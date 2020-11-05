@@ -1,0 +1,43 @@
+{
+  "name": "@generative-fm/play",
+  "version": "0.0.0",
+  "description": "Player interface for Generative.fm",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^7.12.1",
+    "html-webpack-plugin": "^4.5.0",
+    "prettier": "^2.1.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "reset-css": "^5.0.1",
+    "webpack": "^5.3.2",
+    "webpack-cli": "^4.1.0"
+  },
+  "devDependencies": {
+    "@alexbainter/eslint-config": "^0.1.2",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^5.0.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.0.5",
+    "style-loader": "^2.0.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/generative-fm/play.git"
+  },
+  "author": "Alex Bainter <alex@alexbainter.com> (https://alexbainter.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/generative-fm/play/issues"
+  },
+  "homepage": "https://github.com/generative-fm/play#readme"
+}

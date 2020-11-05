@@ -1,0 +1,9 @@
+@import '_colors.scss';
+
+$offset-box-shadow: 4px;
+$blur-box-shadow: 4px;
+
+$box-shadow-bottom: 0 $offset-box-shadow $blur-box-shadow $color-box-shadow;
+$box-shadow-top: 0 (-$offset-box-shadow) $blur-box-shadow $color-box-shadow;
+$box-shadow-right: $offset-box-shadow 0 $blur-box-shadow $color-box-shadow;
+$box-shadow-left: -$offset-box-shadow 0 $blur-box-shadow $color-box-shadow;
