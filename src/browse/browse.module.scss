@@ -1,0 +1,11 @@
+.browse {
+  display: flex;
+  justify-content: center;
+
+  &__grid {
+    max-width: 110rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

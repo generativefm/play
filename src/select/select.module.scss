@@ -1,0 +1,92 @@
+@import '../styles/_colors.scss';
+@import '../styles/_borders.scss';
+@import '../styles/_effects.scss';
+@import '../styles/_type.scss';
+
+.select {
+}
+
+.select-button {
+  @include type-normal();
+  font-size: 0.9rem;
+  text-align: left;
+  padding: 0 0.25rem 0 calc(0.5rem - 1px);
+  background-color: transparent;
+  color: $color-grey;
+  border: 1px solid $color-grey;
+  border-radius: $border-radius-md;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $color-white;
+    color: $color-white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &--is-open {
+    border-color: $color-white;
+    color: $color-white;
+  }
+}
+
+.select-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  visibility: hidden;
+
+  &__label {
+    @include type-ui();
+    color: $color-white;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  &__options {
+    background-color: $color-dark-3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: $border-radius-lg;
+    padding: 0.5rem 0;
+    box-shadow: $box-shadow-bottom;
+  }
+
+  &--is-open {
+    visibility: visible;
+  }
+}
+
+.select-list-option {
+  @include type-normal();
+  color: $color-white;
+  background-color: transparent;
+  border: none;
+  padding: 0.25rem 2rem 0.25rem 1rem;
+  font-size: 0.9rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-white, 0.05);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    background-color: rgba($color-white, 0.15);
+  }
+
+  &--is-selected {
+    background-color: rgba($color-white, 0.1);
+  }
+}

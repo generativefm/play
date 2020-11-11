@@ -1,0 +1,13 @@
+@import '../styles/_colors.scss';
+
+.playback-controls {
+  color: $color-grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon--primary {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+}

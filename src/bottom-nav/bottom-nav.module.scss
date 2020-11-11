@@ -1,0 +1,28 @@
+@import '../styles/_colors.scss';
+@import '../styles/_effects.scss';
+@import '../styles/_type.scss';
+
+.bottom-nav {
+  height: 4rem;
+  background-color: $color-dark-2;
+  box-shadow: $box-shadow-top;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  &__link {
+    @include type-normal();
+    font-size: 0.75rem;
+    color: $color-grey;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    padding: 0.5rem 0;
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,63 @@
+@import '../styles/_theme.scss';
+
+.grid-element {
+  margin: 2rem 1rem;
+  width: 10rem;
+
+  &__image {
+    width: 10rem;
+    height: 10rem;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-bottom;
+    transition: filter 200ms;
+    position: relative;
+    background-size: contain;
+    background-blend-mode: multiply;
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: rgba(black, 0.75);
+
+      .grid-element__image__more,
+      .grid-element__image__action {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &__more {
+      position: absolute;
+      top: 1rem;
+      right: 0.5rem;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+
+    &__action {
+      position: absolute;
+      bottom: 1rem;
+      right: 0.5rem;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 200ms;
+      font-size: 1rem;
+    }
+  }
+
+  &__title {
+    @include type-normal();
+    color: $color-white;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    display: block;
+  }
+
+  &__subtitle {
+    @include type-normal();
+    color: $color-grey;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    line-height: 1.25;
+  }
+}

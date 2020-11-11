@@ -1,0 +1,24 @@
+@import '../styles/_theme.scss';
+
+.icon-button {
+  background: none;
+  color: $color-white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: rgba($color-white, 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color-white, 0.2);
+  }
+}

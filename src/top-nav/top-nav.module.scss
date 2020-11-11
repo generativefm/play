@@ -2,7 +2,7 @@
 @import '../styles/_colors.scss';
 @import '../styles/_effects.scss';
 
-.header {
+.top-nav {
   display: flex;
   align-items: center;
   background-color: $color-dark-2;
@@ -27,6 +27,10 @@
 
       &:hover {
         background-color: rgba(white, 0.05);
+      }
+
+      &--is-active {
+        color: $color-white;
       }
     }
   }

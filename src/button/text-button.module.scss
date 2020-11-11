@@ -1,0 +1,32 @@
+@import '../styles/_theme.scss';
+
+.text-button {
+  @include type-ui();
+  border-radius: $border-radius-sm;
+  text-transform: uppercase;
+  border: none;
+  background-color: $color-primary;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  box-shadow: $box-shadow-bottom;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.8);
+  }
+
+  &:active {
+    background-color: rgba($color-primary, 0.6);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  > * {
+    margin-right: 0.5rem;
+  }
+}

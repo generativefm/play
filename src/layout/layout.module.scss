@@ -1,4 +1,14 @@
 .layout {
   display: grid;
-  grid-template-rows: 4rem 1fr;
+  grid-template-rows: 4rem 1fr 4rem;
+  height: 100%;
+  overflow: hidden;
+
+  &--is-narrow {
+    grid-template-rows: 1fr 4rem 4rem;
+  }
+
+  &__content {
+    overflow-y: auto;
+  }
 }

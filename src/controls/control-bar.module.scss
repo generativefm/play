@@ -1,0 +1,13 @@
+@import '../styles/_colors.scss';
+@import '../styles/_effects.scss';
+
+.control-bar {
+  width: 100%;
+  background-color: $color-dark-2;
+  box-shadow: $box-shadow-top;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
