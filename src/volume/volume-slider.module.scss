@@ -1,0 +1,59 @@
+@import '../styles/_theme.scss';
+
+.volume-slider {
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  width: 5rem;
+  position: relative;
+  cursor: pointer;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+
+  &__rail {
+    height: 2px;
+    background-color: $color-grey;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__fill {
+    height: 2px;
+    background-color: $color-white;
+    position: absolute;
+  }
+
+  &__cap {
+    position: absolute;
+    height: 36px;
+    width: 36px;
+    margin-left: -18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 200ms;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background-color: rgba($color-white, 0.1);
+    }
+
+    &::after {
+      content: '';
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background-color: $color-white;
+    }
+  }
+}

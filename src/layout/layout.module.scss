@@ -1,14 +1,16 @@
 .layout {
-  display: grid;
-  grid-template-rows: 4rem 1fr 4rem;
   height: 100%;
-  overflow: hidden;
+  padding-top: 4rem;
+  box-sizing: border-box;
 
-  &--is-narrow {
-    grid-template-rows: 1fr 4rem 4rem;
+  &--has-controls {
+    .layout__content {
+      margin-bottom: 5rem;
+    }
   }
 
   &__content {
-    overflow-y: auto;
+    max-width: 110rem;
+    margin: 0 auto;
   }
 }

@@ -15,48 +15,26 @@ const SelectListOption = ({ display, isSelected, onClick }) => (
   </button>
 );
 
-const SelectList = ({
-  options,
-  selectedValue,
-  label,
-  onChange,
-  isOpen,
-  topOffset,
-}) => {
-  const [element, setElement] = useState();
-  const [height, setHeight] = useState(0);
-  const ref = useRef(null);
-
-  useLayoutEffect(() => {
-    setHeight(ref.current.clientHeight);
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={classnames(styles['select-list'], {
-        [styles['select-list--is-open']]: isOpen,
-      })}
-      style={{
-        marginTop: -height,
-      }}
-    >
-      <div className={styles['select-list__label']}>{label}</div>
-      <div className={styles['select-list__options']} ref={setElement}>
-        {options.map(([value, display]) => (
-          <SelectListOption
-            key={value}
-            display={display}
-            isSelected={value === selectedValue}
-            onClick={() => onChange(value)}
-          />
-        ))}
-      </div>
+const SelectList = ({ options, selectedValue, onChange, isOpen }) => (
+  <div
+    className={classnames(styles['select-list'], {
+      [styles['select-list--is-open']]: isOpen,
+    })}
+  >
+    <div className={styles['select-list__options']}>
+      {options.map(([value, display]) => (
+        <SelectListOption
+          key={value}
+          display={display}
+          isSelected={value === selectedValue}
+          onClick={() => onChange(value)}
+        />
+      ))}
     </div>
-  );
-};
+  </div>
+);
 
-const Select = ({ options, value, label, onChange }) => {
+const Select = ({ options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [width, setWidth] = useState('auto');
   const [buttonHeight, setButtonHeight] = useState(0);
@@ -91,15 +69,6 @@ const Select = ({ options, value, label, onChange }) => {
 
   return (
     <div className={styles.select} ref={containerRef}>
-      <SelectList
-        options={options}
-        selectedValue={value}
-        label={label}
-        onChange={handleChange}
-        isOpen={isOpen}
-        width={width}
-        topOffset={buttonHeight}
-      ></SelectList>
       <button
         ref={buttonRef}
         className={classnames(styles['select-button'], {
@@ -112,6 +81,14 @@ const Select = ({ options, value, label, onChange }) => {
         {selectedOption[1]}
         <ArrowDropDown />
       </button>
+      <SelectList
+        options={options}
+        selectedValue={value}
+        onChange={handleChange}
+        isOpen={isOpen}
+        width={width}
+        topOffset={buttonHeight}
+      ></SelectList>
     </div>
   );
 };

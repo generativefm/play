@@ -3,23 +3,24 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import { Link } from 'react-router-dom';
 import { MoreVert, PlayArrow } from '@material-ui/icons';
 import IconButton from '../button/icon-button';
-import styles from './grid-element.module.scss';
+import styles from './element.module.scss';
 
-const GridElement = ({ id, subtitle }) => {
+const Element = ({ id, getSubtitle }) => {
   const piece = byId[id];
+  const subtitle = getSubtitle(piece);
   return (
-    <div className={styles['grid-element']}>
+    <div className={styles['element']}>
       <Link to={`/piece/${id}`}>
         <div
-          className={styles['grid-element__image']}
+          className={styles['element__image']}
           style={{ backgroundImage: `url(${piece.imageSrc})` }}
         >
-          <div className={styles['grid-element__image__more']}>
+          <div className={styles['element__image__more']}>
             <IconButton>
               <MoreVert />
             </IconButton>
           </div>
-          <div className={styles['grid-element__image__action']}>
+          <div className={styles['element__image__action']}>
             <IconButton>
               <PlayArrow />
             </IconButton>
@@ -27,12 +28,12 @@ const GridElement = ({ id, subtitle }) => {
         </div>
       </Link>
 
-      <Link to={`/piece/${id}`} className={styles['grid-element__title']}>
+      <Link to={`/piece/${id}`} className={styles['element__title']}>
         {piece.title}
       </Link>
-      <div className={styles['grid-element__subtitle']}>{subtitle}</div>
+      <div className={styles['element__subtitle']}>{subtitle}</div>
     </div>
   );
 };
 
-export default GridElement;
+export default Element;

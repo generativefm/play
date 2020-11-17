@@ -1,6 +1,6 @@
 @import '../styles/_theme.scss';
 
-.grid-element {
+.element {
   margin: 2rem 1rem;
   width: 10rem;
 
@@ -18,8 +18,8 @@
     &:hover {
       background-color: rgba(black, 0.75);
 
-      .grid-element__image__more,
-      .grid-element__image__action {
+      .element__image__more,
+      .element__image__action {
         visibility: visible;
         opacity: 1;
       }
@@ -51,6 +51,10 @@
     margin-top: 0.5rem;
     text-decoration: none;
     display: block;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__subtitle {

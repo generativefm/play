@@ -1,16 +1,14 @@
 import React from 'react';
 import pieces from '@generative-music/pieces-alex-bainter';
-import GridElement from '../piece/grid-element';
+import Grid from '../grid/grid';
 import styles from './browse.module.scss';
 
-const Browse = () => (
-  <div className={styles.browse}>
-    <div className={styles['browse__grid']}>
-      {pieces.map(({ id, tags }) => (
-        <GridElement key={id} id={id} subtitle={tags.join(' • ')} />
-      ))}
+const Browse = () => {
+  return (
+    <div className={styles.browse}>
+      <Grid pieceIds={pieces.map(({ id }) => id)} title={'All pieces'} />
     </div>
-  </div>
-);
+  );
+};
 
 export default Browse;

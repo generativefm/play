@@ -1,0 +1,25 @@
+@import '../styles/_theme.scss';
+
+.header {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__title {
+    @include type-more-prominent();
+    color: $color-white;
+    font-size: 2rem;
+  }
+
+  &__options {
+    margin-left: 2rem;
+    z-index: 1;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

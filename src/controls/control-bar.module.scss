@@ -10,4 +10,30 @@
   justify-content: space-between;
   padding: 0 1rem;
   box-sizing: border-box;
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 5rem;
+
+  &--will-appear {
+    transform: translateY(100%);
+    will-change: transform;
+  }
+
+  &--is-appearing {
+    transform: none;
+    transition: transform 200ms;
+  }
+
+  &__left {
+    width: 20rem;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    width: 10rem;
+    justify-content: flex-end;
+  }
 }
