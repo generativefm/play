@@ -1,0 +1,30 @@
+@import '../styles/_theme.scss';
+
+.category {
+  padding-top: 2rem;
+  max-width: 100rem;
+  margin: 0 auto;
+  &__title {
+    margin-left: 3rem;
+    @include type-more-prominent();
+    color: $color-white;
+    font-size: 2rem;
+  }
+
+  &__list {
+    display: flex;
+
+    &__button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+    }
+
+    &__pieces {
+      display: flex;
+      overflow: hidden;
+      scroll-behavior: smooth;
+    }
+  }
+}

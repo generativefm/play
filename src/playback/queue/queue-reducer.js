@@ -2,8 +2,8 @@ import { USER_PLAYED_PIECE } from '../user-played-piece';
 
 const queueReducer = (
   state = {
-    pieceIds: ['zed'],
-    index: 0,
+    pieceIds: [],
+    index: null,
   },
   action
 ) => {

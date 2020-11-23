@@ -1,12 +1,11 @@
 @import '../styles/_theme.scss';
 
-.element {
-  margin: 2rem 1rem;
-  width: 10rem;
+.preview {
+  padding: 2rem 1rem;
+  display: inline-block;
+  box-sizing: border-box;
 
   &__image {
-    width: 10rem;
-    height: 10rem;
     border-radius: $border-radius-md;
     box-shadow: $box-shadow-bottom;
     transition: filter 200ms;
@@ -18,8 +17,8 @@
     &:hover {
       background-color: rgba(black, 0.75);
 
-      .element__image__more,
-      .element__image__action {
+      .preview__image__more,
+      .preview__image__action {
         visibility: visible;
         opacity: 1;
       }

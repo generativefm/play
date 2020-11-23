@@ -5,13 +5,11 @@ import React, {
   useCallback,
   useLayoutEffect,
 } from 'react';
-import Element from './element';
+import Preview from './preview';
 import Select from '../select/select';
 import styles from './grid.module.scss';
 
-const getReleaseDate = ({ releaseDate }) => releaseDate.getFullYear();
-
-const Grid = ({ pieceIds, getSubtitle = getReleaseDate, title }) => {
+const Grid = ({ pieceIds, getSubtitle, title }) => {
   const ref = useRef(null);
   const [marginLeft, setMarginLeft] = useState(0);
 
@@ -56,7 +54,7 @@ const Grid = ({ pieceIds, getSubtitle = getReleaseDate, title }) => {
       </div>
       <div className={styles.grid} ref={ref}>
         {pieceIds.map((id) => (
-          <Element key={id} id={id} getSubtitle={getSubtitle} />
+          <Preview key={id} id={id} getSubtitle={getSubtitle} />
         ))}
       </div>
     </>

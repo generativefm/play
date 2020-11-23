@@ -40,6 +40,10 @@
     border: none;
     cursor: pointer;
 
+    &:active {
+      background-color: rgba($color-white, 0.2);
+    }
+
     &:focus {
       outline: none;
     }
