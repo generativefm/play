@@ -1,9 +1,10 @@
-import { USER_PLAYED_PIECE } from '../user-played-piece';
+import { USER_PLAYED_PIECE } from '../playback/user-played-piece';
+import { byId } from '@generative-music/pieces-alex-bainter';
 
 const queueReducer = (
   state = {
-    pieceIds: [],
-    index: null,
+    pieceIds: Object.keys(byId),
+    index: Math.floor(Math.random() * 40),
   },
   action
 ) => {

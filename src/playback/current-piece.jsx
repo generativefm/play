@@ -7,7 +7,7 @@ import {
   MoreVert,
 } from '@material-ui/icons';
 import IconButton from '../button/icon-button';
-import selectCurrentPieceId from './queue/select-current-piece-id';
+import selectCurrentPieceId from '../queue/select-current-piece-id';
 import styles from './current-piece.module.scss';
 
 const CurrentPiece = () => {

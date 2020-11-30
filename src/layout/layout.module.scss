@@ -1,3 +1,5 @@
+@import '../styles/_theme.scss';
+
 .layout {
   height: 100%;
   padding-top: 4rem;
@@ -9,8 +11,43 @@
     }
   }
 
+  &--has-playback-content {
+    overflow: hidden;
+  }
+
   &__content {
-    max-width: 110rem;
-    margin: 0 auto;
+    &__main {
+      max-width: 110rem;
+      margin: 0 auto;
+    }
+
+    &__playback {
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 9rem);
+      background-color: $color-dark-2;
+      z-index: 2;
+
+      &--will-enter {
+        transform: translateY(100%);
+        will-change: transform;
+      }
+
+      &--is-entering {
+        transform: none;
+        transition: transform 200ms;
+      }
+
+      &--will-exit {
+        will-change: transform;
+      }
+
+      &--is-exiting {
+        transform: translateY(100%);
+        transition: transform 200ms;
+      }
+    }
   }
 }

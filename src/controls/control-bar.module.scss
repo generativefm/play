@@ -3,14 +3,14 @@
 
 .control-bar {
   width: 100%;
-  background-color: $color-dark-2;
+  background-color: $color-dark-3;
   box-shadow: $box-shadow-top;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   bottom: 0;
   left: 0;

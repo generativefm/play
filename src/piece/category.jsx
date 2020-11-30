@@ -6,7 +6,7 @@ import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import styles from './category.module.scss';
 
-const Category = ({ title, pieceIds }) => {
+const Category = ({ title, pieceIds, getSubtitle }) => {
   const listRef = useRef(null);
   const contentWidth = useContentWidth();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -59,6 +59,7 @@ const Category = ({ title, pieceIds }) => {
                 key={pieceId}
                 pieceId={pieceId}
                 width={`calc((${contentWidth}px - 4rem) / 6)`}
+                getSubtitle={getSubtitle}
               />
             ))}
         </div>
