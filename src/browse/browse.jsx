@@ -1,50 +1,81 @@
-import React from 'react';
-import pieces from '@generative-music/pieces-alex-bainter';
+import React, { useMemo, useCallback } from 'react';
+import pieces, { byId } from '@generative-music/pieces-alex-bainter';
+import { useSelector } from 'react-redux';
 import Category from '../piece/category';
 import formatReleaseDate from '../dates/format-release-date';
+import formatPlayTime from '../piece/format-play-time';
+import selectPlayTime from '../piece/select-play-time';
 import styles from './browse.module.scss';
 
-const newest = pieces
-  .sort((a, b) => b.releaseDate - a.releaseDate)
-  .slice(0, 24);
-
-const mostPopular = pieces
-  .filter(() => Math.random() < 0.5)
-  .sort(() => Math.random() - 0.5)
-  .slice(0, 24);
-
-const mostLiked = pieces
-  .filter(() => Math.random() < 0.5)
-  .sort(() => Math.random() - 0.5)
-  .slice(0, 24);
-
 const Browse = () => {
+  const playTime = useSelector(selectPlayTime);
+
+  const orderedNewestPieceIds = useMemo(
+    () =>
+      pieces.sort((a, b) => b.releaseDate - a.releaseDate).map(({ id }) => id),
+    []
+  );
+
+  const orderedMostPlayedPieceIds = useMemo(
+    () => Object.keys(playTime).sort((a, b) => playTime[b] - playTime[a]),
+    [playTime]
+  );
+
+  const playTimePerDay = useMemo(
+    () =>
+      Object.keys(playTime)
+        .map((pieceId) => [
+          pieceId,
+          playTime[pieceId] /
+            ((Date.now() - byId[pieceId].releaseDate.getTime()) /
+              (1000 * 60 * 60 * 24)),
+        ])
+        .reduce((o, [pieceId, hoursPerDay]) => {
+          o[pieceId] = hoursPerDay;
+          return o;
+        }, {}),
+    [playTime]
+  );
+
+  const orderedTrendingPieceIds = useMemo(
+    () =>
+      Object.keys(playTimePerDay).sort(
+        (a, b) => playTimePerDay[b] - playTimePerDay[a]
+      ),
+    [playTimePerDay]
+  );
+
+  const getNewestSubtitle = useCallback(
+    (piece) => formatReleaseDate(piece.releaseDate),
+    []
+  );
+
+  const getMostPlayedSubtitle = useCallback(
+    (piece) => formatPlayTime(playTime[piece.id]),
+    [playTime]
+  );
+
+  const getTrendingSubtitle = useCallback(
+    (piece) => `${formatPlayTime(playTimePerDay[piece.id])} per day`,
+    [playTimePerDay]
+  );
+
   return (
     <div className={styles.browse}>
       <Category
-        title={'Most played'}
-        pieceIds={mostPopular.map(({ id }) => id)}
-        getSubtitle={(piece) => {
-          const index = mostPopular.indexOf(piece);
-          return `played for ${
-            (24 - index) * 10 + Math.floor(Math.random() * 5)
-          } hours`;
-        }}
+        title={'Most played worldwide'}
+        pieceIds={orderedMostPlayedPieceIds}
+        getSubtitle={getMostPlayedSubtitle}
       />
       <Category
-        title={'Most liked'}
-        pieceIds={mostLiked.map(({ id }) => id)}
-        getSubtitle={(piece) => {
-          const index = mostLiked.indexOf(piece);
-          return `${Math.round(
-            Math.min(((24 - index) / 24) * 100 + Math.random() * 3, 100)
-          )}% liked`;
-        }}
+        title={'Trending worldwide'}
+        pieceIds={orderedTrendingPieceIds}
+        getSubtitle={getTrendingSubtitle}
       />
       <Category
         title={'Newest'}
-        pieceIds={newest.map(({ id }) => id)}
-        getSubtitle={(piece) => formatReleaseDate(piece.releaseDate)}
+        pieceIds={orderedNewestPieceIds}
+        getSubtitle={getNewestSubtitle}
       />
     </div>
   );

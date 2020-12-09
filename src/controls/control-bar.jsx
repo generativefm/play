@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { ExpandLess } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import classnames from 'classnames';
 import PlaybackControls from './playback-controls';
 import CurrentPiece from '../playback/current-piece';
 import VolumeSlider from '../volume/volume-slider';
@@ -42,7 +43,11 @@ const ControlBar = () => {
         <div className={styles['control-bar__right']}>
           <VolumeSlider />
           <IconButton onClick={handleExpansionClick}>
-            <ExpandLess />
+            <ExpandLess
+              className={classnames(styles['flip-vertical'], {
+                [styles['flip-vertical--is-flipping']]: isPlaybackOpen,
+              })}
+            />
           </IconButton>
         </div>
       </div>

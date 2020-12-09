@@ -36,4 +36,12 @@
     width: 10rem;
     justify-content: flex-end;
   }
+
+  .flip-vertical {
+    transition: transform 200ms;
+
+    &--is-flipping {
+      transform: rotate(180deg);
+    }
+  }
 }

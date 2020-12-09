@@ -13,15 +13,19 @@
   top: 0;
   left: 0;
   width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
 
   .title {
     @include type-less-prominent();
     color: $color-grey;
-    padding: 0 1rem;
+    flex: 0 0 auto;
+    margin-right: 1rem;
   }
 
   .nav {
     height: 100%;
+    flex: 1 1 auto;
     &__link {
       @include type-normal();
       text-decoration: none;

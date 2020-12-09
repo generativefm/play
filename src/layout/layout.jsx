@@ -10,6 +10,7 @@ import Piece from '../piece/piece';
 import Browse from '../browse/browse';
 import Flavor from '../flavor/flavor';
 import Playback from '../playback/playback';
+import Library from '../library/library';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
@@ -35,6 +36,7 @@ const Layout = () => {
             <Route path="/" exact component={Browse} />
             <Route path="/piece/:id" component={Piece} />
             <Route path="/flavor/:flavor" component={Flavor} />
+            <Route path="/library" component={Library} />
           </Switch>
         </div>
         <CSSTransition

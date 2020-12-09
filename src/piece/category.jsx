@@ -1,16 +1,19 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { ChevronRight, ChevronLeft } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
 import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
+import userPlayedPiece from '../playback/user-played-piece';
 import styles from './category.module.scss';
 
 const Category = ({ title, pieceIds, getSubtitle }) => {
   const listRef = useRef(null);
   const contentWidth = useContentWidth();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const dispatch = useDispatch();
 
   const handlePreviousClick = useCallback(() => {
     const { width } = listRef.current.getBoundingClientRect();
@@ -31,6 +34,32 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
       listRef.current.scrollLeft + width < listRef.current.scrollWidth
     );
   }, []);
+
+  useLayoutEffect(() => {
+    if (!listRef.current) {
+      return;
+    }
+    const { width } = listRef.current.getBoundingClientRect();
+    setCanScrollRight(
+      listRef.current.scrollLeft + width < listRef.current.scrollWidth
+    );
+  }, []);
+
+  const handlePiecePlay = useCallback(
+    (pieceId) => {
+      dispatch(
+        userPlayedPiece({
+          selectionPieceIds: pieceIds,
+          index: pieceIds.indexOf(pieceId),
+        })
+      );
+    },
+    [dispatch, pieceIds]
+  );
+
+  if (pieceIds.length === 0) {
+    return null;
+  }
 
   return (
     <div className={styles.category}>
@@ -60,6 +89,7 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
                 pieceId={pieceId}
                 width={`calc((${contentWidth}px - 4rem) / 6)`}
                 getSubtitle={getSubtitle}
+                onPlay={handlePiecePlay}
               />
             ))}
         </div>

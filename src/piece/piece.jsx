@@ -7,19 +7,22 @@ import {
   ThumbDownOutlined,
   MoreVert,
 } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import formatReleaseDate from '../dates/format-release-date';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
 import userPlayedPiece from '../playback/user-played-piece';
+import formatPlayTime from './format-play-time';
+import selectPlayTime from '../user/select-play-time';
 import styles from './piece.module.scss';
 
 const Piece = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const handlePlayClick = useCallback(() => {
-    dispatch(userPlayedPiece({ pieceId: id }));
+    dispatch(userPlayedPiece({ selectionPieceIds: [id], index: 0 }));
   }, [id, dispatch]);
+  const playTime = useSelector(selectPlayTime);
 
   if (!id && !byId[id]) {
     return <Redirect to="/" />;
@@ -51,6 +54,12 @@ const Piece = () => {
           <div className={styles['info__other__stats']}>
             <p>{formatReleaseDate(piece.releaseDate)}</p>
             <p>{piece.tags.join('/')}</p>
+            <p>
+              {playTime[piece.id]
+                ? `Played for ${formatPlayTime(playTime[piece.id])}`
+                : 'Never played'}{' '}
+              by you
+            </p>
           </div>
         </div>
       </div>
