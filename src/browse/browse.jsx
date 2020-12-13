@@ -5,6 +5,7 @@ import Category from '../piece/category';
 import formatReleaseDate from '../dates/format-release-date';
 import formatPlayTime from '../piece/format-play-time';
 import selectPlayTime from '../piece/select-play-time';
+import CircularLoadingIndicator from '../playback/circular-loading-indicator';
 import styles from './browse.module.scss';
 
 const Browse = () => {
@@ -51,26 +52,26 @@ const Browse = () => {
   );
 
   const getMostPlayedSubtitle = useCallback(
-    (piece) => formatPlayTime(playTime[piece.id]),
+    (piece) => `${formatPlayTime(playTime[piece.id])} played`,
     [playTime]
   );
 
   const getTrendingSubtitle = useCallback(
-    (piece) => `${formatPlayTime(playTimePerDay[piece.id])} per day`,
+    (piece) => `${formatPlayTime(playTimePerDay[piece.id])} played per day`,
     [playTimePerDay]
   );
 
   return (
     <div className={styles.browse}>
       <Category
-        title={'Most played worldwide'}
-        pieceIds={orderedMostPlayedPieceIds}
-        getSubtitle={getMostPlayedSubtitle}
-      />
-      <Category
         title={'Trending worldwide'}
         pieceIds={orderedTrendingPieceIds}
         getSubtitle={getTrendingSubtitle}
+      />
+      <Category
+        title={'Most played worldwide'}
+        pieceIds={orderedMostPlayedPieceIds}
+        getSubtitle={getMostPlayedSubtitle}
       />
       <Category
         title={'Newest'}

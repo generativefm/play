@@ -1,8 +1,14 @@
-import { createStore as _createStore, combineReducers } from 'redux';
+import {
+  createStore as _createStore,
+  combineReducers,
+  applyMiddleware,
+} from 'redux';
 import queueReducer from '../queue/queue-reducer';
 import playbackReducer from '../playback/playback-reducer';
 import userReducer from '../user/user-reducer';
 import pieceReducer from '../piece/piece-reducer';
+import masterGainReducer from '../volume/master-gain-reducer';
+import playbackMiddleware from '../playback/playback-middleware';
 
 const createStore = () =>
   _createStore(
@@ -11,7 +17,9 @@ const createStore = () =>
       playback: playbackReducer,
       user: userReducer,
       piece: pieceReducer,
-    })
+      masterGain: masterGainReducer,
+    }),
+    applyMiddleware(playbackMiddleware)
   );
 
 export default createStore;

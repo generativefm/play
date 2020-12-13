@@ -4,14 +4,15 @@
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
+    "@alexbainter/indexed-db": "^0.1.1",
     "@auth0/auth0-react": "^1.2.0",
     "@generative-music/pieces-alex-bainter": "^4.2.1",
+    "@generative-music/samples-alex-bainter": "^2.3.0",
+    "@generative-music/web-library": "^0.2.1",
+    "@generative-music/web-provider": "^2.0.4",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "classnames": "^2.2.6",
-    "eslint": "^7.12.1",
-    "html-webpack-plugin": "^4.5.0",
-    "prettier": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -19,9 +20,7 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "reset-css": "^5.0.1",
-    "tone": "^14.7.58",
-    "webpack": "^5.3.2",
-    "webpack-cli": "^4.1.0"
+    "tone": "^14.7.58"
   },
   "devDependencies": {
     "@alexbainter/eslint-config": "^0.1.2",
@@ -30,10 +29,16 @@
     "@babel/preset-react": "^7.12.5",
     "babel-loader": "^8.1.0",
     "css-loader": "^5.0.0",
+    "eslint": "^7.15.0",
     "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "node-fetch": "^2.6.1",
     "node-sass": "^5.0.0",
+    "prettier": "^2.2.1",
     "sass-loader": "^10.0.5",
     "style-loader": "^2.0.0",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {

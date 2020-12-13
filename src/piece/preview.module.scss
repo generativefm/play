@@ -11,20 +11,33 @@
     transition: filter 200ms;
     position: relative;
     background-size: contain;
-    background-blend-mode: multiply;
-    transition: background-color 200ms;
 
     &:hover {
-      background-color: rgba(black, 0.75);
-
       .preview__image__more,
       .preview__image__action {
         visibility: visible;
         opacity: 1;
       }
+
+      &::after {
+        content: '';
+        background-image: linear-gradient(
+          to right,
+          transparent,
+          rgba(black, 0.75) 75%
+        );
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        animation: 200ms fade-in;
+      }
     }
 
     &__more {
+      z-index: 2;
       position: absolute;
       top: 1rem;
       right: 0.5rem;
@@ -34,6 +47,7 @@
     }
 
     &__action {
+      z-index: 2;
       position: absolute;
       bottom: 1rem;
       right: 0.5rem;
@@ -41,6 +55,11 @@
       opacity: 0;
       transition: opacity 200ms;
       font-size: 1rem;
+
+      &--is-visible {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
@@ -62,5 +81,14 @@
     font-size: 0.9rem;
     margin-top: 0.5rem;
     line-height: 1.25;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

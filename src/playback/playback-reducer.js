@@ -1,17 +1,7 @@
-import { USER_OPENED_PLAYBACK } from './user-opened-playback';
-import { USER_CLOSED_PLAYBACK } from './user-closed-playback';
+import { combineReducers } from 'redux';
+import isOpen from './is-open-reducer';
+import status from './status-reducer';
 
-const playbackReducer = (state = { isOpen: false }, action) => {
-  switch (action.type) {
-    case USER_OPENED_PLAYBACK: {
-      return Object.assign({}, state, { isOpen: true });
-    }
-    case USER_CLOSED_PLAYBACK: {
-      return Object.assign({}, state, { isOpen: false });
-    }
-  }
-
-  return state;
-};
+const playbackReducer = combineReducers({ isOpen, status });
 
 export default playbackReducer;

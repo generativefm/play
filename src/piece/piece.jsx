@@ -14,14 +14,22 @@ import IconButton from '../button/icon-button';
 import userPlayedPiece from '../playback/user-played-piece';
 import formatPlayTime from './format-play-time';
 import selectPlayTime from '../user/select-play-time';
+import useMasterGain from '../volume/use-master-gain';
 import styles from './piece.module.scss';
 
 const Piece = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const masterGain = useMasterGain();
   const handlePlayClick = useCallback(() => {
-    dispatch(userPlayedPiece({ selectionPieceIds: [id], index: 0 }));
-  }, [id, dispatch]);
+    dispatch(
+      userPlayedPiece({
+        selectionPieceIds: [id],
+        index: 0,
+        destination: masterGain,
+      })
+    );
+  }, [id, dispatch, masterGain]);
   const playTime = useSelector(selectPlayTime);
 
   if (!id && !byId[id]) {

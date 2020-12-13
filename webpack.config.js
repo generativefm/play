@@ -2,6 +2,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fetch = require('node-fetch');
 
 const config = {
   mode: 'development',
@@ -11,6 +12,16 @@ const config = {
   resolve: {
     extensions: ['.json', '.js', '.jsx'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
+  },
+  devServer: {
+    historyApiFallback: true,
+    before: (app, server, compiler) => {
+      app.get('/api/playtime', (req, res) =>
+        fetch('http://api.generative.fm/v1/playtime').then((response) => {
+          response.body.pipe(res);
+        })
+      );
+    },
   },
   module: {
     rules: [
@@ -58,9 +69,6 @@ const config = {
       template: 'src/index.template.html',
     }),
   ],
-  devServer: {
-    historyApiFallback: true,
-  },
 };
 
 module.exports = config;
