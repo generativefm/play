@@ -1,0 +1,9 @@
+@import '../styles/_theme.scss';
+
+.context-menu {
+  position: absolute;
+  background-color: $color-dark-4;
+  box-shadow: $box-shadow-bottom;
+  border-radius: $border-radius-md;
+  z-index: 2;
+}

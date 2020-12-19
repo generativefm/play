@@ -1,13 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  ThumbDownOutlined,
-  ThumbUpOutlined,
-  MoreVert,
-} from '@material-ui/icons';
-import IconButton from '../button/icon-button';
+import FeedbackButtons from '../piece/feedback-buttons';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
+import MoreButton from '../piece/more-button';
 import styles from './current-piece.module.scss';
 
 const CurrentPiece = () => {
@@ -27,15 +23,8 @@ const CurrentPiece = () => {
           {piece.title}
         </div>
         <div className={styles['current-piece__more__controls']}>
-          <IconButton>
-            <ThumbDownOutlined />
-          </IconButton>
-          <IconButton>
-            <ThumbUpOutlined />
-          </IconButton>
-          <IconButton>
-            <MoreVert />
-          </IconButton>
+          <FeedbackButtons pieceId={currentPieceId} />
+          <MoreButton pieceId={currentPieceId} />
         </div>
       </div>
     </div>

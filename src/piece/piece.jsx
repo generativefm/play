@@ -1,12 +1,7 @@
 import React, { useCallback } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  PlayArrow,
-  ThumbUpOutlined,
-  ThumbDownOutlined,
-  MoreVert,
-} from '@material-ui/icons';
+import { PlayArrow, MoreVert } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import formatReleaseDate from '../dates/format-release-date';
 import TextButton from '../button/text-button';
@@ -15,6 +10,8 @@ import userPlayedPiece from '../playback/user-played-piece';
 import formatPlayTime from './format-play-time';
 import selectPlayTime from '../user/select-play-time';
 import useMasterGain from '../volume/use-master-gain';
+import FeedbackButtons from './feedback-buttons';
+import MoreButton from './more-button';
 import styles from './piece.module.scss';
 
 const Piece = () => {
@@ -49,15 +46,8 @@ const Piece = () => {
               <PlayArrow />
               Play
             </TextButton>
-            <IconButton>
-              <ThumbDownOutlined />
-            </IconButton>
-            <IconButton>
-              <ThumbUpOutlined />
-            </IconButton>
-            <IconButton>
-              <MoreVert />
-            </IconButton>
+            <FeedbackButtons pieceId={id} />
+            <MoreButton pieceId={id} />
           </div>
           <div className={styles['info__other__stats']}>
             <p>{formatReleaseDate(piece.releaseDate)}</p>

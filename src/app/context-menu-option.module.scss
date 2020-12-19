@@ -1,0 +1,32 @@
+@import '../styles/_theme.scss';
+
+.context-menu-option {
+  @include type-normal();
+  text-decoration: none;
+  color: $color-white;
+  padding: 1rem 1rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-white, 0.15);
+  }
+  &:active {
+    background-color: rgba($color-white, 0.3);
+  }
+
+  $insetMargin: 0.5rem;
+  &:first-of-type {
+    margin-top: $insetMargin;
+  }
+
+  &:last-of-type {
+    margin-bottom: $insetMargin;
+  }
+
+  &__icon {
+    margin-right: 0.5rem;
+  }
+}

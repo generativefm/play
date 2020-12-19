@@ -1,0 +1,42 @@
+import React, { useRef, useCallback, useLayoutEffect, useState } from 'react';
+import useDismissable from './use-dismissable';
+import useCreateContextMenu from './use-create-context-menu';
+import styles from './context-menu.module.scss';
+
+const ContextMenu = ({ x, y, children }) => {
+  const ref = useRef(null);
+  const [isTooFarRight, setIsTooFarRight] = useState(false);
+  const [isTooFarDown, setIsTooFarDown] = useState(false);
+  const createContextMenu = useCreateContextMenu();
+  const handleDismiss = useCallback(() => {
+    createContextMenu(null);
+  }, [createContextMenu]);
+  useDismissable({ dismissableRef: ref, onDismiss: handleDismiss });
+
+  const handleContextMenuEvent = useCallback((event) => {
+    event.stopPropagation();
+    event.preventDefault();
+  }, []);
+
+  useLayoutEffect(() => {
+    const { width, height } = ref.current.getBoundingClientRect();
+    setIsTooFarRight(x + width > window.innerWidth);
+    setIsTooFarDown(y + height > window.innerHeight);
+  }, [x, y, children]);
+
+  const left = isTooFarRight && ref.current ? x - ref.current.offsetWidth : x;
+  const top = isTooFarDown && ref.current ? y - ref.current.offsetHeight : y;
+
+  return (
+    <div
+      className={styles['context-menu']}
+      style={{ left, top }}
+      ref={ref}
+      onContextMenu={handleContextMenuEvent}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default ContextMenu;

@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 
 const config = {
   mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
   output: {
     publicPath: '/',
   },

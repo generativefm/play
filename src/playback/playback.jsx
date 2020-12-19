@@ -12,6 +12,7 @@ import selectCurrentPieceId from '../queue/select-current-piece-id';
 import IconButton from '../button/icon-button';
 import selectQueuedPieceIds from '../queue/select-queued-piece-ids';
 import userClosedPlayback from './user-closed-playback';
+import MoreButton from '../piece/more-button';
 import styles from './playback.module.scss';
 
 const Playback = () => {
@@ -75,9 +76,7 @@ const Playback = () => {
                   <div className={styles['playback__queue__list__item__title']}>
                     {queuedPiece.title}
                   </div>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
+                  <MoreButton pieceId={pieceId} />
                 </div>
               );
             })}

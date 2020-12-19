@@ -21,4 +21,8 @@
   &:active {
     background-color: rgba($color-white, 0.3);
   }
+
+  &--has-background {
+    background-color: rgba($color-dark-1, 0.5);
+  }
 }

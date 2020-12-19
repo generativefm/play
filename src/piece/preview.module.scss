@@ -19,6 +19,10 @@
         opacity: 1;
       }
 
+      .preview__image__status {
+        visibility: hidden;
+      }
+
       &::after {
         content: '';
         background-image: linear-gradient(
@@ -55,10 +59,19 @@
       opacity: 0;
       transition: opacity 200ms;
       font-size: 1rem;
+    }
 
-      &--is-visible {
-        opacity: 1;
-        visibility: visible;
+    &__status {
+      z-index: 2;
+      position: absolute;
+      bottom: 1rem;
+      right: 0.5rem;
+      visibility: visible;
+      transition: opacity 200ms;
+      font-size: 1rem;
+
+      &--is-loading {
+        visibility: visible !important;
       }
     }
   }

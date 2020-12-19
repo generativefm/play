@@ -9,6 +9,9 @@ const useDismissable = ({ isOpen = true, dismissableRef, onDismiss }) => {
     }
 
     const handleDocumentClick = (event) => {
+      if (!dismissableRef.current) {
+        return;
+      }
       if (!dismissableRef.current.contains(event.target)) {
         onDismiss();
       }

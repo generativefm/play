@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const masterGainContext = createContext(null);
+const masterGainContext = createContext();
 
 export default masterGainContext;
