@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import { Stop, PlayArrow, VolumeUp } from '@material-ui/icons';
 import IconButton from '../button/icon-button';
@@ -11,18 +11,14 @@ import CircularLoadingIndicator from '../playback/circular-loading-indicator';
 import useCreateContextMenuForMouseEvent from '../app/use-create-context-menu-for-mouse-event';
 import MoreButton from './more-button';
 import PieceContextMenu from './piece-context-menu';
+import userStoppedPlayback from '../playback/user-stopped-playback';
 import styles from './preview.module.scss';
 
 const getReleaseDate = ({ releaseDate }) => releaseDate.getFullYear();
 
-const Preview = ({
-  pieceId,
-  width,
-  onPlay,
-  onStop,
-  getSubtitle = getReleaseDate,
-}) => {
+const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
   const piece = byId[pieceId];
+  const dispatch = useDispatch();
 
   const createContextMenuForMouseEvent = useCreateContextMenuForMouseEvent(
     <PieceContextMenu pieceId={pieceId} />
@@ -41,10 +37,10 @@ const Preview = ({
       if (!isCurrentlyPlaying) {
         onPlay(pieceId);
       } else {
-        onStop(pieceId);
+        dispatch(userStoppedPlayback());
       }
     },
-    [pieceId, onPlay, isCurrentlyPlaying, onStop]
+    [pieceId, onPlay, isCurrentlyPlaying, dispatch]
   );
 
   const subtitle = getSubtitle(piece);

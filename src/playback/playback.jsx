@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  ThumbUpOutlined,
-  ThumbDownOutlined,
-  MoreVert,
-} from '@material-ui/icons';
 import classnames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
-import IconButton from '../button/icon-button';
 import selectQueuedPieceIds from '../queue/select-queued-piece-ids';
 import userClosedPlayback from './user-closed-playback';
 import MoreButton from '../piece/more-button';
+import LikeButton from '../piece/like-button';
+import DislikeButton from '../piece/dislike-button';
 import styles from './playback.module.scss';
 
 const Playback = () => {
@@ -43,15 +39,14 @@ const Playback = () => {
           src={piece.imageSrc}
         />
         <div className={styles['playback__current-piece__info']}>
-          <IconButton>
-            <ThumbDownOutlined />
-          </IconButton>
-          <div className={styles['playback__current-piece__info__title']}>
+          <DislikeButton pieceId={currentPieceId} />
+          <Link
+            className={styles['playback__current-piece__info__title']}
+            to={`/piece/${currentPieceId}`}
+          >
             {piece.title}
-          </div>
-          <IconButton>
-            <ThumbUpOutlined />
-          </IconButton>
+          </Link>
+          <LikeButton pieceId={currentPieceId} />
         </div>
       </div>
       <div className={styles['playback__queue']}>

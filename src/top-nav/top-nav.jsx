@@ -11,7 +11,7 @@ const TopNav = () => {
         <NavLink
           className={styles.nav__link}
           activeClassName={styles['nav__link--is-active']}
-          to="/"
+          to="/browse"
         >
           Browse
         </NavLink>

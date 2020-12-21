@@ -1,25 +1,31 @@
 @import '../styles/_theme.scss';
 
-.header {
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  &__title {
-    @include type-more-prominent();
-    color: $color-white;
-    font-size: 2rem;
-  }
-
-  &__options {
-    margin-left: 2rem;
-    z-index: 1;
-  }
-}
-
 .grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  max-width: 100rem;
+  margin: 2rem auto 0;
+  overflow: none;
+  padding: 0 2rem;
+  box-sizing: border-box;
+
+  &__header {
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__title {
+      @include type-more-prominent();
+      color: $color-white;
+      font-size: 2rem;
+    }
+
+    &__options {
+      margin-left: 2rem;
+      z-index: 1;
+    }
+  }
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

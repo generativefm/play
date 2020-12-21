@@ -9,7 +9,7 @@ import styles from './bottom-nav.module.scss';
 
 const BottomNav = () => (
   <nav className={styles['bottom-nav']}>
-    <NavLink className={styles['bottom-nav__link']} to="/">
+    <NavLink className={styles['bottom-nav__link']} to="/browse">
       <BrowseIcon />
       Browse
     </NavLink>

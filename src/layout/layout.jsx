@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
@@ -33,10 +33,11 @@ const Layout = () => {
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>
           <Switch>
-            <Route path="/" exact component={Browse} />
+            <Route path="/browse" component={Browse} />
             <Route path="/piece/:id" component={Piece} />
             <Route path="/flavor/:flavor" component={Flavor} />
             <Route path="/library" component={Library} />
+            <Redirect to="/browse" />
           </Switch>
         </div>
         <CSSTransition

@@ -50,12 +50,12 @@ const Piece = () => {
             <MoreButton pieceId={id} />
           </div>
           <div className={styles['info__other__stats']}>
-            <p>{formatReleaseDate(piece.releaseDate)}</p>
+            <p>released {formatReleaseDate(piece.releaseDate)}</p>
             <p>{piece.tags.join('/')}</p>
             <p>
               {playTime[piece.id]
-                ? `Played for ${formatPlayTime(playTime[piece.id])}`
-                : 'Never played'}{' '}
+                ? `played for ${formatPlayTime(playTime[piece.id])}`
+                : 'never played'}{' '}
               by you
             </p>
           </div>

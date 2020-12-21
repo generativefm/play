@@ -1,3 +1,5 @@
-const selectQueuedPieceIds = ({ queue: { pieceIds } }) => pieceIds;
+import selectQueue from './select-queue';
+
+const selectQueuedPieceIds = (state) => selectQueue(state).pieceIds;
 
 export default selectQueuedPieceIds;

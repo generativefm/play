@@ -6,7 +6,6 @@ import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
-import userStoppedPlayback from '../playback/user-stopped-playback';
 import useMasterGain from '../volume/use-master-gain';
 import styles from './category.module.scss';
 
@@ -61,10 +60,6 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
     [dispatch, pieceIds, masterGain]
   );
 
-  const handlePieceStop = useCallback(() => {
-    dispatch(userStoppedPlayback());
-  }, [dispatch]);
-
   if (pieceIds.length === 0) {
     return null;
   }
@@ -98,7 +93,6 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
                 width={`calc((${contentWidth}px - 4rem) / 6)`}
                 getSubtitle={getSubtitle}
                 onPlay={handlePiecePlay}
-                onStop={handlePieceStop}
               />
             ))}
         </div>
