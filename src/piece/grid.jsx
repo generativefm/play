@@ -1,46 +1,74 @@
 import React, { useRef, useCallback, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import { useLocation, useHistory } from 'react-router-dom';
 import useMasterGain from '../volume/use-master-gain';
 import Preview from './preview';
+import PreviewSkeleton from './preview-skeleton';
 import Select from '../select/select';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
+import useSortings from './use-sortings';
 import styles from './grid.module.scss';
 
-const sortings = {
-  atoz: (a, b) => a.title.localeCompare(b.title),
-  ztoa: (a, b) => b.title.localeCompare(a.title),
-  newest: (a, b) => b.releaseDate - a.releaseDate,
+const SORT_LABELS = {
+  atoz: 'A to Z',
+  ztoa: 'Z to A',
+  newest: 'Newest',
+  playtime: 'Most played',
+  trending: 'Trending',
 };
+
+const SORT_REGEX = /sort=([\w\d]+)/i;
 
 const Grid = ({ pieceIds, getSubtitle, title }) => {
   const ref = useRef(null);
   const contentWidth = useContentWidth();
   const masterGain = useMasterGain();
   const dispatch = useDispatch();
-  const [sorting, setSorting] = useState('atoz');
+  const sortings = useSortings();
+  const { search: queryString } = useLocation();
+  const history = useHistory();
+  const queryStringSortMatch = queryString.match(SORT_REGEX);
+
+  const [sorting, setSorting] = useState(
+    (queryStringSortMatch &&
+      queryStringSortMatch.length > 1 &&
+      typeof queryStringSortMatch[1] === 'string' &&
+      typeof sortings[queryStringSortMatch[1].toLowerCase()] !== 'undefined' &&
+      queryStringSortMatch[1].toLowerCase()) ||
+      'atoz'
+  );
+
+  const sortedPieceIds = useMemo(
+    () =>
+      sortings[sorting] &&
+      pieceIds
+        .map((pieceId) => byId[pieceId])
+        .sort(sortings[sorting])
+        .map(({ id }) => id),
+    [sorting, pieceIds, sortings]
+  );
 
   const handlePiecePlay = useCallback(
     (pieceId) => {
       dispatch(
         userPlayedPiece({
-          selectionPieceIds: pieceIds,
-          index: pieceIds.indexOf(pieceId),
+          selectionPieceIds: sortedPieceIds,
+          index: sortedPieceIds.indexOf(pieceId),
           destination: masterGain,
         })
       );
     },
-    [dispatch, pieceIds, masterGain]
+    [dispatch, sortedPieceIds, masterGain]
   );
 
-  const sortedPieceIds = useMemo(
-    () =>
-      pieceIds
-        .map((pieceId) => byId[pieceId])
-        .sort(sortings[sorting])
-        .map(({ id }) => id),
-    [sorting, pieceIds]
+  const handleSortingChange = useCallback(
+    (newSorting) => {
+      setSorting(newSorting);
+      history.replace(`?sort=${newSorting}`);
+    },
+    [history]
   );
 
   return (
@@ -49,26 +77,32 @@ const Grid = ({ pieceIds, getSubtitle, title }) => {
         <h1 className={styles['grid__header__title']}>{title}</h1>
         <div className={styles['grid__header__options']}>
           <Select
-            options={[
-              ['atoz', 'A to Z'],
-              ['ztoa', 'Z to A'],
-              ['newest', 'Newest'],
-            ]}
+            options={Object.keys(sortings).map((key) => [
+              key,
+              SORT_LABELS[key],
+            ])}
             value={sorting}
-            onChange={setSorting}
+            onChange={handleSortingChange}
           />
         </div>
       </div>
       <div className={styles['grid__items']} ref={ref}>
-        {sortedPieceIds.map((pieceId) => (
-          <Preview
-            key={pieceId}
-            pieceId={pieceId}
-            getSubtitle={getSubtitle}
-            onPlay={handlePiecePlay}
-            width={`calc((${contentWidth}px - 4rem) / 7)`}
-          />
-        ))}
+        {sortedPieceIds === null
+          ? pieceIds.map((pieceId) => (
+              <PreviewSkeleton
+                key={pieceId}
+                width={`calc((${contentWidth}px - 4rem) / 8)`}
+              />
+            ))
+          : sortedPieceIds.map((pieceId) => (
+              <Preview
+                key={pieceId}
+                pieceId={pieceId}
+                getSubtitle={getSubtitle}
+                onPlay={handlePiecePlay}
+                width={`calc((${contentWidth}px - 4rem) / 8)`}
+              />
+            ))}
       </div>
     </div>
   );

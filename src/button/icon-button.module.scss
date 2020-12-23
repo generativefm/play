@@ -25,4 +25,14 @@
   &--has-background {
     background-color: rgba($color-dark-1, 0.5);
   }
+
+  &--is-disabled {
+    color: rgba($color-white, 0.2);
+    cursor: default;
+    pointer-events: none;
+
+    &:hover {
+      background: none;
+    }
+  }
 }

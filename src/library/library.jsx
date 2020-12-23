@@ -5,7 +5,7 @@ import selectHistory from '../user/select-history';
 import selectLikes from '../user/select-likes';
 import selectPlayTime from '../user/select-play-time';
 import formatPlayTime from '../piece/format-play-time';
-import useSelectorOnce from './use-selector-once';
+import useSelectorOnce from '../app/use-selector-once';
 
 const humanNumbers = {
   1: 'one',

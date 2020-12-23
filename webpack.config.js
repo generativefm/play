@@ -18,9 +18,11 @@ const config = {
     historyApiFallback: true,
     before: (app, server, compiler) => {
       app.get('/api/playtime', (req, res) =>
-        fetch('http://api.generative.fm/v1/playtime').then((response) => {
-          response.body.pipe(res);
-        })
+        fetch('http://stats.api.generative.fm/v1/global/playtime').then(
+          (response) => {
+            response.body.pipe(res);
+          }
+        )
       );
     },
   },

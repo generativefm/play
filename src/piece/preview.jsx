@@ -7,7 +7,7 @@ import { Stop, PlayArrow, VolumeUp } from '@material-ui/icons';
 import IconButton from '../button/icon-button';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectPlaybackStatus from '../playback/select-playback-status';
-import CircularLoadingIndicator from '../playback/circular-loading-indicator';
+import CircularLoadingIndicator from '../app/circular-loading-indicator';
 import useCreateContextMenuForMouseEvent from '../app/use-create-context-menu-for-mouse-event';
 import MoreButton from './more-button';
 import PieceContextMenu from './piece-context-menu';

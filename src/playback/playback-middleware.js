@@ -6,6 +6,9 @@ import selectCurrentPieceId from '../queue/select-current-piece-id';
 import pieceStartedPlaying from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
 import { USER_STARTED_PLAYBACK } from './user-started-playback';
+import selectQueue from '../queue/select-queue';
+import { USER_PRESSED_NEXT } from '../queue/user-pressed-next';
+import { USER_PRESSED_PREVIOUS } from '../queue/user-pressed-previous';
 
 const playbackMiddleware = (store) => (next) => {
   const activatingPieces = new Set();
@@ -95,6 +98,28 @@ const playbackMiddleware = (store) => (next) => {
       }
       case USER_STOPPED_PLAYBACK: {
         stopAll();
+        break;
+      }
+      case USER_PRESSED_NEXT: {
+        stopAll();
+        const { index, pieceIds } = selectQueue(store.getState());
+        if (pieceIds[index + 1]) {
+          playPiece({
+            pieceId: pieceIds[index + 1],
+            destination: action.payload.destination,
+          });
+        }
+        break;
+      }
+      case USER_PRESSED_PREVIOUS: {
+        stopAll();
+        const { index, pieceIds } = selectQueue(store.getState());
+        if (pieceIds[index - 1]) {
+          playPiece({
+            pieceId: pieceIds[index - 1],
+            destination: action.payload.destination,
+          });
+        }
       }
     }
 

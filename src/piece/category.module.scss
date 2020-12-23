@@ -9,6 +9,11 @@
     @include type-more-prominent();
     color: $color-white;
     font-size: 2rem;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 1px solid $color-white;
+    }
   }
 
   &__list {
@@ -25,6 +30,12 @@
       display: flex;
       overflow: hidden;
       scroll-behavior: smooth;
+    }
+
+    &--is-loading {
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem;
     }
   }
 }

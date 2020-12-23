@@ -2,14 +2,17 @@ import React, { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { ChevronRight, ChevronLeft } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
 import useMasterGain from '../volume/use-master-gain';
+import PreviewSkeleton from './preview-skeleton';
 import styles from './category.module.scss';
 
-const Category = ({ title, pieceIds, getSubtitle }) => {
+const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   const listRef = useRef(null);
   const contentWidth = useContentWidth();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -45,7 +48,7 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
     setCanScrollRight(
       listRef.current.scrollLeft + width < listRef.current.scrollWidth
     );
-  }, [pieceIds.length]);
+  }, [pieceIds]);
 
   const handlePiecePlay = useCallback(
     (pieceId) => {
@@ -60,13 +63,36 @@ const Category = ({ title, pieceIds, getSubtitle }) => {
     [dispatch, pieceIds, masterGain]
   );
 
+  if (pieceIds === null) {
+    return (
+      <div className={styles.category}>
+        <div className={styles['category__title']}>{title}</div>
+        <div
+          className={classnames(
+            styles['category__list'],
+            styles['category__list--is-loading']
+          )}
+        >
+          {Array.from({ length: 6 }, (_, i) => (
+            <PreviewSkeleton
+              key={i}
+              width={`calc((${contentWidth}px - 4rem) / 6)`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   if (pieceIds.length === 0) {
     return null;
   }
 
   return (
     <div className={styles.category}>
-      <h1 className={styles['category__title']}>{title}</h1>
+      <Link to={linkTo} className={styles['category__title']}>
+        {title}
+      </Link>
       <div className={styles['category__list']}>
         <div
           className={styles['category__list__button-container']}

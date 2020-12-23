@@ -14,6 +14,7 @@ import Library from '../library/library';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
+import FullGrid from '../browse/full-grid';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -33,9 +34,10 @@ const Layout = () => {
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>
           <Switch>
-            <Route path="/browse" component={Browse} />
+            <Route path="/browse" exact component={Browse} />
+            <Route path="/browse/all" exact component={FullGrid} />
+            <Route path="/browse/flavor/:flavor" component={Flavor} />
             <Route path="/piece/:id" component={Piece} />
-            <Route path="/flavor/:flavor" component={Flavor} />
             <Route path="/library" component={Library} />
             <Redirect to="/browse" />
           </Switch>

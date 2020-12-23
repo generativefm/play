@@ -43,6 +43,15 @@
       @include type-normal();
       color: $color-grey;
       line-height: 2rem;
+
+      &__tag {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+          border-bottom: 1px solid $color-grey;
+        }
+      }
     }
   }
 }
