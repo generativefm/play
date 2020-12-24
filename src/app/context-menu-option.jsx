@@ -29,6 +29,8 @@ const ContextMenuOption = ({ children, onClick, href, linkTo }) => {
         className={styles['context-menu-option']}
         href={href}
         onClick={handleClick}
+        target="_blank"
+        rel="noreferrer noopener"
       >
         {children}
       </a>

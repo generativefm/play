@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Share, ArtTrack } from '@material-ui/icons';
+import { Share, ArtTrack, FiberManualRecord } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import selectLikes from '../user/select-likes';
@@ -45,6 +45,14 @@ const PieceContextMenu = ({ pieceId }) => {
           Go to generator
         </ContextMenuOption>
       )}
+      <ContextMenuOption
+        href={`https://record.generative.fm/browse?new-recording=${pieceId}`}
+      >
+        <FiberManualRecord
+          className={contextMenuOptionStyles['context-menu-option__icon']}
+        />
+        Record with Generative.fm Record
+      </ContextMenuOption>
     </>
   );
 };
