@@ -1,5 +1,7 @@
+import { byId } from '@generative-music/pieces-alex-bainter';
 import { USER_PRESSED_LIKE } from './user-pressed-like';
 import { USER_PRESSED_DISLIKE } from './user-pressed-dislike';
+import { LEGACY_DATA_IMPORTED } from '../import/legacy-data-imported';
 
 const unlikePiece = ({ state, pieceId }) =>
   Object.keys(state).reduce((o, key) => {
@@ -25,6 +27,22 @@ const likesReducer = (state = {}, action) => {
         return state;
       }
       return unlikePiece({ state, pieceId });
+    }
+    case LEGACY_DATA_IMPORTED: {
+      const { favorites } = action.payload;
+      const importedLikes = favorites
+        .map((legacyId) => legacyId.replace('alex-bainter-', ''))
+        .filter(
+          (pieceId) =>
+            Boolean(byId[pieceId]) &&
+            !Object.prototype.hasOwnProperty.call(state, pieceId)
+        )
+        .reduce((o, pieceId) => {
+          o[pieceId] = Date.now();
+          return o;
+        }, {});
+
+      return Object.assign({}, importedLikes, state);
     }
   }
   return state;

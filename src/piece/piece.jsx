@@ -75,7 +75,7 @@ const Piece = () => {
             {Object.keys(playTime).length > 0 ? (
               <p>
                 {playTime[piece.id]
-                  ? `played for ${formatPlayTime(playTime[piece.id])}`
+                  ? `played for ${formatPlayTime(playTime[piece.id])} total`
                   : 'never played by anyone else'}
               </p>
             ) : (

@@ -10,7 +10,7 @@ import pieceReducer from '../piece/piece-reducer';
 import masterGainReducer from '../volume/master-gain-reducer';
 import playbackMiddleware from '../playback/playback-middleware';
 
-const createStore = () =>
+const createStore = (preloadedState = {}) =>
   _createStore(
     combineReducers({
       queue: queueReducer,
@@ -19,6 +19,7 @@ const createStore = () =>
       piece: pieceReducer,
       masterGain: masterGainReducer,
     }),
+    preloadedState,
     applyMiddleware(playbackMiddleware)
   );
 

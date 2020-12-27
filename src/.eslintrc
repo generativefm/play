@@ -1,3 +1,9 @@
 {
-  "extends": ["@alexbainter/eslint-config/react"]
+  "extends": ["@alexbainter/eslint-config/react"],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "globals": {
+    "process": "readonly"
+  }
 }

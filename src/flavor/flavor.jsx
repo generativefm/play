@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import pieces from '@generative-music/pieces-alex-bainter';
 import Grid from '../piece/grid';
