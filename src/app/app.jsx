@@ -17,6 +17,7 @@ const App = () => {
 
   useEffect(() => {
     loadState(persistConfigs).then((storedState) => {
+      console.log(storedState);
       const store = createStore(storedState);
       persistStore(store, persistConfigs);
       setReduxStore(store);

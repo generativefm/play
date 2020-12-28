@@ -1,4 +1,7 @@
 const makeAssimilator = (...propNames) => (state = {}, value) => {
+  if (typeof value === 'undefined') {
+    return state;
+  }
   if (propNames.length === 0) {
     return value;
   }

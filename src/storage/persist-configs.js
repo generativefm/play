@@ -6,6 +6,8 @@ import selectLikes from '../user/select-likes';
 import assimilateLikes from '../user/assimilate-likes';
 import selectPlayTime from '../user/select-play-time';
 import assimilatePlayTime from '../user/assimilate-play-time';
+import selectCurrentGainValue from '../volume/select-current-gain-value';
+import assimilateCurrentGainValue from '../volume/assimilate-current-gain-value';
 
 const configs = [
   {
@@ -24,9 +26,14 @@ const configs = [
     assimilator: assimilateLikes,
   },
   {
-    key: 'playTime',
+    key: 'userPlayTime',
     selector: selectPlayTime,
     assimilator: assimilatePlayTime,
+  },
+  {
+    key: 'masterGain',
+    selector: selectCurrentGainValue,
+    assimilator: assimilateCurrentGainValue,
   },
 ];
 
