@@ -1,6 +1,11 @@
-import React, { useRef, useCallback, useState, useMemo } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
-import { byId } from '@generative-music/pieces-alex-bainter';
 import { useLocation, useHistory } from 'react-router-dom';
 import useMasterGain from '../volume/use-master-gain';
 import Preview from './preview';
@@ -43,12 +48,20 @@ const Grid = ({ pieceIds, getSubtitle, title }) => {
   const sortedPieceIds = useMemo(
     () =>
       sortings[sorting] &&
-      pieceIds
-        .map((pieceId) => byId[pieceId])
-        .sort(sortings[sorting])
-        .map(({ id }) => id),
+      !sortings[sorting].isLoading &&
+      sortings[sorting].isAvailable &&
+      sortings[sorting].sort(pieceIds),
     [sorting, pieceIds, sortings]
   );
+
+  useEffect(() => {
+    if (
+      !sortings[sorting] ||
+      (!sortings[sorting].isLoading && !sortings[sorting].isAvailable)
+    ) {
+      handleSortingChange('atoz');
+    }
+  }, [sorting, sortings, handleSortingChange]);
 
   const handlePiecePlay = useCallback(
     (pieceId) => {
@@ -77,17 +90,18 @@ const Grid = ({ pieceIds, getSubtitle, title }) => {
         <h1 className={styles['grid__header__title']}>{title}</h1>
         <div className={styles['grid__header__options']}>
           <Select
-            options={Object.keys(sortings).map((key) => [
-              key,
-              SORT_LABELS[key],
-            ])}
+            options={Object.keys(sortings)
+              .filter(
+                (key) => sortings[key].isLoading || sortings[key].isAvailable
+              )
+              .map((key) => [key, SORT_LABELS[key]])}
             value={sorting}
             onChange={handleSortingChange}
           />
         </div>
       </div>
       <div className={styles['grid__items']} ref={ref}>
-        {sortedPieceIds === null
+        {!Array.isArray(sortedPieceIds)
           ? pieceIds.map((pieceId) => (
               <PreviewSkeleton
                 key={pieceId}

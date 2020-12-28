@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectPlayTime from './select-play-time';
-import fetchData from './fetch-data';
+import fetchPlayTime from './fetch-play-time';
 import playTimeLoaded from './play-time-loaded';
 
 const usePlayTime = () => {
@@ -9,7 +9,7 @@ const usePlayTime = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchData().then((fetchedPlayTime) => {
+    fetchPlayTime().then((fetchedPlayTime) => {
       dispatch(playTimeLoaded(fetchedPlayTime));
     });
   }, [dispatch]);

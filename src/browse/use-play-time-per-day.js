@@ -7,6 +7,7 @@ const usePlayTimePerDay = () => {
   const playTime = useSelector(selectPlayTime);
   return useMemo(
     () =>
+      playTime &&
       Object.keys(playTime)
         .filter((pieceId) => Boolean(byId[pieceId]))
         .map((pieceId) => [

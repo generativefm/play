@@ -36,6 +36,7 @@ const Piece = () => {
   }
 
   const piece = byId[id];
+  const hasPlayTime = Boolean(playTime) && Object.keys(playTime).length > 0;
 
   return (
     <div className={styles.piece}>
@@ -72,14 +73,13 @@ const Piece = () => {
                 : 'never played'}{' '}
               by you
             </p>
-            {Object.keys(playTime).length > 0 ? (
+            {playTime === null && <CircularLoadingIndicator />}
+            {hasPlayTime && (
               <p>
                 {playTime[piece.id]
                   ? `played for ${formatPlayTime(playTime[piece.id])} total`
                   : 'never played by anyone else'}
               </p>
-            ) : (
-              <CircularLoadingIndicator />
             )}
           </div>
         </div>

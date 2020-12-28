@@ -63,7 +63,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
     [dispatch, pieceIds, masterGain]
   );
 
-  if (pieceIds === null) {
+  if (!Array.isArray(pieceIds)) {
     return (
       <div className={styles.category}>
         <div className={styles['category__title']}>{title}</div>

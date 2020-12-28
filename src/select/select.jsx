@@ -65,7 +65,8 @@ const Select = ({ options, value, onChange }) => {
     isOpen,
   });
 
-  const selectedOption = options.find(([optionValue]) => optionValue === value);
+  const selectedOption =
+    options.find(([optionValue]) => optionValue === value) || options[0];
 
   return (
     <div className={styles.select} ref={containerRef}>

@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import pieces from '@generative-music/pieces-alex-bainter';
+import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import { useSelector } from 'react-redux';
 import Category from '../piece/category';
 import formatReleaseDate from '../dates/format-release-date';
@@ -16,46 +16,51 @@ const Browse = () => {
   const dislikes = useSelectorOnce(selectDislikes);
   const sortings = useSortings();
 
-  const pieceIdsByTag = useMemo(
-    () =>
-      sortings.trending
-        ? pieces.sort(sortings.trending).reduce((map, piece) => {
-            const { tags, id } = piece;
-            tags.forEach((tag) => {
-              const otherPieceIds = map.get(tag) || [];
-              map.set(tag, otherPieceIds.concat([id]));
-            });
-            return map;
-          }, new Map())
-        : new Map(),
-    [sortings]
-  );
-
-  const likedPieceIds = useMemo(
-    () => pieces.filter(({ id }) => !dislikes[id]),
+  const nonDislikedPieceIds = useMemo(
+    () => pieces.filter(({ id }) => !dislikes[id]).map(({ id }) => id),
     [dislikes]
   );
 
   const orderedNewestPieceIds = useMemo(
-    () => likedPieceIds.sort(sortings.newest).map(({ id }) => id),
-    [sortings, likedPieceIds]
+    () => sortings.newest.sort(nonDislikedPieceIds),
+    [sortings, nonDislikedPieceIds]
   );
 
   const orderedMostPlayedPieceIds = useMemo(
     () =>
-      sortings.playtime &&
-      likedPieceIds.sort(sortings.playtime).map(({ id }) => id),
-    [sortings, likedPieceIds]
+      !sortings.playtime.isLoading &&
+      sortings.playtime.isAvailable &&
+      sortings.playtime.sort(nonDislikedPieceIds),
+    [sortings, nonDislikedPieceIds]
   );
 
   const playTimePerDay = usePlayTimePerDay();
 
   const orderedTrendingPieceIds = useMemo(
     () =>
-      sortings.trending &&
-      likedPieceIds.sort(sortings.trending).map(({ id }) => id),
-    [sortings, likedPieceIds]
+      !sortings.trending.isLoading &&
+      sortings.trending.isAvailable &&
+      sortings.trending.sort(nonDislikedPieceIds),
+    [sortings, nonDislikedPieceIds]
   );
+
+  const pieceIdsByTag = useMemo(() => {
+    if (orderedTrendingPieceIds === null) {
+      return new Map();
+    }
+    const orderedPieceIds =
+      orderedTrendingPieceIds.length > 0
+        ? orderedTrendingPieceIds
+        : orderedNewestPieceIds;
+    return orderedPieceIds.reduce((map, pieceId) => {
+      const { tags } = byId[pieceId];
+      tags.forEach((tag) => {
+        const otherPieceIds = map.get(tag) || [];
+        map.set(tag, otherPieceIds.concat([pieceId]));
+      });
+      return map;
+    }, new Map());
+  }, [orderedTrendingPieceIds, orderedNewestPieceIds]);
 
   const getNewestSubtitle = useCallback(
     (piece) => formatReleaseDate(piece.releaseDate),
@@ -74,18 +79,22 @@ const Browse = () => {
 
   return (
     <div className={styles.browse}>
-      <Category
-        title={'Trending'}
-        pieceIds={orderedTrendingPieceIds}
-        getSubtitle={getTrendingSubtitle}
-        linkTo="/browse/all?sort=trending"
-      />
-      <Category
-        title={'Most played'}
-        pieceIds={orderedMostPlayedPieceIds}
-        getSubtitle={getMostPlayedSubtitle}
-        linkTo="/browse/all?sort=playtime"
-      />
+      {(sortings.trending.isLoading || sortings.trending.isAvailable) && (
+        <Category
+          title={'Trending'}
+          pieceIds={orderedTrendingPieceIds}
+          getSubtitle={getTrendingSubtitle}
+          linkTo="/browse/all?sort=trending"
+        />
+      )}
+      {(sortings.playtime.isLoading || sortings.playtime.isAvailable) && (
+        <Category
+          title={'Most played'}
+          pieceIds={orderedMostPlayedPieceIds}
+          getSubtitle={getMostPlayedSubtitle}
+          linkTo="/browse/all?sort=playtime"
+        />
+      )}
       <Category
         title={'Newest'}
         pieceIds={orderedNewestPieceIds}
