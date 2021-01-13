@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThumbDownOutlined, ThumbDown } from '@material-ui/icons';
+import { userDislikedPiece, userUndislikedPiece } from '@generative.fm/user';
 import IconButton from '../button/icon-button';
-import userPressedDislike from '../user/user-pressed-dislike';
 import selectDislikes from '../user/select-dislikes';
 
 const DislikeButton = ({ pieceId }) => {
@@ -10,8 +10,9 @@ const DislikeButton = ({ pieceId }) => {
   const isDisliked = Boolean(dislikes[pieceId]);
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
-    dispatch(userPressedDislike({ pieceId }));
-  }, [pieceId, dispatch]);
+    const actionCreator = isDisliked ? userUndislikedPiece : userDislikedPiece;
+    dispatch(actionCreator({ pieceId }));
+  }, [pieceId, dispatch, isDisliked]);
 
   return (
     <IconButton onClick={handleClick}>

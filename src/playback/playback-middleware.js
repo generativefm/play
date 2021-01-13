@@ -1,7 +1,8 @@
 import { Transport, Gain, getContext } from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import { recordEmission } from '@generative.fm/stats';
+import { USER_PLAYED_PIECE } from '@generative.fm/user';
 import sampleLibrary from './sample-library';
-import { USER_PLAYED_PIECE } from './user-played-piece';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import pieceStartedPlaying from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
@@ -15,12 +16,21 @@ const playbackMiddleware = (store) => (next) => {
   const activePieces = new Map();
 
   const stopAll = () => {
+    Transport.stop();
+    Transport.cancel();
+    const endTime = Date.now();
     Array.from(activePieces).forEach(
-      ([pieceId, { schedule, deactivate, end, gainNode }]) => {
-        if (end) {
-          Transport.stop();
-          Transport.cancel();
+      ([pieceId, { schedule, deactivate, end, gainNode, startTime }]) => {
+        if (typeof end === 'function') {
           end();
+        }
+        if (startTime) {
+          recordEmission({
+            startTime,
+            endTime,
+            pieceId,
+            userId: 'ANONYMOUS_PLAY_USER',
+          });
         }
         activePieces.set(pieceId, { deactivate, schedule, gainNode });
       }
@@ -40,6 +50,7 @@ const playbackMiddleware = (store) => (next) => {
         schedule,
         end,
         gainNode,
+        startTime: Date.now(),
       });
       Transport.start();
       store.dispatch(pieceStartedPlaying());
@@ -72,6 +83,7 @@ const playbackMiddleware = (store) => (next) => {
           schedule,
           end,
           gainNode: pieceGain,
+          startTime: Date.now(),
         });
         Transport.start();
         store.dispatch(pieceStartedPlaying());

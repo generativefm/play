@@ -1,4 +1,4 @@
-import { USER_PLAYED_PIECE } from '../playback/user-played-piece';
+import { USER_PLAYED_PIECE } from '@generative.fm/user';
 
 const queueReducer = (
   state = {

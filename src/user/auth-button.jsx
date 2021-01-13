@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle } from '@material-ui/icons';
 import TextButton from '../button/text-button';
@@ -12,7 +12,41 @@ const AuthButton = () => {
     loginWithRedirect,
     user,
     logout,
+    getAccessTokenSilently,
   } = useAuth0();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+    getAccessTokenSilently().then((token) => {
+      console.log('sending request with jwt');
+
+      fetch(`http://localhost:3000/v1/user/${user.sub}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user.sub,
+          testing: 'goodbye',
+          wow: 'yup',
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            console.log('not okay');
+            return;
+          }
+          return response.json();
+        })
+        .then((user) => {
+          console.log(user);
+        });
+    });
+  }, [isAuthenticated, getAccessTokenSilently, user]);
+
   if (isLoading) {
     return <div></div>;
   }

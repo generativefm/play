@@ -8,7 +8,9 @@ const useCreateContextMenuForTarget = (content) => {
     (event) => {
       event.preventDefault();
       event.stopPropagation();
-      const { x, bottom: y } = event.target.getBoundingClientRect();
+      const { x: viewportX, bottom } = event.target.getBoundingClientRect();
+      const x = viewportX + window.scrollX;
+      const y = bottom + window.scrollY;
       createContextMenu({ x, y, content });
     },
     [createContextMenu, content]

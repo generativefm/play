@@ -9,19 +9,23 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import importLegacyData from '../import/import-legacy-data';
 import persistConfigs from '../storage/persist-configs';
 import loadState from '../storage/load-state';
-import persistStore from '../storage/persist-store';
 import hasImportedLegacyData from '../import/has-imported-legacy-data';
+import IS_STORAGE_SUPPORTED from '../storage/is-supported';
 
 const App = () => {
   const [reduxStore, setReduxStore] = useState(null);
 
   useEffect(() => {
-    loadState(persistConfigs).then((storedState) => {
-      console.log(storedState);
+    const storedStatePromise = IS_STORAGE_SUPPORTED
+      ? loadState(persistConfigs)
+      : Promise.resolve();
+    storedStatePromise.then((storedState) => {
       const store = createStore(storedState);
-      persistStore(store, persistConfigs);
       setReduxStore(store);
-      hasImportedLegacyData().then((result) => {
+      const hasImportedLegacyDataPromise = IS_STORAGE_SUPPORTED
+        ? hasImportedLegacyData()
+        : Promise.resolve(false);
+      hasImportedLegacyDataPromise.then((result) => {
         if (!result) {
           importLegacyData(store);
         }
@@ -34,6 +38,7 @@ const App = () => {
       domain="alexbainter.us.auth0.com"
       clientId="dVxdHNnv71wgV9Hfk7vQ6fCOPvwj173G"
       redirectUri={window.location.origin}
+      audience="https://api.generative.fm"
     >
       {reduxStore && (
         <Provider store={reduxStore}>

@@ -1,10 +1,35 @@
-import legacyDataImported from './legacy-data-imported';
+import { mergeData } from '@generative.fm/user';
+import { byId } from '@generative-music/pieces-alex-bainter';
 import setImported from './set-imported';
 
 const LEGACY_ORIGIN =
   process.env.NODE_ENV === 'production'
     ? 'https://generative.fm'
     : 'http://localhost:9999';
+
+const convertLegacyPieceId = (legacyPieceId) =>
+  legacyPieceId.replace('alex-bainter-', '');
+
+const convertLegacyStateToUserData = (legacyState) => {
+  const { favorites, playTime: legacyPlayTime } = legacyState;
+  const now = Date.now();
+  const likes = favorites
+    .map(convertLegacyPieceId)
+    .filter((pieceId) => Boolean(byId[pieceId]))
+    .reduce((o, pieceId) => {
+      o[pieceId] = now;
+      return o;
+    }, {});
+  const playTime = Object.keys(legacyPlayTime).reduce((o, legacyPieceId) => {
+    const pieceId = convertLegacyPieceId(legacyPieceId);
+    if (!byId[pieceId]) {
+      return o;
+    }
+    o[pieceId] = legacyPlayTime[legacyPieceId];
+    return o;
+  }, {});
+  return { likes, playTime };
+};
 
 const importLegacyData = (store) => {
   const iframe = document.createElement('iframe');
@@ -26,8 +51,11 @@ const importLegacyData = (store) => {
         try {
           const parsedState = JSON.parse(data.state);
           if (!parsedState.isImported) {
-            store.dispatch(legacyDataImported(parsedState));
-            source.postMessage({ type: 'set-import-request' }, origin);
+            store.dispatch(
+              mergeData(convertLegacyStateToUserData(parsedState))
+            );
+            // TO DO: uncomment this
+            //source.postMessage({ type: 'set-import-request' }, origin);
           } else {
             closeIframe();
           }

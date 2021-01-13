@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { getPlayTime } from '@generative.fm/stats';
 import selectPlayTime from './select-play-time';
-import fetchPlayTime from './fetch-play-time';
 import playTimeLoaded from './play-time-loaded';
 
 const usePlayTime = () => {
@@ -9,7 +9,7 @@ const usePlayTime = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchPlayTime().then((fetchedPlayTime) => {
+    getPlayTime().then((fetchedPlayTime) => {
       dispatch(playTimeLoaded(fetchedPlayTime));
     });
   }, [dispatch]);

@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useLayoutEffect, useState } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  useState,
+  useEffect,
+} from 'react';
 import useDismissable from './use-dismissable';
 import useCreateContextMenu from './use-create-context-menu';
 import styles from './context-menu.module.scss';
@@ -18,10 +24,14 @@ const ContextMenu = ({ x, y, children }) => {
     event.preventDefault();
   }, []);
 
+  useEffect(() => {}, []);
+
   useLayoutEffect(() => {
     const { width, height } = ref.current.getBoundingClientRect();
-    setIsTooFarRight(x + width > window.innerWidth);
-    setIsTooFarDown(y + height > window.innerHeight);
+    const { scrollY, scrollX } = window;
+    const { clientWidth, clientHeight } = document.body;
+    setIsTooFarRight(x - scrollX + width > clientWidth);
+    setIsTooFarDown(y - scrollY + height > clientHeight);
   }, [x, y, children]);
 
   const left = isTooFarRight && ref.current ? x - ref.current.offsetWidth : x;

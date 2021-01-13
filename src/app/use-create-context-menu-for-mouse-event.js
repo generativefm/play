@@ -8,7 +8,9 @@ const useCreateContextMenuForMouseEvent = (content) => {
     (event) => {
       event.preventDefault();
       event.stopPropagation();
-      const { clientX: x, clientY: y } = event;
+      const { clientX, clientY } = event;
+      const x = clientX + window.scrollX;
+      const y = clientY + window.scrollY;
       createContextMenu({ x, y, content });
     },
     [createContextMenu, content]

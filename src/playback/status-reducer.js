@@ -1,4 +1,4 @@
-import { USER_PLAYED_PIECE } from './user-played-piece';
+import { USER_PLAYED_PIECE } from '@generative.fm/user';
 import { PIECE_STARTED_PLAYING } from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
 

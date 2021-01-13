@@ -3,12 +3,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fetch = require('node-fetch');
+const { EnvironmentPlugin } = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const createInjectAssetsPlugin = require('./create-inject-assets-plugin');
 
 const config = {
   mode: 'development',
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'source-map',
+  entry: {
+    main: { import: './src', filename: '[name].[contenthash].js' },
+    serviceWorker: { import: './src/sw.js', filename: 'sw.js' },
+  },
   output: {
     publicPath: '/',
+    chunkFilename: '[id].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
     extensions: ['.json', '.js', '.jsx'],
@@ -16,14 +25,17 @@ const config = {
   },
   devServer: {
     historyApiFallback: true,
-    before: (app, server, compiler) => {
-      app.get('/api/playtime', (req, res) =>
+    before: (app) => {
+      app.get('/api/global/playtime', (req, res) =>
         fetch('http://stats.api.generative.fm/v1/global/playtime').then(
           (response) => {
             response.body.pipe(res);
           }
         )
       );
+      app.post('/api/emissions', (req, res) => {
+        res.sendStatus(200);
+      });
     },
   },
   module: {
@@ -68,9 +80,17 @@ const config = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.template.html',
+      excludeChunks: ['serviceWorker'],
     }),
+    new EnvironmentPlugin({
+      SAMPLE_FILE_HOST: '//localhost:6969',
+      GFM_STATS_ENDPOINT: '/api',
+      GFM_USER_ENDPOINT: '//localhost:3000/',
+    }),
+    createInjectAssetsPlugin('sw.js'),
   ],
 };
 

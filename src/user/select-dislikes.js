@@ -1,3 +1,5 @@
-const selectLikes = ({ user: { dislikes } }) => dislikes;
+import { selectDislikes as selectDislikesFromUser } from '@generative.fm/user';
 
-export default selectLikes;
+const selectDislikes = ({ user }) => selectDislikesFromUser(user);
+
+export default selectDislikes;

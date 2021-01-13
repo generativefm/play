@@ -1,8 +1,9 @@
 import { promisifyRequest } from '@alexbainter/indexed-db';
+import { getStoredState as getStoredUserState } from '@generative.fm/user';
 import openDb from './open-db';
 import STATE_OBJECT_STORE_NAME from './state-object-store-name';
 
-const loadState = async (persistConfigs) => {
+const loadPlayState = async (persistConfigs) => {
   const db = await openDb();
   const transaction = db
     .transaction(STATE_OBJECT_STORE_NAME)
@@ -17,5 +18,13 @@ const loadState = async (persistConfigs) => {
     return assimilator(loadedState, storedValue);
   }, {});
 };
+
+const loadState = (persistConfigs) =>
+  Promise.all([
+    loadPlayState(persistConfigs),
+    getStoredUserState(),
+  ]).then(([storedPlayState, storedUserState]) =>
+    Object.assign({}, storedPlayState, { user: storedUserState })
+  );
 
 export default loadState;

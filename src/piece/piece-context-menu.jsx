@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { Share, ArtTrack, FiberManualRecord } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
 import selectLikes from '../user/select-likes';
 import ContextMenuOption from '../app/context-menu-option';
-import userPressedLike from '../user/user-pressed-like';
 import LikeIcon from './like-icon';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import contextMenuOptionStyles from '../app/context-menu-option.module.scss';
@@ -19,8 +19,9 @@ const PieceContextMenu = ({ pieceId }) => {
   const { pathname } = useLocation();
 
   const handleLikeClick = useCallback(() => {
-    dispatch(userPressedLike({ pieceId }));
-  }, [dispatch, pieceId]);
+    const actionCreator = isLiked ? userUnlikedPiece : userLikedPiece;
+    dispatch(actionCreator({ pieceId }));
+  }, [dispatch, pieceId, isLiked]);
 
   return (
     <>

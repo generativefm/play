@@ -10,6 +10,7 @@
     "@generative-music/samples-alex-bainter": "^2.3.0",
     "@generative-music/web-library": "^0.2.1",
     "@generative-music/web-provider": "^2.0.4",
+    "@generative.fm/stats": "^0.1.5",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "classnames": "^2.2.6",
@@ -28,6 +29,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.8.1",
     "css-loader": "^5.0.0",
     "eslint": "^7.15.0",
@@ -45,7 +47,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
