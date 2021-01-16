@@ -1,7 +1,10 @@
 'use strict';
 
-const pieceLoader = (source) => {
+const path = require('path');
+
+function pieceLoader(source) {
   const pieceManifest = JSON.parse(source);
+  const { version } = require(path.join(this.context, 'package.json'));
   const output = `import imageSrc from '${pieceManifest.image}';
   export default {
     imageSrc,
@@ -13,8 +16,9 @@ const pieceLoader = (source) => {
     id: '${pieceManifest.id}',
     tags: [${pieceManifest.tags.map((tag) => `"${tag}"`)}],
     releaseDate: new Date('${pieceManifest.releaseDate}'),
+    version: '${version}'
   }`;
   return output;
-};
+}
 
 module.exports = pieceLoader;

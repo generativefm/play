@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle } from '@material-ui/icons';
+import { userAuthenticated } from '@generative.fm/user';
+import { useDispatch } from 'react-redux';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
 import styles from './auth-button.module.scss';
 
 const AuthButton = () => {
+  const dispatch = useDispatch();
+
   const {
     isLoading,
     isAuthenticated,
@@ -20,32 +24,9 @@ const AuthButton = () => {
       return;
     }
     getAccessTokenSilently().then((token) => {
-      console.log('sending request with jwt');
-
-      fetch(`http://localhost:3000/v1/user/${user.sub}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.sub,
-          testing: 'goodbye',
-          wow: 'yup',
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            console.log('not okay');
-            return;
-          }
-          return response.json();
-        })
-        .then((user) => {
-          console.log(user);
-        });
+      dispatch(userAuthenticated({ userId: user.sub, token }));
     });
-  }, [isAuthenticated, getAccessTokenSilently, user]);
+  }, [isAuthenticated, getAccessTokenSilently, user, dispatch]);
 
   if (isLoading) {
     return <div></div>;

@@ -14,7 +14,6 @@ import CircularLoadingIndicator from '../app/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStartedPlayback from '../playback/user-started-playback';
 import userStoppedPlayback from '../playback/user-stopped-playback';
-import useMasterGain from '../volume/use-master-gain';
 import selectQueue from '../queue/select-queue';
 import userPlayedPiece from '../playback/user-played-piece';
 import styles from './playback-controls.module.scss';
@@ -23,11 +22,10 @@ const PlaybackControls = () => {
   const dispatch = useDispatch();
   const playbackStatus = useSelector(selectPlaybackStatus);
   const queue = useSelector(selectQueue);
-  const masterGain = useMasterGain();
 
   const handlePlayClick = useCallback(() => {
-    dispatch(userStartedPlayback({ destination: masterGain }));
-  }, [dispatch, masterGain]);
+    dispatch(userStartedPlayback());
+  }, [dispatch]);
 
   const handleStopClick = useCallback(() => {
     dispatch(userStoppedPlayback());
@@ -40,12 +38,11 @@ const PlaybackControls = () => {
     }
     dispatch(
       userPlayedPiece({
-        destination: masterGain,
         selectionPieceIds: queue.pieceIds,
         index: queue.index - 1,
       })
     );
-  }, [dispatch, masterGain, queue]);
+  }, [dispatch, queue]);
 
   const handleNextClick = useCallback(() => {
     if (queue.index + 1 === queue.pieceIds.length) {
@@ -54,12 +51,11 @@ const PlaybackControls = () => {
     }
     dispatch(
       userPlayedPiece({
-        destination: masterGain,
         selectionPieceIds: queue.pieceIds,
         index: queue.index + 1,
       })
     );
-  }, [dispatch, masterGain, queue]);
+  }, [dispatch, queue]);
 
   const isLoading = playbackStatus === 'loading';
   const isPlaying = playbackStatus === 'playing';

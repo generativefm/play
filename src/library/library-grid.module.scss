@@ -1,0 +1,20 @@
+@import '../styles/_theme.scss';
+
+.library-grid {
+  &__header {
+    max-width: 100rem;
+    margin: 2rem auto 0;
+    overflow: none;
+    padding: 0 2rem 0 3rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__title {
+      @include type-more-prominent();
+      color: $color-white;
+      font-size: 2rem;
+    }
+  }
+}

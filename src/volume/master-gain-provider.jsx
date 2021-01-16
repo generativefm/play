@@ -1,15 +1,15 @@
-import React, { useRef, useEffect } from 'react';
-import { Gain, now } from 'tone';
+import React, { useEffect } from 'react';
+import { now } from 'tone';
 import { useSelector } from 'react-redux';
 import selectCurrentGainValue from './select-current-gain-value';
 import masterGainContext from './master-gain-context';
+import masterGainNode from './master-gain-node';
 
 const MasterGainProvider = ({ children }) => {
   const currentGainValue = useSelector(selectCurrentGainValue);
-  const gainNodeRef = useRef(new Gain(currentGainValue).toDestination());
 
   useEffect(() => {
-    const { gain } = gainNodeRef.current;
+    const { gain } = masterGainNode;
     if (gain.value === currentGainValue) {
       return;
     }
@@ -17,7 +17,7 @@ const MasterGainProvider = ({ children }) => {
   }, [currentGainValue]);
 
   return (
-    <masterGainContext.Provider value={gainNodeRef.current}>
+    <masterGainContext.Provider value={masterGainNode}>
       {children}
     </masterGainContext.Provider>
   );

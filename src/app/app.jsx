@@ -39,6 +39,7 @@ const App = () => {
       clientId="dVxdHNnv71wgV9Hfk7vQ6fCOPvwj173G"
       redirectUri={window.location.origin}
       audience="https://api.generative.fm"
+      useRefreshTokens={true}
     >
       {reduxStore && (
         <Provider store={reduxStore}>

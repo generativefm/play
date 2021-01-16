@@ -10,6 +10,7 @@ import { USER_STARTED_PLAYBACK } from './user-started-playback';
 import selectQueue from '../queue/select-queue';
 import { USER_PRESSED_NEXT } from '../queue/user-pressed-next';
 import { USER_PRESSED_PREVIOUS } from '../queue/user-pressed-previous';
+import masterGainNode from '../volume/master-gain-node';
 
 const playbackMiddleware = (store) => (next) => {
   const activatingPieces = new Set();
@@ -37,7 +38,7 @@ const playbackMiddleware = (store) => (next) => {
     );
   };
 
-  const playPiece = ({ pieceId, destination }) => {
+  const playPiece = ({ pieceId }) => {
     if (activatingPieces.has(pieceId)) {
       return;
     }
@@ -56,7 +57,7 @@ const playbackMiddleware = (store) => (next) => {
       store.dispatch(pieceStartedPlaying());
       return;
     }
-    const pieceGain = new Gain().connect(destination);
+    const pieceGain = new Gain().connect(masterGainNode);
     const piece = byId[pieceId];
     activatingPieces.add(pieceId);
     piece.loadActivate().then((activate) => {
@@ -96,16 +97,15 @@ const playbackMiddleware = (store) => (next) => {
     switch (action.type) {
       case USER_STARTED_PLAYBACK: {
         const pieceId = selectCurrentPieceId(store.getState());
-        const { destination } = action.payload;
         stopAll();
-        playPiece({ pieceId, destination });
+        playPiece({ pieceId });
         break;
       }
       case USER_PLAYED_PIECE: {
-        const { index, selectionPieceIds, destination } = action.payload;
+        const { index, selectionPieceIds } = action.payload;
         const pieceId = selectionPieceIds[index];
         stopAll();
-        playPiece({ pieceId, destination });
+        playPiece({ pieceId });
         break;
       }
       case USER_STOPPED_PLAYBACK: {
@@ -118,7 +118,6 @@ const playbackMiddleware = (store) => (next) => {
         if (pieceIds[index + 1]) {
           playPiece({
             pieceId: pieceIds[index + 1],
-            destination: action.payload.destination,
           });
         }
         break;
@@ -129,7 +128,6 @@ const playbackMiddleware = (store) => (next) => {
         if (pieceIds[index - 1]) {
           playPiece({
             pieceId: pieceIds[index - 1],
-            destination: action.payload.destination,
           });
         }
       }

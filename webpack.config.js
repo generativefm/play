@@ -88,7 +88,7 @@ const config = {
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',
       GFM_STATS_ENDPOINT: '/api',
-      GFM_USER_ENDPOINT: '//localhost:3000/',
+      GFM_USER_ENDPOINT: 'https://user.api.generative.fm/v1',
     }),
     createInjectAssetsPlugin('sw.js'),
   ],

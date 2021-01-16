@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import pieces from '@generative-music/pieces-alex-bainter';
-import Grid from '../piece/grid';
+import BrowseGrid from '../browse/browse-grid';
 
 const Flavor = () => {
   const { flavor } = useParams();
@@ -12,7 +12,7 @@ const Flavor = () => {
     [flavor]
   );
 
-  return <Grid pieceIds={pieceIds} title={flavor} />;
+  return <BrowseGrid pieceIds={pieceIds} title={flavor} />;
 };
 
 export default Flavor;

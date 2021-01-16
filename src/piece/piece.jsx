@@ -8,28 +8,27 @@ import TextButton from '../button/text-button';
 import userPlayedPiece from '../playback/user-played-piece';
 import formatPlayTime from './format-play-time';
 import selectUserPlayTime from '../user/select-play-time';
-import useMasterGain from '../volume/use-master-gain';
 import FeedbackButtons from './feedback-buttons';
 import MoreButton from './more-button';
 import usePlayTime from './use-play-time';
 import CircularLoadingIndicator from '../app/circular-loading-indicator';
+import useLatestUser from '../user/use-latest-user';
 import styles from './piece.module.scss';
 
 const Piece = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const masterGain = useMasterGain();
   const handlePlayClick = useCallback(() => {
     dispatch(
       userPlayedPiece({
         selectionPieceIds: [id],
         index: 0,
-        destination: masterGain,
       })
     );
-  }, [id, dispatch, masterGain]);
+  }, [id, dispatch]);
   const userPlayTime = useSelector(selectUserPlayTime);
   const playTime = usePlayTime();
+  const isLoadingUser = useLatestUser();
 
   if (!id && !byId[id]) {
     return <Redirect to="/" />;
@@ -67,12 +66,15 @@ const Piece = () => {
                 </span>
               ))}
             </p>
-            <p>
-              {userPlayTime[piece.id]
-                ? `played for ${formatPlayTime(userPlayTime[piece.id])}`
-                : 'never played'}{' '}
-              by you
-            </p>
+            {isLoadingUser && <CircularLoadingIndicator />}
+            {!isLoadingUser && (
+              <p>
+                {userPlayTime[piece.id]
+                  ? `played for ${formatPlayTime(userPlayTime[piece.id])}`
+                  : 'never played'}{' '}
+                by you
+              </p>
+            )}
             {playTime === null && <CircularLoadingIndicator />}
             {hasPlayTime && (
               <p>
@@ -81,6 +83,7 @@ const Piece = () => {
                   : 'never played by anyone else'}
               </p>
             )}
+            version {piece.version}
           </div>
         </div>
       </div>

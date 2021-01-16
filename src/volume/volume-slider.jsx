@@ -1,11 +1,10 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { VolumeUp, VolumeOff } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '../button/icon-button';
 import selectCurrentGainValue from './select-current-gain-value';
 import userAdjustedMasterGain from './user-adjusted-master-gain';
 import userClickedVolumeButton from './user-clicked-volume-button';
-import useMasterGain from './use-master-gain';
 import styles from './volume-slider.module.scss';
 
 const VolumeSlider = () => {

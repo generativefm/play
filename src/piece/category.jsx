@@ -8,7 +8,6 @@ import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
-import useMasterGain from '../volume/use-master-gain';
 import PreviewSkeleton from './preview-skeleton';
 import styles from './category.module.scss';
 
@@ -18,7 +17,6 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const dispatch = useDispatch();
-  const masterGain = useMasterGain();
 
   const handlePreviousClick = useCallback(() => {
     const { width } = listRef.current.getBoundingClientRect();
@@ -56,11 +54,10 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
         userPlayedPiece({
           selectionPieceIds: pieceIds,
           index: pieceIds.indexOf(pieceId),
-          destination: masterGain,
         })
       );
     },
-    [dispatch, pieceIds, masterGain]
+    [dispatch, pieceIds]
   );
 
   if (!Array.isArray(pieceIds)) {
