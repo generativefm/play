@@ -8,7 +8,7 @@ import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
-import PreviewSkeleton from './preview-skeleton';
+import PreviewSkeleton from '../loading/preview-skeleton';
 import styles from './category.module.scss';
 
 const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
@@ -86,7 +86,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   }
 
   return (
-    <div className={styles.category}>
+    <div className={styles.category} style={{ width: contentWidth }}>
       <Link to={linkTo} className={styles['category__title']}>
         {title}
       </Link>

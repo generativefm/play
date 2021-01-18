@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Preview from './preview';
-import PreviewSkeleton from './preview-skeleton';
+import PreviewSkeleton from '../loading/preview-skeleton';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
 import styles from './grid.module.scss';

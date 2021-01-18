@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPlayTime } from '@generative.fm/stats';
+import { getGlobalPlayTime, getPendingPlayTime } from '@generative.fm/stats';
 import selectPlayTime from './select-play-time';
 import playTimeLoaded from './play-time-loaded';
 
@@ -9,9 +9,18 @@ const usePlayTime = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPlayTime().then((fetchedPlayTime) => {
-      dispatch(playTimeLoaded(fetchedPlayTime));
-    });
+    Promise.all([getGlobalPlayTime(), getPendingPlayTime()]).then(
+      ([fetchedPlayTime, pendingPlayTime]) => {
+        const totalPlayTime = Object.keys(pendingPlayTime).reduce(
+          (o, pieceId) => {
+            o[pieceId] = pendingPlayTime[pieceId] + (o[pieceId] || 0);
+            return o;
+          },
+          Object.assign({}, fetchedPlayTime)
+        );
+        dispatch(playTimeLoaded(totalPlayTime));
+      }
+    );
   }, [dispatch]);
 
   return playTime;

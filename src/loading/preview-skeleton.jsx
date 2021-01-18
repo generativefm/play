@@ -1,4 +1,5 @@
 import React from 'react';
+import TextSkeleton from './text-skeleton';
 import styles from './preview-skeleton.module.scss';
 
 const PreviewSkeleton = ({ width }) => (
@@ -10,8 +11,8 @@ const PreviewSkeleton = ({ width }) => (
         height: `calc(${width} - 2rem)`,
       }}
     />
-    <div className={styles['preview-skeleton__title']} />
-    <div className={styles['preview-skeleton__subtitle']} />
+    <TextSkeleton className={styles['preview-skeleton__title']} />
+    <TextSkeleton className={styles['preview-skeleton__subtitle']} />
   </div>
 );
 

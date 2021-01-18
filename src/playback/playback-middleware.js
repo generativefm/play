@@ -1,6 +1,6 @@
 import { Transport, Gain, getContext } from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import { recordEmission } from '@generative.fm/stats';
+import { startEmission, stopEmission } from '@generative.fm/stats';
 import { USER_PLAYED_PIECE } from '@generative.fm/user';
 import sampleLibrary from './sample-library';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
@@ -19,19 +19,11 @@ const playbackMiddleware = (store) => (next) => {
   const stopAll = () => {
     Transport.stop();
     Transport.cancel();
-    const endTime = Date.now();
     Array.from(activePieces).forEach(
-      ([pieceId, { schedule, deactivate, end, gainNode, startTime }]) => {
+      ([pieceId, { schedule, deactivate, end, gainNode }]) => {
         if (typeof end === 'function') {
           end();
-        }
-        if (startTime) {
-          recordEmission({
-            startTime,
-            endTime,
-            pieceId,
-            userId: 'ANONYMOUS_PLAY_USER',
-          });
+          stopEmission();
         }
         activePieces.set(pieceId, { deactivate, schedule, gainNode });
       }
@@ -51,7 +43,6 @@ const playbackMiddleware = (store) => (next) => {
         schedule,
         end,
         gainNode,
-        startTime: Date.now(),
       });
       Transport.start();
       store.dispatch(pieceStartedPlaying());
@@ -84,8 +75,8 @@ const playbackMiddleware = (store) => (next) => {
           schedule,
           end,
           gainNode: pieceGain,
-          startTime: Date.now(),
         });
+        startEmission({ pieceId, userId: 'ANONYMOUS_PLAY_USER' });
         Transport.start();
         store.dispatch(pieceStartedPlaying());
       });

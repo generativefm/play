@@ -1,0 +1,28 @@
+@import '../styles/_theme.scss';
+
+$color-gradient-1: rgba($color-white, 0.1);
+$color-gradient-2: rgba($color-white, 0.15);
+
+@mixin background-wipe() {
+  background: linear-gradient(
+    45deg,
+    $color-gradient-1,
+    $color-gradient-2,
+    $color-gradient-1
+  );
+  background-size: 300%;
+  animation-name: background-wipe;
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-delay: 1s;
+}
+
+@keyframes background-wipe {
+  from {
+    background-position: 0% 100%;
+  }
+  to {
+    background-position: 100% 0%;
+  }
+}

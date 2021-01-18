@@ -1,0 +1,23 @@
+@import '../styles/_theme.scss';
+@import './_skeleton.scss';
+
+.preview-skeleton {
+  padding: 2rem 1rem;
+  border-radius: $border-radius-sm;
+  box-sizing: border-box;
+
+  &__image {
+    border-radius: $border-radius-md;
+    @include background-wipe();
+  }
+
+  &__title {
+    width: 7rem;
+    height: 1rem;
+  }
+
+  &__subtitle {
+    width: 5rem;
+    height: 0.9rem;
+  }
+}

@@ -52,6 +52,10 @@
           border-bottom: 1px solid $color-grey;
         }
       }
+
+      &__skeleton {
+        width: 15rem;
+      }
     }
   }
 }

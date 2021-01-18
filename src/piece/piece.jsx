@@ -2,17 +2,16 @@ import React, { useCallback } from 'react';
 import { useParams, Redirect, Link } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { PlayArrow } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import formatReleaseDate from '../dates/format-release-date';
 import TextButton from '../button/text-button';
 import userPlayedPiece from '../playback/user-played-piece';
 import formatPlayTime from './format-play-time';
-import selectUserPlayTime from '../user/select-play-time';
 import FeedbackButtons from './feedback-buttons';
 import MoreButton from './more-button';
 import usePlayTime from './use-play-time';
-import CircularLoadingIndicator from '../app/circular-loading-indicator';
-import useLatestUser from '../user/use-latest-user';
+import TextSkeleton from '../loading/text-skeleton';
+import useUserPlayTime from '../user/use-play-time';
 import styles from './piece.module.scss';
 
 const Piece = () => {
@@ -26,16 +25,21 @@ const Piece = () => {
       })
     );
   }, [id, dispatch]);
-  const userPlayTime = useSelector(selectUserPlayTime);
-  const playTime = usePlayTime();
-  const isLoadingUser = useLatestUser();
+  const globalPlayTime = usePlayTime();
+  const {
+    isLoading: isLoadingUserPlayTime,
+    playTime: userPlayTime,
+  } = useUserPlayTime();
 
   if (!id && !byId[id]) {
     return <Redirect to="/" />;
   }
 
   const piece = byId[id];
-  const hasPlayTime = Boolean(playTime) && Object.keys(playTime).length > 0;
+  const hasGlobalPlayTime =
+    Boolean(globalPlayTime) && Object.keys(globalPlayTime).length > 0;
+  const hasUserPlayTime =
+    Object.keys(userPlayTime).length > 0 || !isLoadingUserPlayTime;
 
   return (
     <div className={styles.piece}>
@@ -66,8 +70,12 @@ const Piece = () => {
                 </span>
               ))}
             </p>
-            {isLoadingUser && <CircularLoadingIndicator />}
-            {!isLoadingUser && (
+            {!hasUserPlayTime && (
+              <TextSkeleton
+                className={styles['info__other__stats__skeleton']}
+              />
+            )}
+            {hasUserPlayTime && (
               <p>
                 {userPlayTime[piece.id]
                   ? `played for ${formatPlayTime(userPlayTime[piece.id])}`
@@ -75,11 +83,17 @@ const Piece = () => {
                 by you
               </p>
             )}
-            {playTime === null && <CircularLoadingIndicator />}
-            {hasPlayTime && (
+            {globalPlayTime === null && (
+              <TextSkeleton
+                className={styles['info__other__stats__skeleton']}
+              />
+            )}
+            {hasGlobalPlayTime && (
               <p>
-                {playTime[piece.id]
-                  ? `played for ${formatPlayTime(playTime[piece.id])} total`
+                {globalPlayTime[piece.id]
+                  ? `played for ${formatPlayTime(
+                      globalPlayTime[piece.id]
+                    )} total`
                   : 'never played by anyone else'}
               </p>
             )}
