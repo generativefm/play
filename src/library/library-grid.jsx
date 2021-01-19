@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import Grid from '../piece/grid';
 import useContentWidth from '../layout/use-content-width';
 import useLibraryCategories from './use-library-categories';
-import useLatestUser from '../user/use-latest-user';
 import styles from './library-grid.module.scss';
 
 const titlesByPage = {
@@ -23,7 +22,6 @@ const LibraryGrid = () => {
         .toLowerCase(),
     [location]
   );
-  const isLoading = useLatestUser();
   const { orderedPieceIds, getSubtitle } = categories[page] || {};
   const title = titlesByPage[page];
   return (
@@ -34,10 +32,7 @@ const LibraryGrid = () => {
       >
         <h1 className={styles['library-grid__header__title']}>{title}</h1>
       </div>
-      <Grid
-        pieceIds={!isLoading && orderedPieceIds}
-        getSubtitle={getSubtitle}
-      />
+      <Grid pieceIds={orderedPieceIds} getSubtitle={getSubtitle} />
     </>
   );
 };

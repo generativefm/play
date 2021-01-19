@@ -1,9 +1,12 @@
 import { useMemo, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import selectHistory from '../user/select-history';
 import selectLikes from '../user/select-likes';
 import selectPlayTime from '../user/select-play-time';
 import formatPlayTime from '../piece/format-play-time';
 import useSelectorOnce from '../app/use-selector-once';
+import useLatestUser from '../user/use-latest-user';
+import selectUserId from '../user/select-user-id';
 
 const humanNumbers = {
   1: 'one',
@@ -58,9 +61,11 @@ const getHumanReadableElapsed = (elapsedMs) => {
 };
 
 const useLibraryCategories = () => {
-  const history = useSelectorOnce(selectHistory);
-  const likes = useSelectorOnce(selectLikes);
-  const playTime = useSelectorOnce(selectPlayTime);
+  const isLoadingUser = useLatestUser();
+  const userId = useSelector(selectUserId);
+  const history = useSelectorOnce(selectHistory, [isLoadingUser, userId]);
+  const likes = useSelectorOnce(selectLikes, [isLoadingUser, userId]);
+  const playTime = useSelectorOnce(selectPlayTime, [isLoadingUser, userId]);
 
   const orderedHistoryPieceIds = useMemo(
     () => Object.keys(history).sort((a, b) => history[b] - history[a]),
@@ -96,14 +101,14 @@ const useLibraryCategories = () => {
   return useMemo(
     () => ({
       history: {
-        orderedPieceIds: orderedHistoryPieceIds,
+        orderedPieceIds: !isLoadingUser && orderedHistoryPieceIds,
         getSubtitle: getHistorySubtitle,
       },
       likes: {
-        orderedPieceIds: orderedLikesPieceIds,
+        orderedPieceIds: !isLoadingUser && orderedLikesPieceIds,
       },
       playtime: {
-        orderedPieceIds: orderedPlayTimePieceIds,
+        orderedPieceIds: !isLoadingUser && orderedPlayTimePieceIds,
         getSubtitle: getPlayTimeSubtitle,
       },
     }),
@@ -113,6 +118,7 @@ const useLibraryCategories = () => {
       orderedLikesPieceIds,
       orderedPlayTimePieceIds,
       getPlayTimeSubtitle,
+      isLoadingUser,
     ]
   );
 };

@@ -1,7 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle } from '@material-ui/icons';
-import { userAuthenticated } from '@generative.fm/user';
+import {
+  userAuthenticated,
+  userLoggedOut,
+  userStartedAnonymousSession,
+} from '@generative.fm/user';
+import { clearData } from '@generative.fm/stats';
 import { useDispatch } from 'react-redux';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
@@ -20,13 +25,24 @@ const AuthButton = () => {
   } = useAuth0();
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     if (!isAuthenticated) {
+      dispatch(userStartedAnonymousSession());
       return;
     }
     getAccessTokenSilently().then((token) => {
       dispatch(userAuthenticated({ userId: user.sub, token }));
     });
-  }, [isAuthenticated, getAccessTokenSilently, user, dispatch]);
+  }, [isLoading, isAuthenticated, getAccessTokenSilently, user, dispatch]);
+
+  const handleLogOut = useCallback(() => {
+    clearData().then(() => {
+      dispatch(userLoggedOut());
+      logout();
+    });
+  }, [logout, dispatch]);
 
   if (isLoading) {
     return <div></div>;
@@ -38,14 +54,18 @@ const AuthButton = () => {
 
   if (user.picture) {
     return (
-      <button className={styles['auth-button']} type="button" onClick={logout}>
+      <button
+        className={styles['auth-button']}
+        type="button"
+        onClick={handleLogOut}
+      >
         <img className={styles['auth-button__image']} src={user.picture}></img>
       </button>
     );
   }
 
   return (
-    <IconButton onClick={logout}>
+    <IconButton onClick={handleLogOut}>
       <AccountCircle />
     </IconButton>
   );

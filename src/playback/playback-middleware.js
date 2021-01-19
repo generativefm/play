@@ -11,6 +11,8 @@ import selectQueue from '../queue/select-queue';
 import { USER_PRESSED_NEXT } from '../queue/user-pressed-next';
 import { USER_PRESSED_PREVIOUS } from '../queue/user-pressed-previous';
 import masterGainNode from '../volume/master-gain-node';
+import selectUserId from '../user/select-user-id';
+import selectToken from '../user/select-token';
 
 const playbackMiddleware = (store) => (next) => {
   const activatingPieces = new Set();
@@ -19,11 +21,12 @@ const playbackMiddleware = (store) => (next) => {
   const stopAll = () => {
     Transport.stop();
     Transport.cancel();
+    const token = selectToken(store.getState());
     Array.from(activePieces).forEach(
       ([pieceId, { schedule, deactivate, end, gainNode }]) => {
         if (typeof end === 'function') {
           end();
-          stopEmission();
+          stopEmission({ token });
         }
         activePieces.set(pieceId, { deactivate, schedule, gainNode });
       }
@@ -58,7 +61,8 @@ const playbackMiddleware = (store) => (next) => {
         destination: pieceGain,
       }).then(([deactivate, schedule]) => {
         activatingPieces.delete(pieceId);
-        const currentPieceId = selectCurrentPieceId(store.getState());
+        const state = store.getState();
+        const currentPieceId = selectCurrentPieceId(state);
         if (currentPieceId !== pieceId) {
           return;
         }
@@ -76,7 +80,8 @@ const playbackMiddleware = (store) => (next) => {
           end,
           gainNode: pieceGain,
         });
-        startEmission({ pieceId, userId: 'ANONYMOUS_PLAY_USER' });
+        const userId = selectUserId(state);
+        startEmission({ pieceId, userId });
         Transport.start();
         store.dispatch(pieceStartedPlaying());
       });
