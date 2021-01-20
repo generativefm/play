@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
 import selectLikes from '../user/select-likes';
-import ContextMenuOption from '../app/context-menu-option';
+import ContextMenuOption from '../context-menu/context-menu-option';
 import LikeIcon from './like-icon';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
-import contextMenuOptionStyles from '../app/context-menu-option.module.scss';
+import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 
 const PieceContextMenu = ({ pieceId }) => {
   const dispatch = useDispatch();

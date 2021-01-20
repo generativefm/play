@@ -10,7 +10,7 @@ import {
 } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '../button/icon-button';
-import CircularLoadingIndicator from '../app/circular-loading-indicator';
+import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStartedPlayback from '../playback/user-started-playback';
 import userStoppedPlayback from '../playback/user-stopped-playback';

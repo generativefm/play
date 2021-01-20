@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import createStore from '../store/create-store';
 import Layout from '../layout/layout';
 import MasterGainProvider from '../volume/master-gain-provider';
-import ContextMenuProvider from './context-menu-provider';
+import ContextMenuProvider from '../context-menu/context-menu-provider';
 import { Provider } from 'react-redux';
 import { Auth0Provider } from '@auth0/auth0-react';
 import importLegacyData from '../import/import-legacy-data';

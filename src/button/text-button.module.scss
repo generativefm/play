@@ -2,24 +2,24 @@
 
 .text-button {
   @include type-ui();
-  border-radius: $border-radius-sm;
   text-transform: uppercase;
   border: none;
-  background-color: $color-primary;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
   cursor: pointer;
-  box-shadow: $box-shadow-bottom;
+  background: none;
+  color: $color-primary;
+  border-radius: $border-radius-sm;
 
   &:hover {
-    background-color: rgba($color-primary, 0.8);
+    background-color: rgba($color-primary, 0.05);
   }
 
   &:active {
-    background-color: rgba($color-primary, 0.6);
+    background-color: rgba($color-primary, 0.15);
   }
 
   &:focus {
@@ -28,5 +28,19 @@
 
   > * {
     margin-right: 0.5rem;
+  }
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-dark-1;
+    box-shadow: $box-shadow-bottom;
+
+    &:hover {
+      background-color: rgba($color-primary, 0.8);
+    }
+
+    &:active {
+      background-color: rgba($color-primary, 0.6);
+    }
   }
 }

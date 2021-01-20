@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import useDismissable from './use-dismissable';
+import useDismissable from '../app/use-dismissable';
 import useCreateContextMenu from './use-create-context-menu';
 import styles from './context-menu.module.scss';
 
