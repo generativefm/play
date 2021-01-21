@@ -1,0 +1,10 @@
+@import '../styles/_theme.scss';
+
+.user-context-menu {
+  &__email {
+    @include type-normal();
+    color: $color-white;
+    padding: 1rem;
+    border-bottom: 1px solid rgba($color-white, 0.1);
+  }
+}

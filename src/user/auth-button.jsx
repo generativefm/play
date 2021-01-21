@@ -1,15 +1,15 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, MoreVert } from '@material-ui/icons';
 import {
   userAuthenticated,
-  userLoggedOut,
   userStartedAnonymousSession,
 } from '@generative.fm/user';
-import { clearData } from '@generative.fm/stats';
 import { useDispatch } from 'react-redux';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
+import useCreateContextMenuForTarget from '../context-menu/use-create-context-menu-for-target';
+import UserContextMenu from './user-context-menu';
 import styles from './auth-button.module.scss';
 
 const AuthButton = () => {
@@ -20,9 +20,12 @@ const AuthButton = () => {
     isAuthenticated,
     loginWithRedirect,
     user,
-    logout,
     getAccessTokenSilently,
   } = useAuth0();
+
+  const createContextMenuForTarget = useCreateContextMenuForTarget(
+    <UserContextMenu />
+  );
 
   useEffect(() => {
     if (isLoading) {
@@ -37,19 +40,21 @@ const AuthButton = () => {
     });
   }, [isLoading, isAuthenticated, getAccessTokenSilently, user, dispatch]);
 
-  const handleLogOut = useCallback(() => {
-    clearData().then(() => {
-      dispatch(userLoggedOut());
-      logout();
-    });
-  }, [logout, dispatch]);
-
   if (isLoading) {
     return <div></div>;
   }
 
   if (!isAuthenticated) {
-    return <TextButton onClick={loginWithRedirect}>Sign In</TextButton>;
+    return (
+      <>
+        <IconButton onClick={createContextMenuForTarget}>
+          <MoreVert />
+        </IconButton>
+        <TextButton onClick={loginWithRedirect} isPrimary>
+          Sign In
+        </TextButton>
+      </>
+    );
   }
 
   if (user.picture) {
@@ -57,7 +62,7 @@ const AuthButton = () => {
       <button
         className={styles['auth-button']}
         type="button"
-        onClick={handleLogOut}
+        onClick={createContextMenuForTarget}
       >
         <img className={styles['auth-button__image']} src={user.picture}></img>
       </button>
@@ -65,7 +70,7 @@ const AuthButton = () => {
   }
 
   return (
-    <IconButton onClick={handleLogOut}>
+    <IconButton onClick={createContextMenuForTarget}>
       <AccountCircle />
     </IconButton>
   );
