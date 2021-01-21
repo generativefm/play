@@ -17,6 +17,7 @@ import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import BrowseGrid from '../browse/browse-grid';
 import LibraryGrid from '../library/library-grid';
 import BannerProvider from '../banner/banner-provider';
+import Settings from '../settings/settings';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -45,6 +46,7 @@ const Layout = () => {
               <Route path="/library/history" exact component={LibraryGrid} />
               <Route path="/library/likes" exact component={LibraryGrid} />
               <Route path="/library/playtime" exact component={LibraryGrid} />
+              <Route path="/settings" component={Settings} />
               <Redirect to="/browse" />
             </Switch>
           </div>

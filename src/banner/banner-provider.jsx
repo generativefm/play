@@ -6,7 +6,6 @@ const BannerProvider = ({ children }) => {
   const [currentBanner, setCurrentBanner] = useState();
 
   const handleDismiss = useCallback(() => {
-    console.log('seting banner to null');
     setCurrentBanner(null);
   }, []);
 

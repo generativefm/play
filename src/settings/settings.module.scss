@@ -1,0 +1,43 @@
+@import '../styles/_theme.scss';
+
+.settings {
+  max-width: 100rem;
+  margin: 2rem auto 0;
+
+  &__header {
+    @include type-more-prominent();
+    font-size: 2rem;
+    color: $color-white;
+  }
+}
+
+.setting {
+  margin-top: 2rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &__control {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__label {
+      @include type-normal();
+      color: $color-white;
+    }
+  }
+
+  &__help {
+    @include type-normal();
+    color: $color-grey;
+    margin-top: 1rem;
+  }
+}
