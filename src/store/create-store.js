@@ -13,6 +13,7 @@ import storeUserStateMiddleware from '../user/store-user-state-middleware';
 import synchronizeUserMiddleware from '../user/synchronize-user-middleware';
 import persistStateMiddleware from '../storage/persist-state-middleware';
 import settingsReducer from '../settings/settings-reducer';
+import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -26,6 +27,7 @@ const createStore = (preloadedState) =>
     }),
     preloadedState,
     applyMiddleware(
+      anonymousImportMiddleware,
       playbackMiddleware,
       storeUserStateMiddleware,
       synchronizeUserMiddleware,

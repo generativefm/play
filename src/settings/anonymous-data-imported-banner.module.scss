@@ -1,0 +1,17 @@
+@import '../styles/_theme.scss';
+
+.dialog-body-part {
+  @include type-normal();
+  line-height: 1.25;
+
+  &--text {
+    color: $color-white;
+    margin-bottom: 1rem;
+  }
+
+  &--summary {
+    color: $color-grey;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}

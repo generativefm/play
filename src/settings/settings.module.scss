@@ -3,6 +3,7 @@
 .settings {
   max-width: 100rem;
   margin: 2rem auto 0;
+  padding: 0 1rem;
 
   &__header {
     @include type-more-prominent();
@@ -18,6 +19,7 @@
   font-size: 1rem;
   padding: 0;
   cursor: pointer;
+  text-align: left;
 
   &:focus {
     outline: none;

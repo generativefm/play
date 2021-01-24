@@ -13,6 +13,7 @@
   background: none;
   color: $color-primary;
   border-radius: $border-radius-sm;
+  transition: background-color 200ms;
 
   &:hover {
     background-color: rgba($color-primary, 0.05);

@@ -11,6 +11,7 @@ import persistConfigs from '../storage/persist-configs';
 import loadState from '../storage/load-state';
 import hasImportedLegacyData from '../import/has-imported-legacy-data';
 import IS_STORAGE_SUPPORTED from '../storage/is-supported';
+import DialogProvider from '../dialog/dialog-provider';
 
 const App = () => {
   const [reduxStore, setReduxStore] = useState(null);
@@ -46,7 +47,9 @@ const App = () => {
           <MasterGainProvider>
             <Router>
               <ContextMenuProvider>
-                <Layout />
+                <DialogProvider>
+                  <Layout />
+                </DialogProvider>
               </ContextMenuProvider>
             </Router>
           </MasterGainProvider>
