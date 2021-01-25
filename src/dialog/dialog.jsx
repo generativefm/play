@@ -1,10 +1,24 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { Close } from '@material-ui/icons';
 import TextButton from '../button/text-button';
+import IconButton from '../button/icon-button';
+import useDismissable from '../app/use-dismissable';
 import styles from './dialog.module.scss';
 
 const Dialog = ({ title, actions, children, onDismiss }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const ref = useRef(null);
+
+  const handleDismiss = useCallback(() => {
+    setIsVisible(false);
+  }, []);
+
+  useDismissable({
+    isOpen: isVisible,
+    dismissableRef: ref,
+    onDismiss: handleDismiss,
+  });
 
   const wrapOnClick = useCallback(
     (onClick) => () => {
@@ -16,9 +30,12 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
     []
   );
 
+  const hasActions = Array.isArray(actions) && actions.length > 0;
+
   const makeClickHandlers = useCallback(
-    () => actions.map(({ onClick }) => wrapOnClick(onClick)),
-    [actions, wrapOnClick]
+    () =>
+      hasActions ? actions.map(({ onClick }) => wrapOnClick(onClick)) : [],
+    [hasActions, actions, wrapOnClick]
   );
 
   const [clickHandlers, setClickHandlers] = useState(makeClickHandlers());
@@ -42,18 +59,25 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       onExited={onDismiss}
     >
       <div className={styles['dialog-container']}>
-        <div className={styles.dialog}>
+        <div className={styles.dialog} ref={ref}>
           <h1 className={styles['dialog__header']}>
-            Anonymous activity moved to your account
+            {title}
+            {!hasActions && (
+              <IconButton onClick={handleDismiss}>
+                <Close />
+              </IconButton>
+            )}
           </h1>
           <div className={styles['dialog__body']}>{children}</div>
-          <div className={styles['dialog__footer']}>
-            {actions.map(({ text }, i) => (
-              <TextButton key={i} onClick={clickHandlers[i]}>
-                {text}
-              </TextButton>
-            ))}
-          </div>
+          {hasActions && (
+            <div className={styles['dialog__footer']}>
+              {actions.map(({ text }, i) => (
+                <TextButton key={i} onClick={clickHandlers[i]}>
+                  {text}
+                </TextButton>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </CSSTransition>

@@ -34,7 +34,7 @@
   margin: 0 1rem;
   max-width: 40rem;
   background-color: $color-dark-3;
-  padding: 1rem 2rem;
+  padding: 2rem;
   border-radius: $border-radius-md;
   box-shadow: $box-shadow-bottom;
 
@@ -42,12 +42,16 @@
     @include type-more-prominent();
     font-size: 1.5rem;
     color: $color-white;
-    margin-top: 1rem;
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__footer {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: -1rem;
+    margin-right: -1rem;
   }
 }

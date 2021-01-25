@@ -35,4 +35,42 @@
       background: none;
     }
   }
+
+  &--is-active {
+    color: $color-primary;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-primary;
+      position: absolute;
+      top: -25%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  &--is-ticking {
+    &::after {
+      animation-name: tick;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      animation-delay: -500ms;
+      will-change: left;
+    }
+  }
+}
+
+@keyframes tick {
+  0% {
+    left: 33%;
+  }
+  100% {
+    left: 67%;
+  }
 }

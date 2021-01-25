@@ -2,8 +2,8 @@ import { USER_PLAYED_PIECE } from '@generative.fm/user';
 
 const queueReducer = (
   state = {
-    pieceIds: [],
-    index: null,
+    pieceIds: ['zed'],
+    index: 0,
   },
   action
 ) => {

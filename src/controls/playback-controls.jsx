@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import {
-  HourglassEmpty,
   Shuffle,
   Repeat,
   SkipPrevious,
@@ -16,6 +15,7 @@ import userStartedPlayback from '../playback/user-started-playback';
 import userStoppedPlayback from '../playback/user-stopped-playback';
 import selectQueue from '../queue/select-queue';
 import userPlayedPiece from '../playback/user-played-piece';
+import TimerControl from '../timer/timer-control';
 import styles from './playback-controls.module.scss';
 
 const PlaybackControls = () => {
@@ -64,9 +64,7 @@ const PlaybackControls = () => {
 
   return (
     <div className={styles['playback-controls']}>
-      <IconButton>
-        <HourglassEmpty />
-      </IconButton>
+      <TimerControl />
       <IconButton>
         <Shuffle />
       </IconButton>

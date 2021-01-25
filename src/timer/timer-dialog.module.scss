@@ -1,0 +1,50 @@
+@import '../styles/_theme.scss';
+
+.timer-dialog-body {
+  min-width: 20rem;
+
+  &__controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__indicator {
+    margin-top: 2rem;
+    margin-bottom: -1rem;
+    width: 100%;
+    height: 0.5rem;
+    position: relative;
+
+    &__pendulum {
+      height: 0.5rem;
+      width: 0.5rem;
+      background-color: $color-primary;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      animation-name: pendulum-swing;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      will-change: left, height;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+@keyframes pendulum-swing {
+  0% {
+    left: 0%;
+  }
+
+  50% {
+    height: 1px;
+  }
+
+  100% {
+    left: 100%;
+  }
+}

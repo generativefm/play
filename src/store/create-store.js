@@ -14,6 +14,8 @@ import synchronizeUserMiddleware from '../user/synchronize-user-middleware';
 import persistStateMiddleware from '../storage/persist-state-middleware';
 import settingsReducer from '../settings/settings-reducer';
 import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
+import timerMiddleware from '../timer/timer-middleware';
+import timerReducer from '../timer/timer-reducer';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -24,6 +26,7 @@ const createStore = (preloadedState) =>
       piece: pieceReducer,
       masterGain: masterGainReducer,
       settings: settingsReducer,
+      timer: timerReducer,
     }),
     preloadedState,
     applyMiddleware(
@@ -31,7 +34,8 @@ const createStore = (preloadedState) =>
       playbackMiddleware,
       storeUserStateMiddleware,
       synchronizeUserMiddleware,
-      persistStateMiddleware
+      persistStateMiddleware,
+      timerMiddleware
     )
   );
 

@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const useDismissable = ({ isOpen = true, dismissableRef, onDismiss }) => {
   const history = useHistory();
+  const [isOpening, setIsOpening] = useState(isOpen);
   useEffect(() => {
-    if (!isOpen || !dismissableRef.current) {
+    if (isOpening || !isOpen || !dismissableRef.current) {
       return;
     }
 
     const handleDocumentClick = (event) => {
-      if (!dismissableRef.current) {
+      if (isOpening.current || !dismissableRef.current) {
         return;
       }
       if (!dismissableRef.current.contains(event.target)) {
@@ -26,7 +27,10 @@ const useDismissable = ({ isOpen = true, dismissableRef, onDismiss }) => {
       document.removeEventListener('click', handleDocumentClick);
       unlisten();
     };
-  }, [isOpen, dismissableRef, onDismiss, history]);
+  }, [isOpen, dismissableRef, onDismiss, history, isOpening]);
+  useEffect(() => {
+    setIsOpening(false);
+  }, [isOpen]);
   return dismissableRef;
 };
 

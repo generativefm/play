@@ -1,0 +1,52 @@
+@import '../styles/_theme.scss';
+
+.timer-input {
+  @include type-normal();
+  color: $color-grey;
+  display: inline-flex;
+  align-items: baseline;
+  border-bottom: 1px solid $color-grey;
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-bottom: 1px;
+
+  &--is-editing {
+    border-bottom: 2px solid $color-primary;
+    margin-bottom: 0;
+
+    .timer-input__digit--has-cursor {
+      border-color: $color-white;
+    }
+  }
+
+  &__digit {
+    font-size: 2rem;
+
+    &:nth-of-type(4) {
+      margin-left: 0.5rem;
+    }
+
+    &--is-user-input {
+      color: $color-white;
+    }
+
+    &--has-cursor {
+      border-right: 1px solid transparent;
+    }
+  }
+
+  &__unit {
+    margin-left: 0.25rem;
+
+    &--is-user-input {
+      color: $color-white;
+    }
+  }
+
+  &__input {
+    width: 0;
+    height: 0;
+    z-index: -1;
+    opacity: 0;
+  }
+}

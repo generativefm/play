@@ -13,6 +13,8 @@ import { USER_PRESSED_PREVIOUS } from '../queue/user-pressed-previous';
 import masterGainNode from '../volume/master-gain-node';
 import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
+import { TIMER_PROGRESSED } from '../timer/timer-progressed';
+import { USER_STARTED_TIMER } from '../timer/user-started-timer';
 
 const playbackMiddleware = (store) => (next) => {
   const activatingPieces = new Set();
@@ -126,6 +128,14 @@ const playbackMiddleware = (store) => (next) => {
             pieceId: pieceIds[index - 1],
           });
         }
+        break;
+      }
+      case TIMER_PROGRESSED: {
+        if (action.payload.durationRemaining) {
+          break;
+        }
+        stopAll();
+        break;
       }
     }
 
