@@ -15,7 +15,7 @@ const statusReducer = (state = 'stopped', action) => {
       return 'stopped';
     }
     case TIMER_PROGRESSED: {
-      if (action.payload.duration) {
+      if (action.payload.durationRemaining) {
         return state;
       }
       return 'stopped';
