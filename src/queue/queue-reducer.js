@@ -1,19 +1,14 @@
-import { USER_PLAYED_PIECE } from '@generative.fm/user';
+import { combineReducers } from 'redux';
+import index from './index-reducer';
+import pieceIds from './piece-ids-reducer';
+import isShuffleActive from './is-shuffle-active-reducer';
+import isLoopActive from './is-loop-active-reducer';
 
-const queueReducer = (
-  state = {
-    pieceIds: ['zed'],
-    index: 0,
-  },
-  action
-) => {
-  if (action.type === USER_PLAYED_PIECE) {
-    return {
-      pieceIds: action.payload.selectionPieceIds,
-      index: action.payload.index,
-    };
-  }
-  return state;
-};
+const queueReducer = combineReducers({
+  index,
+  pieceIds,
+  isShuffleActive,
+  isLoopActive,
+});
 
 export default queueReducer;

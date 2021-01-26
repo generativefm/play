@@ -1,5 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { byId } from '@generative-music/pieces-alex-bainter';
 import selectHistory from '../user/select-history';
 import selectLikes from '../user/select-likes';
 import selectPlayTime from '../user/select-play-time';
@@ -68,17 +69,26 @@ const useLibraryCategories = () => {
   const playTime = useSelectorOnce(selectPlayTime, [isLoadingUser, userId]);
 
   const orderedHistoryPieceIds = useMemo(
-    () => Object.keys(history).sort((a, b) => history[b] - history[a]),
+    () =>
+      Object.keys(history)
+        .filter((pieceId) => byId[pieceId])
+        .sort((a, b) => history[b] - history[a]),
     [history]
   );
 
   const orderedLikesPieceIds = useMemo(
-    () => Object.keys(likes).sort((a, b) => likes[b] - likes[a]),
+    () =>
+      Object.keys(likes)
+        .filter((pieceId) => byId[pieceId])
+        .sort((a, b) => likes[b] - likes[a]),
     [likes]
   );
 
   const orderedPlayTimePieceIds = useMemo(
-    () => Object.keys(playTime).sort((a, b) => playTime[b] - playTime[a]),
+    () =>
+      Object.keys(playTime)
+        .filter((pieceId) => byId[pieceId])
+        .sort((a, b) => playTime[b] - playTime[a]),
     [playTime]
   );
 
