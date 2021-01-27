@@ -18,6 +18,7 @@ import BrowseGrid from '../browse/browse-grid';
 import LibraryGrid from '../library/library-grid';
 import Settings from '../settings/settings';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
+import Snackbar from '../snackbar/snackbar';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -66,6 +67,7 @@ const Layout = () => {
           </div>
         </CSSTransition>
       </div>
+      <Snackbar />
       {currentPieceId && <ControlBar />}
       {isNarrowScreen && <BottomNav />}
     </div>

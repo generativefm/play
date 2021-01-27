@@ -17,6 +17,7 @@ import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
 import timerMiddleware from '../timer/timer-middleware';
 import timerReducer from '../timer/timer-reducer';
 import shuffleMiddleware from '../queue/shuffle-middleware';
+import snackbarMiddleware from '../snackbar/snackbar-middleware';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -37,7 +38,8 @@ const createStore = (preloadedState) =>
       synchronizeUserMiddleware,
       persistStateMiddleware,
       timerMiddleware,
-      shuffleMiddleware
+      shuffleMiddleware,
+      snackbarMiddleware
     )
   );
 

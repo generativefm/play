@@ -1,0 +1,58 @@
+@import '../styles/_theme.scss';
+
+.snackbar-message {
+  @include type-normal();
+  background-color: $color-dark-4;
+  color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-bottom;
+  z-index: 3;
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.9rem;
+  transition: opacity 200ms, transform 200ms;
+  display: none;
+
+  &--is-above-controls {
+    margin-bottom: 5rem;
+  }
+
+  &--is-above-bottom-nav {
+    margin-bottom: 4rem;
+  }
+
+  &--is-above-controls#{&}--is-above-bottom-nav {
+    margin-bottom: 9rem;
+  }
+
+  &--will-appear {
+    display: block;
+    opacity: 0;
+    transform: translateY(100%);
+    will-change: opacity, transform;
+  }
+
+  &--is-appearing {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+
+  &--has-appeared {
+    display: block;
+  }
+
+  &--will-exit {
+    display: block;
+    opacity: 1;
+    will-change: opacity, transform;
+  }
+
+  &--is-exiting {
+    display: block;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
