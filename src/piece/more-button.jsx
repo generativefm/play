@@ -4,9 +4,9 @@ import PieceContextMenu from './piece-context-menu';
 import IconButton from '../button/icon-button';
 import useCreateContextMenuForTarget from '../context-menu/use-create-context-menu-for-target';
 
-const MoreButton = ({ pieceId }) => {
+const MoreButton = ({ pieceId, shouldEnableLike }) => {
   const createContextMenuForTarget = useCreateContextMenuForTarget(
-    <PieceContextMenu pieceId={pieceId} />
+    <PieceContextMenu pieceId={pieceId} shouldEnableLike={shouldEnableLike} />
   );
   return (
     <IconButton onClick={createContextMenuForTarget}>

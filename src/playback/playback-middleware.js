@@ -1,13 +1,12 @@
 import { Transport, Gain, getContext } from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { startEmission, stopEmission } from '@generative.fm/stats';
-import { USER_PLAYED_PIECE } from '@generative.fm/user';
+import { USER_PLAYED_PIECE, playTimeIncreased } from '@generative.fm/user';
 import sampleLibrary from './sample-library';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import pieceStartedPlaying from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
 import { USER_STARTED_PLAYBACK } from './user-started-playback';
-import selectQueue from '../queue/select-queue';
 import masterGainNode from '../volume/master-gain-node';
 import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
@@ -25,7 +24,12 @@ const playbackMiddleware = (store) => (next) => {
       ([pieceId, { schedule, deactivate, end, gainNode }]) => {
         if (typeof end === 'function') {
           end();
-          stopEmission({ token });
+          stopEmission({ token }).then((additionalPlayTime) => {
+            if (Object.keys(additionalPlayTime).length === 0) {
+              return;
+            }
+            store.dispatch(playTimeIncreased({ additionalPlayTime }));
+          });
         }
         activePieces.set(pieceId, { deactivate, schedule, gainNode });
       }

@@ -51,9 +51,13 @@ const importLegacyData = (store) => {
         try {
           const parsedState = JSON.parse(data.state);
           if (!parsedState.isImported) {
-            store.dispatch(
-              mergeData(convertLegacyStateToUserData(parsedState))
-            );
+            const action = mergeData(convertLegacyStateToUserData(parsedState));
+            action.meta = Object.assign({}, action.meta, {
+              snackbar: {
+                message: 'Play time and favorites imported',
+              },
+            });
+            store.dispatch();
             // TO DO: uncomment this
             //source.postMessage({ type: 'set-import-request' }, origin);
           } else {

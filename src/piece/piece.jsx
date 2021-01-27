@@ -53,7 +53,7 @@ const Piece = () => {
               Play
             </TextButton>
             <FeedbackButtons pieceId={id} />
-            <MoreButton pieceId={id} />
+            <MoreButton pieceId={id} shouldEnableLike={false} />
           </div>
           <div className={styles['info__other__stats']}>
             <p>released {formatReleaseDate(piece.releaseDate)}</p>

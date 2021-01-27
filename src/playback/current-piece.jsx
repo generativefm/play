@@ -24,7 +24,7 @@ const CurrentPiece = () => {
         </div>
         <div className={styles['current-piece__more__controls']}>
           <FeedbackButtons pieceId={currentPieceId} />
-          <MoreButton pieceId={currentPieceId} />
+          <MoreButton pieceId={currentPieceId} shouldEnableLike={false} />
         </div>
       </div>
     </div>

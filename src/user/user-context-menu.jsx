@@ -8,6 +8,9 @@ import ContextMenuOption from '../context-menu/context-menu-option';
 import styles from './user-context-menu.module.scss';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 
+const HELP_URL =
+  'https://www.notion.so/generativefm/Get-help-with-Generative-fm-0efd0280b87d4132a66d212f125d9f4f';
+
 const UserContextMenu = () => {
   const { user, logout, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
@@ -38,7 +41,7 @@ const UserContextMenu = () => {
         />
         Settings
       </ContextMenuOption>
-      <ContextMenuOption>
+      <ContextMenuOption href={HELP_URL}>
         <Help
           className={contextMenuOptionStyles['context-menu-option__icon']}
         />

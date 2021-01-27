@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { subscribe } from './snackbar-middleware';
 import SnackbarMessage from './snackbar-message';
+import snackbarContext from './snackbar-context';
 
-const Snackbar = () => {
+const SnackbarProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   useEffect(
     () =>
       subscribe(({ message }) => {
-        const now = Date.now();
+        const timestamp = Date.now();
         setMessages((previousValue) => [
           ...previousValue,
-          { message, timestamp: now },
+          { message, timestamp },
         ]);
       }),
     []
   );
 
+  const showSnackbarMessage = useCallback((message) => {
+    const timestamp = Date.now();
+    setMessages((previousValue) => [...previousValue, { message, timestamp }]);
+  }, []);
+
   return (
     <>
+      <snackbarContext.Provider value={showSnackbarMessage}>
+        {children}
+      </snackbarContext.Provider>
       {messages.map(({ message, timestamp }, i) => (
         <SnackbarMessage
           key={timestamp}
@@ -38,4 +47,4 @@ const Snackbar = () => {
   );
 };
 
-export default Snackbar;
+export default SnackbarProvider;
