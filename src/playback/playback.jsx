@@ -83,7 +83,7 @@ const Playback = () => {
               <QueuedPiece
                 key={pieceId}
                 pieceId={pieceId}
-                isCurrent={pieceId === currentPieceId}
+                isCurrentPiece={pieceId === currentPieceId}
               />
             ))}
         </div>

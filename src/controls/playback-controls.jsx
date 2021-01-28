@@ -18,6 +18,7 @@ import ShuffleControl from '../queue/shuffle-control';
 import LoopControl from '../queue/loop-control';
 import PreviousControl from '../queue/previous-control';
 import NextControl from '../queue/next-control';
+import useHotkey from '../app/use-hotkey';
 import styles from './playback-controls.module.scss';
 
 const PlaybackControls = () => {
@@ -35,6 +36,7 @@ const PlaybackControls = () => {
   const isLoading = playbackStatus === 'loading';
   const isPlaying = playbackStatus === 'playing';
 
+  useHotkey(' ', isPlaying ? handleStopClick : handlePlayClick);
   return (
     <div className={styles['playback-controls']}>
       <TimerControl />
