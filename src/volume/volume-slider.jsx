@@ -75,10 +75,11 @@ const VolumeSlider = () => {
   }, []);
 
   useEffect(() => {
-    const handleWheel = () => {
+    const handleWheel = (event) => {
       if (!isMouseOverRef.current) {
         return;
       }
+      event.preventDefault();
       let gainDelta;
       if (event.deltaY < 0 || event.deltaX < 0) {
         gainDelta = 0.05;
@@ -92,9 +93,9 @@ const VolumeSlider = () => {
       dispatch(userAdjustedMasterGain(adjustedGain));
     };
 
-    document.addEventListener('wheel', handleWheel);
+    window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
-      document.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('wheel', handleWheel, { passive: false });
     };
   });
 

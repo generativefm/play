@@ -14,9 +14,9 @@ const useHotkey = (key, callback) => {
       event.preventDefault();
       callback(event);
     };
-    document.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [key, callback]);
 };

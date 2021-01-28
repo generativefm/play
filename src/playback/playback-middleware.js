@@ -50,6 +50,8 @@ const playbackMiddleware = (store) => (next) => {
         end,
         gainNode,
       });
+      const userId = selectUserId(store.getState());
+      startEmission({ pieceId, userId });
       Transport.start();
       store.dispatch(pieceStartedPlaying());
       return;
