@@ -19,11 +19,6 @@ const ContextMenu = ({ x, y, children }) => {
   }, [createContextMenu]);
   useDismissable({ dismissableRef: ref, onDismiss: handleDismiss });
 
-  const handleContextMenuEvent = useCallback((event) => {
-    event.stopPropagation();
-    event.preventDefault();
-  }, []);
-
   useEffect(() => {}, []);
 
   useLayoutEffect(() => {
@@ -38,12 +33,7 @@ const ContextMenu = ({ x, y, children }) => {
   const top = isTooFarDown && ref.current ? y - ref.current.offsetHeight : y;
 
   return (
-    <div
-      className={styles['context-menu']}
-      style={{ left, top }}
-      ref={ref}
-      onContextMenu={handleContextMenuEvent}
-    >
+    <div className={styles['context-menu']} style={{ left, top }} ref={ref}>
       {children}
     </div>
   );

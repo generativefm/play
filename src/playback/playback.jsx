@@ -9,7 +9,32 @@ import userClosedPlayback from './user-closed-playback';
 import MoreButton from '../piece/more-button';
 import LikeButton from '../piece/like-button';
 import DislikeButton from '../piece/dislike-button';
+import PieceContextMenu from '../piece/piece-context-menu';
+import useCreateContextMenuForMouseEvent from '../context-menu/use-create-context-menu-for-mouse-event';
 import styles from './playback.module.scss';
+
+const QueuedPiece = ({ pieceId, isCurrentPiece }) => {
+  const queuedPiece = byId[pieceId];
+  const createContextMenuForMouseEvent = useCreateContextMenuForMouseEvent(
+    <PieceContextMenu pieceId={pieceId} />
+  );
+  return (
+    <div
+      key={pieceId}
+      className={classnames(styles['queued-piece'], {
+        [styles['queued-piece--is-selected']]: isCurrentPiece,
+      })}
+      onContextMenu={createContextMenuForMouseEvent}
+    >
+      <img
+        className={styles['queued-piece__image']}
+        src={queuedPiece.imageSrc}
+      />
+      <div className={styles['queued-piece__title']}>{queuedPiece.title}</div>
+      <MoreButton pieceId={pieceId} />
+    </div>
+  );
+};
 
 const Playback = () => {
   const currentPieceId = useSelector(selectCurrentPieceId);
@@ -42,7 +67,7 @@ const Playback = () => {
           <DislikeButton pieceId={currentPieceId} />
           <Link
             className={styles['playback__current-piece__info__title']}
-            to={`/piece/${currentPieceId}`}
+            to={`/generator/${currentPieceId}`}
           >
             {piece.title}
           </Link>
@@ -54,27 +79,13 @@ const Playback = () => {
         <div className={styles['playback__queue__list']}>
           {queuedPieceIds
             .filter((pieceId) => pieceId && Boolean(byId[pieceId]))
-            .map((pieceId) => {
-              const queuedPiece = byId[pieceId];
-              return (
-                <div
-                  key={pieceId}
-                  className={classnames(styles['playback__queue__list__item'], {
-                    [styles['playback__queue__list__item--is-selected']]:
-                      pieceId === currentPieceId,
-                  })}
-                >
-                  <img
-                    className={styles['playback__queue__list__item__image']}
-                    src={queuedPiece.imageSrc}
-                  />
-                  <div className={styles['playback__queue__list__item__title']}>
-                    {queuedPiece.title}
-                  </div>
-                  <MoreButton pieceId={pieceId} />
-                </div>
-              );
-            })}
+            .map((pieceId) => (
+              <QueuedPiece
+                key={pieceId}
+                pieceId={pieceId}
+                isCurrent={pieceId === currentPieceId}
+              />
+            ))}
         </div>
       </div>
     </div>

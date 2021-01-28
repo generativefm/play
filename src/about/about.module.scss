@@ -1,0 +1,83 @@
+@import '../styles/_theme.scss';
+
+.about {
+  max-width: 100rem;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+  overflow-x: hidden;
+
+  &__header {
+    @include type-more-prominent();
+    font-size: 2rem;
+    color: $color-white;
+  }
+
+  &__body {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+
+    &__logo {
+      width: 15rem;
+      height: 15rem;
+      border-radius: $border-radius-md;
+      box-shadow: $box-shadow-bottom;
+      transition: opacity 500ms;
+      margin-bottom: 1rem;
+      z-index: 1;
+
+      &--will-appear {
+        opacity: 0;
+        will-change: opacity;
+      }
+
+      &--is-appearing {
+        opacity: 1;
+      }
+    }
+
+    &__text {
+      @include type-normal();
+      color: $color-white;
+      line-height: 2.5;
+      transition: opacity 0ms 500ms, transform 500ms 500ms;
+      opacity: 0;
+      margin-top: 1rem;
+      text-align: center;
+
+      &--will-appear {
+        opacity: 0;
+        transform: translateY(-100%);
+        will-change: transform;
+      }
+
+      &--is-appearing {
+        opacity: 1;
+        transform: none;
+      }
+
+      &--has-appeared {
+        opacity: 1;
+      }
+
+      &__title {
+        @include type-less-prominent();
+        font-size: 1.5rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: $color-white;
+        border-bottom: 1px solid $color-primary;
+        transition: color 200ms;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}

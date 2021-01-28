@@ -18,6 +18,7 @@ import BrowseGrid from '../browse/browse-grid';
 import LibraryGrid from '../library/library-grid';
 import Settings from '../settings/settings';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
+import About from '../about/about';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -41,12 +42,13 @@ const Layout = () => {
             <Route path="/browse" exact component={Browse} />
             <Route path="/browse/all" exact component={BrowseGrid} />
             <Route path="/browse/flavor/:flavor" exact component={Flavor} />
-            <Route path="/piece/:id" exact component={Piece} />
+            <Route path="/generator/:id" exact component={Piece} />
             <Route path="/library" exact component={Library} />
             <Route path="/library/history" exact component={LibraryGrid} />
             <Route path="/library/likes" exact component={LibraryGrid} />
             <Route path="/library/playtime" exact component={LibraryGrid} />
             <Route path="/settings" component={Settings} />
+            <Route path="/about" component={About} />
             <Redirect to="/browse" />
           </Switch>
         </div>

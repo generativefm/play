@@ -51,7 +51,7 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
       style={{ width }}
       onContextMenu={createContextMenuForMouseEvent}
     >
-      <Link to={`/piece/${pieceId}`}>
+      <Link to={`/generator/${pieceId}`}>
         <div
           className={classnames(styles['preview__image'], {
             [styles['preview__image--is-loading']]: isCurrentlyLoading,
@@ -89,7 +89,7 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
         </div>
       </Link>
 
-      <Link to={`/piece/${pieceId}`} className={styles['preview__title']}>
+      <Link to={`/generator/${pieceId}`} className={styles['preview__title']}>
         {piece.title}
       </Link>
       <div className={styles['preview__subtitle']}>{subtitle}</div>

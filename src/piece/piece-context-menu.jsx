@@ -19,7 +19,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const showSnackbarMessage = useShowSnackbarMessage();
 
-  const pieceRoute = `/piece/${pieceId}`;
+  const pieceRoute = `/generator/${pieceId}`;
   const { pathname } = useLocation();
 
   const handleLikeClick = useCallback(() => {

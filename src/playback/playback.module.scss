@@ -78,36 +78,36 @@
       &::-webkit-scrollbar {
         width: 1rem;
       }
-
-      &__item {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid rgba($color-white, 0.1);
-        padding: 1rem;
-
-        &:last-of-type {
-          border-bottom: none;
-        }
-
-        &__image {
-          width: 3rem;
-          height: 3rem;
-          border-radius: $border-radius-sm;
-          box-shadow: $box-shadow-bottom;
-        }
-
-        &__title {
-          @include type-normal();
-          color: $color-white;
-          margin-left: 1rem;
-          width: 100%;
-        }
-
-        &--is-selected {
-          background-color: rgba($color-white, 0.1);
-          border-bottom: none;
-        }
-      }
     }
+  }
+}
+
+.queued-piece {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba($color-white, 0.1);
+  padding: 1rem;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &__image {
+    width: 3rem;
+    height: 3rem;
+    border-radius: $border-radius-sm;
+    box-shadow: $box-shadow-bottom;
+  }
+
+  &__title {
+    @include type-normal();
+    color: $color-white;
+    margin-left: 1rem;
+    width: 100%;
+  }
+
+  &--is-selected {
+    background-color: rgba($color-white, 0.1);
+    border-bottom: none;
   }
 }

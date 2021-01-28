@@ -31,7 +31,7 @@ const Piece = () => {
     playTime: userPlayTime,
   } = useUserPlayTime();
 
-  if (!id && !byId[id]) {
+  if (!id || !byId[id]) {
     return <Redirect to="/" />;
   }
 

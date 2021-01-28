@@ -47,7 +47,7 @@ const UserContextMenu = () => {
         />
         Help
       </ContextMenuOption>
-      <ContextMenuOption>
+      <ContextMenuOption linkTo="/about">
         <Info
           className={contextMenuOptionStyles['context-menu-option__icon']}
         />
