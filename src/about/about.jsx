@@ -7,11 +7,6 @@ import styles from './about.module.scss';
 const ALEX_BAINTER_URL = 'https://alexbainter.com';
 const SOURCE_CODE_URL = 'https://github.com/generative-fm/play';
 
-console.log(
-  styles['about__body__member--will-appear'],
-  styles['about__body__member--is-appearing']
-);
-
 const About = () => {
   return (
     <div className={styles.about}>

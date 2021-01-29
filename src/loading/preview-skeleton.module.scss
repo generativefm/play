@@ -2,8 +2,7 @@
 @import './_skeleton.scss';
 
 .preview-skeleton {
-  padding: 2rem 1rem;
-  border-radius: $border-radius-sm;
+  padding: 2rem 0.5rem;
   box-sizing: border-box;
 
   &__image {
@@ -19,5 +18,17 @@
   &__subtitle {
     width: 5rem;
     height: 0.9rem;
+  }
+}
+
+@include is-narrow-screen() {
+  .preview-skeleton {
+    &__title {
+      height: 0.9rem;
+    }
+
+    &__subtitle {
+      height: 0.8rem;
+    }
   }
 }

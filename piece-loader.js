@@ -16,7 +16,12 @@ function pieceLoader(source) {
     id: '${pieceManifest.id}',
     tags: [${pieceManifest.tags.map((tag) => `"${tag}"`)}],
     releaseDate: new Date('${pieceManifest.releaseDate}'),
-    version: '${version}'
+    version: '${version}',
+    sampleNames: [${pieceManifest.sampleNames.map((instrument) =>
+      Array.isArray(instrument)
+        ? `[${instrument.map((name) => `"${name}"`)}]`
+        : `"${instrument}"`
+    )}]
   }`;
   return output;
 }

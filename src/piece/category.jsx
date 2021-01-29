@@ -9,6 +9,7 @@ import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
 import PreviewSkeleton from '../loading/preview-skeleton';
+import useClientWidth from '../layout/use-client-width';
 import styles from './category.module.scss';
 
 const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
@@ -17,6 +18,9 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const dispatch = useDispatch();
+  const clientWidth = useClientWidth();
+
+  const numVisiblePieces = Math.min(Math.floor(clientWidth / 175), 6);
 
   const handlePreviousClick = useCallback(() => {
     const { width } = listRef.current.getBoundingClientRect();
@@ -73,7 +77,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
           {Array.from({ length: 6 }, (_, i) => (
             <PreviewSkeleton
               key={i}
-              width={`calc((${contentWidth}px - 4rem) / 6)`}
+              width={`calc((${contentWidth}px - 1rem) / ${numVisiblePieces})`}
             />
           ))}
         </div>
@@ -97,13 +101,12 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
             visibility: canScrollLeft ? 'visible' : 'hidden',
           }}
         >
-          <IconButton onClick={handlePreviousClick}>
+          <IconButton onClick={handlePreviousClick} isFloating>
             <ChevronLeft />
           </IconButton>
         </div>
         <div
           className={styles['category__list__pieces']}
-          style={{ width: `calc(${contentWidth}px - 4rem)` }}
           ref={listRef}
           onScroll={handleScroll}
         >
@@ -113,7 +116,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
               <Preview
                 key={pieceId}
                 pieceId={pieceId}
-                width={`calc((${contentWidth}px - 4rem) / 6)`}
+                width={`calc((${contentWidth}px - 1rem) / ${numVisiblePieces})`}
                 getSubtitle={getSubtitle}
                 onPlay={handlePiecePlay}
               />
@@ -125,7 +128,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
             visibility: canScrollRight ? 'visible' : 'hidden',
           }}
         >
-          <IconButton onClick={handleNextClick}>
+          <IconButton onClick={handleNextClick} isFloating>
             <ChevronRight />
           </IconButton>
         </div>

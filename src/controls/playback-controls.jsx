@@ -1,32 +1,27 @@
 import React, { useCallback } from 'react';
-import {
-  Shuffle,
-  Repeat,
-  SkipPrevious,
-  SkipNext,
-  PlayArrow,
-  Stop,
-} from '@material-ui/icons';
+import { PlayArrow, Stop } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '../button/icon-button';
 import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
-import userStartedPlayback from '../playback/user-started-playback';
 import userStoppedPlayback from '../playback/user-stopped-playback';
+import userPlayedPiece from '../playback/user-played-piece';
 import TimerControl from '../timer/timer-control';
 import ShuffleControl from '../queue/shuffle-control';
 import LoopControl from '../queue/loop-control';
 import PreviousControl from '../queue/previous-control';
 import NextControl from '../queue/next-control';
 import useHotkey from '../app/use-hotkey';
+import selectQueue from '../queue/select-queue';
 import styles from './playback-controls.module.scss';
 
 const PlaybackControls = () => {
   const dispatch = useDispatch();
   const playbackStatus = useSelector(selectPlaybackStatus);
+  const { index, pieceIds: queuedPieceIds } = useSelector(selectQueue);
 
   const handlePlayClick = useCallback(() => {
-    dispatch(userStartedPlayback());
+    dispatch(userPlayedPiece({ index, selectionPieceIds: queuedPieceIds }));
   }, [dispatch]);
 
   const handleStopClick = useCallback(() => {

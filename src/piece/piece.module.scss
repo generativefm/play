@@ -21,10 +21,25 @@
   &__other {
     padding-left: 2rem;
 
+    &__status {
+      @include type-normal();
+      color: $color-grey;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      transform: translateY(calc(-100% - 1rem));
+
+      &__icon {
+        margin-right: 0.5rem;
+      }
+    }
+
     &__title {
       @include type-more-prominent();
       color: $color-white;
       font-size: 3rem;
+      display: flex;
+      align-items: center;
     }
 
     &__controls {

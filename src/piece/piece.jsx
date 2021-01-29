@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useParams, Redirect, Link } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import { PlayArrow } from '@material-ui/icons';
+import { PlayArrow, CloudOff } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import formatReleaseDate from '../dates/format-release-date';
 import TextButton from '../button/text-button';
@@ -12,6 +12,7 @@ import MoreButton from './more-button';
 import usePlayTime from './use-play-time';
 import TextSkeleton from '../loading/text-skeleton';
 import useUserPlayTime from '../user/use-play-time';
+import useCanPlay from './use-can-play';
 import styles from './piece.module.scss';
 
 const Piece = () => {
@@ -30,6 +31,7 @@ const Piece = () => {
     isLoading: isLoadingUserPlayTime,
     playTime: userPlayTime,
   } = useUserPlayTime();
+  const canPlay = useCanPlay(id);
 
   if (!id || !byId[id]) {
     return <Redirect to="/" />;
@@ -46,6 +48,12 @@ const Piece = () => {
       <div className={styles.info}>
         <img className={styles['info__image']} src={piece.imageSrc} />
         <div className={styles['info__other']}>
+          <div className={styles['info__other__status']}>
+            {!canPlay && (
+              <CloudOff className={styles['info__other__status__icon']} />
+            )}
+            {!canPlay && 'Unavailable offline'}
+          </div>
           <div className={styles['info__other__title']}>{piece.title}</div>
           <div className={styles['info__other__controls']}>
             <TextButton onClick={handlePlayClick} isPrimary>

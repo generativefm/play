@@ -6,11 +6,11 @@ import sampleLibrary from './sample-library';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import pieceStartedPlaying from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
-import { USER_STARTED_PLAYBACK } from './user-started-playback';
 import masterGainNode from '../volume/master-gain-node';
 import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
 import { TIMER_PROGRESSED } from '../timer/timer-progressed';
+import piecePlaybackFailed from './piece-playback-failed';
 
 const playbackMiddleware = (store) => (next) => {
   const activatingPieces = new Set();
@@ -20,20 +20,18 @@ const playbackMiddleware = (store) => (next) => {
     Transport.stop();
     Transport.cancel();
     const token = selectToken(store.getState());
-    Array.from(activePieces).forEach(
-      ([pieceId, { schedule, deactivate, end, gainNode }]) => {
-        if (typeof end === 'function') {
-          end();
-          stopEmission({ token }).then((additionalPlayTime) => {
-            if (Object.keys(additionalPlayTime).length === 0) {
-              return;
-            }
-            store.dispatch(playTimeIncreased({ additionalPlayTime }));
-          });
-        }
-        activePieces.set(pieceId, { deactivate, schedule, gainNode });
+    Array.from(activePieces).forEach(([pieceId, { end }]) => {
+      if (typeof end === 'function') {
+        end();
+        stopEmission({ token }).then((additionalPlayTime) => {
+          if (Object.keys(additionalPlayTime).length === 0) {
+            return;
+          }
+          store.dispatch(playTimeIncreased({ additionalPlayTime }));
+        });
       }
-    );
+      activePieces.delete(pieceId);
+    });
   };
 
   const playPiece = ({ pieceId }) => {
@@ -59,49 +57,49 @@ const playbackMiddleware = (store) => (next) => {
     const pieceGain = new Gain().connect(masterGainNode);
     const piece = byId[pieceId];
     activatingPieces.add(pieceId);
-    piece.loadActivate().then((activate) => {
-      activate({
-        context: getContext(),
-        sampleLibrary,
-        destination: pieceGain,
-      }).then(([deactivate, schedule]) => {
-        activatingPieces.delete(pieceId);
-        const state = store.getState();
-        const currentPieceId = selectCurrentPieceId(state);
-        if (currentPieceId !== pieceId) {
-          return;
-        }
-        activePiece = activePieces.get(pieceId);
-        if (activePiece && activePiece.end) {
-          console.warn(
-            `${pieceId} activated but it's already been scheduled. Was it activated twice?`
-          );
-          return;
-        }
-        const end = schedule();
-        activePieces.set(pieceId, {
-          deactivate,
-          schedule,
-          end,
-          gainNode: pieceGain,
-        });
-        const userId = selectUserId(state);
-        startEmission({ pieceId, userId });
-        Transport.start();
-        store.dispatch(pieceStartedPlaying());
+    piece
+      .loadActivate()
+      .then((activate) =>
+        activate({
+          context: getContext(),
+          sampleLibrary,
+          destination: pieceGain,
+        }).then(([deactivate, schedule]) => {
+          activatingPieces.delete(pieceId);
+          const state = store.getState();
+          const currentPieceId = selectCurrentPieceId(state);
+          if (currentPieceId !== pieceId) {
+            return;
+          }
+          activePiece = activePieces.get(pieceId);
+          if (activePiece && activePiece.end) {
+            console.warn(
+              `${pieceId} activated but it's already been scheduled. Was it activated twice?`
+            );
+            return;
+          }
+          const end = schedule();
+          activePieces.set(pieceId, {
+            deactivate,
+            schedule,
+            end,
+            gainNode: pieceGain,
+          });
+          const userId = selectUserId(state);
+          startEmission({ pieceId, userId });
+          Transport.start();
+          store.dispatch(pieceStartedPlaying());
+        })
+      )
+      .catch((err) => {
+        console.error(err);
+        store.dispatch(piecePlaybackFailed());
       });
-    });
   };
 
   return (action) => {
     const result = next(action);
     switch (action.type) {
-      case USER_STARTED_PLAYBACK: {
-        const pieceId = selectCurrentPieceId(store.getState());
-        stopAll();
-        playPiece({ pieceId });
-        break;
-      }
       case USER_PLAYED_PIECE: {
         const { index, selectionPieceIds } = action.payload;
         const pieceId = selectionPieceIds[index];

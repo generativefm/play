@@ -4,9 +4,10 @@
   padding-top: 2rem;
   max-width: 100rem;
   margin: 0 auto;
+
   &__title {
-    margin-left: 3rem;
     @include type-more-prominent();
+    margin-left: 1rem;
     color: $color-white;
     font-size: 2rem;
     text-decoration: none;
@@ -18,24 +19,49 @@
 
   &__list {
     display: flex;
+    overflow: hidden;
+    padding: 0 0.5rem;
+    position: relative;
 
     &__button-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 2rem;
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+
+      &:first-of-type {
+        transform: translate(5px, -50%);
+        left: 0;
+      }
+
+      &:last-of-type {
+        transform: translate(-5px, -50%);
+        right: 0;
+      }
     }
 
     &__pieces {
+      max-width: $max-width-rem;
       display: flex;
-      overflow: hidden;
+      overflow-x: scroll;
       scroll-behavior: smooth;
+      padding-bottom: 20px;
+      margin-bottom: -20px;
     }
 
     &--is-loading {
       align-items: center;
       justify-content: center;
-      padding: 0 2rem;
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .category {
+    &__title {
+      font-size: 1.25rem;
     }
   }
 }

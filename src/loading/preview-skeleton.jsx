@@ -7,8 +7,8 @@ const PreviewSkeleton = ({ width }) => (
     <div
       className={styles['preview-skeleton__image']}
       style={{
-        width: `calc(${width} - 2rem)`,
-        height: `calc(${width} - 2rem)`,
+        width: `calc(${width} - 1rem)`,
+        height: `calc(${width} - 1rem)`,
       }}
     />
     <TextSkeleton className={styles['preview-skeleton__title']} />

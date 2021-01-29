@@ -1,7 +1,7 @@
 @import '../styles/_theme.scss';
 
 .preview {
-  padding: 2rem 1rem;
+  padding: 2rem 0.5rem;
   display: inline-block;
   box-sizing: border-box;
 
@@ -103,5 +103,18 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@include is-narrow-screen() {
+  .preview {
+    padding: 1rem 0.5rem;
+
+    &__title {
+      font-size: 0.8rem;
+    }
+    &__subtitle {
+      font-size: 0.75rem;
+    }
   }
 }

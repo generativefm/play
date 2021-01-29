@@ -1,27 +1,24 @@
 import { useState, useLayoutEffect } from 'react';
+import useClientWidth from './use-client-width';
 
 const MAX_WIDTH_REM = 100;
 
-const getContentWidth = () => {
+const getContentWidth = (clientWidth) => {
   const remPx = Number.parseFloat(
     getComputedStyle(document.documentElement).fontSize
   );
   const maxWidthPx = MAX_WIDTH_REM * remPx;
-  return Math.min(maxWidthPx, window.innerWidth);
+  return Math.min(maxWidthPx, clientWidth);
 };
 
 const useContentWidth = () => {
-  const [contentWidth, setContentWidth] = useState(getContentWidth());
+  const clientWidth = useClientWidth();
+  const [contentWidth, setContentWidth] = useState(
+    getContentWidth(clientWidth)
+  );
   useLayoutEffect(() => {
-    setContentWidth(getContentWidth());
-    const handleResize = () => {
-      setContentWidth(getContentWidth());
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    setContentWidth(getContentWidth(clientWidth));
+  }, [clientWidth]);
   return contentWidth;
 };
 

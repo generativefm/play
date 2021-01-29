@@ -14,12 +14,13 @@
     outline: none;
   }
 
-  &:hover {
-    background-color: rgba($color-white, 0.15);
-  }
-
-  &:active {
-    background-color: rgba($color-white, 0.3);
+  &--is-not-touched {
+    &:hover {
+      background-color: rgba($color-white, 0.15);
+    }
+    &:active {
+      background-color: rgba($color-white, 0.3);
+    }
   }
 
   &--has-background {
@@ -62,6 +63,24 @@
       animation-timing-function: ease-in-out;
       animation-delay: -500ms;
       will-change: left;
+    }
+  }
+
+  &--is-floating {
+    background-color: $color-primary;
+    color: $color-dark-1;
+    box-shadow: $box-shadow-bottom;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+
+    &.icon-button--is-not-touched {
+      &:hover {
+        background-color: darken($color-primary, 10%);
+      }
+      &:active {
+        background-color: darken($color-primary, 20%);
+      }
     }
   }
 }
