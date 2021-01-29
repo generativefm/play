@@ -10,7 +10,7 @@ import formatPlayTime from './format-play-time';
 import FeedbackButtons from './feedback-buttons';
 import MoreButton from './more-button';
 import usePlayTime from './use-play-time';
-import TextSkeleton from '../loading/text-skeleton';
+import Skeleton from '../loading/skeleton';
 import useUserPlayTime from '../user/use-play-time';
 import useCanPlay from './use-can-play';
 import styles from './piece.module.scss';
@@ -45,17 +45,19 @@ const Piece = () => {
 
   return (
     <div className={styles.piece}>
-      <div className={styles.info}>
-        <img className={styles['info__image']} src={piece.imageSrc} />
-        <div className={styles['info__other']}>
-          <div className={styles['info__other__status']}>
+      <div className={styles['piece__info']}>
+        <img className={styles['piece__info__image']} src={piece.imageSrc} />
+        <div className={styles['piece__info__other']}>
+          <div className={styles['piece__info__other__status']}>
             {!canPlay && (
-              <CloudOff className={styles['info__other__status__icon']} />
+              <CloudOff
+                className={styles['piece__info__other__status__icon']}
+              />
             )}
             {!canPlay && 'Unavailable offline'}
           </div>
-          <div className={styles['info__other__title']}>{piece.title}</div>
-          <div className={styles['info__other__controls']}>
+          <h1 className={styles['piece__info__other__title']}>{piece.title}</h1>
+          <div className={styles['piece__info__other__controls']}>
             <TextButton onClick={handlePlayClick} isPrimary>
               <PlayArrow />
               Play
@@ -63,13 +65,13 @@ const Piece = () => {
             <FeedbackButtons pieceId={id} />
             <MoreButton pieceId={id} shouldEnableLike={false} />
           </div>
-          <div className={styles['info__other__stats']}>
-            <p>released {formatReleaseDate(piece.releaseDate)}</p>
-            <p>
+          <div className={styles['piece__info__other__stats']}>
+            <div>released {formatReleaseDate(piece.releaseDate)}</div>
+            <div>
               {piece.tags.map((tag, i) => (
                 <span key={tag}>
                   <Link
-                    className={styles['info__other__stats__tag']}
+                    className={styles['piece__info__other__stats__tag']}
                     to={`/browse/flavor/${tag}`}
                   >
                     {tag}
@@ -77,34 +79,24 @@ const Piece = () => {
                   {i < piece.tags.length - 1 && '/'}
                 </span>
               ))}
-            </p>
-            {!hasUserPlayTime && (
-              <TextSkeleton
-                className={styles['info__other__stats__skeleton']}
-              />
-            )}
-            {hasUserPlayTime && (
-              <p>
-                {userPlayTime[piece.id]
+            </div>
+            <div>
+              <Skeleton isLoading={!hasUserPlayTime}>
+                {hasUserPlayTime && userPlayTime[piece.id]
                   ? `played for ${formatPlayTime(userPlayTime[piece.id])}`
                   : 'never played'}{' '}
                 by you
-              </p>
-            )}
-            {globalPlayTime === null && (
-              <TextSkeleton
-                className={styles['info__other__stats__skeleton']}
-              />
-            )}
-            {hasGlobalPlayTime && (
-              <p>
-                {globalPlayTime[piece.id]
+              </Skeleton>
+            </div>
+            <div>
+              <Skeleton isLoading={globalPlayTime === null}>
+                {globalPlayTime && globalPlayTime[piece.id]
                   ? `played for ${formatPlayTime(
                       globalPlayTime[piece.id]
                     )} total`
                   : 'never played by anyone else'}
-              </p>
-            )}
+              </Skeleton>
+            </div>
             version {piece.version}
           </div>
         </div>

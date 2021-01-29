@@ -5,71 +5,96 @@
   align-items: center;
   justify-content: center;
   margin-top: 5rem;
-}
 
-.info {
-  display: flex;
-  align-items: center;
+  &__info {
+    display: flex;
+    align-items: center;
 
-  &__image {
-    width: 27rem;
-    height: 27rem;
-    border-radius: $border-radius-lg;
-    box-shadow: $box-shadow-bottom;
-  }
-
-  &__other {
-    padding-left: 2rem;
-
-    &__status {
-      @include type-normal();
-      color: $color-grey;
-      display: flex;
-      align-items: center;
-      position: absolute;
-      transform: translateY(calc(-100% - 1rem));
-
-      &__icon {
-        margin-right: 0.5rem;
-      }
+    &__image {
+      width: 27rem;
+      height: 27rem;
+      border-radius: $border-radius-lg;
+      box-shadow: $box-shadow-bottom;
     }
 
-    &__title {
-      @include type-more-prominent();
-      color: $color-white;
-      font-size: 3rem;
-      display: flex;
-      align-items: center;
-    }
+    &__other {
+      padding-left: 2rem;
 
-    &__controls {
-      display: flex;
-      margin: 1rem 0;
-      > * {
-        margin-left: 0.5rem;
-      }
-      > *:first-child {
-        margin-left: 0;
-        margin-right: 0.5rem;
-      }
-    }
+      &__status {
+        @include type-normal();
+        color: $color-grey;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        transform: translateY(calc(-100% - 1rem));
 
-    &__stats {
-      @include type-normal();
-      color: $color-grey;
-      line-height: 2rem;
-
-      &__tag {
-        text-decoration: none;
-        color: inherit;
-
-        &:hover {
-          border-bottom: 1px solid $color-grey;
+        &__icon {
+          margin-right: 0.5rem;
         }
       }
 
-      &__skeleton {
-        width: 15rem;
+      &__title {
+        @include type-more-prominent();
+        color: $color-white;
+        font-size: 3rem;
+      }
+
+      &__controls {
+        display: flex;
+        margin: 1rem 0;
+        > * {
+          margin-left: 0.5rem;
+        }
+        > *:first-child {
+          margin-left: 0;
+          margin-right: 0.5rem;
+        }
+      }
+
+      &__stats {
+        @include type-normal();
+        color: $color-grey;
+        line-height: 2rem;
+
+        &__tag {
+          text-decoration: none;
+          color: inherit;
+
+          &:hover {
+            border-bottom: 1px solid $color-grey;
+          }
+        }
+
+        &__skeleton {
+          width: 15rem;
+        }
+      }
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .piece {
+    margin-top: 0;
+    &__info {
+      flex-direction: column;
+      &__image {
+        width: 12rem;
+        height: 12rem;
+      }
+      &__other {
+        padding-left: 0;
+        text-align: center;
+
+        &__title {
+          font-size: 1.75rem;
+          text-align: center;
+          margin-top: 1rem;
+        }
+
+        &__skeleton {
+          height: 0.8rem;
+        }
       }
     }
   }

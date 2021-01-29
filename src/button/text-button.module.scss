@@ -15,12 +15,14 @@
   border-radius: $border-radius-sm;
   transition: background-color 200ms;
 
-  &:hover {
-    background-color: rgba($color-primary, 0.05);
-  }
+  &--is-not-touched {
+    &:hover {
+      background-color: rgba($color-primary, 0.05);
+    }
 
-  &:active {
-    background-color: rgba($color-primary, 0.15);
+    &:active {
+      background-color: rgba($color-primary, 0.15);
+    }
   }
 
   &:focus {
@@ -44,12 +46,14 @@
     color: $color-dark-1;
     box-shadow: $box-shadow-bottom;
 
-    &:hover {
-      background-color: rgba($color-primary, 0.8);
-    }
+    &.text-button--is-not-touched {
+      &:hover {
+        background-color: rgba($color-primary, 0.8);
+      }
 
-    &:active {
-      background-color: rgba($color-primary, 0.6);
+      &:active {
+        background-color: rgba($color-primary, 0.6);
+      }
     }
   }
 }

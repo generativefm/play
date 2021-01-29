@@ -1,4 +1,4 @@
-@import '../styles/_theme.scss';
+@import '../styles/theme.scss';
 
 $color-gradient-1: rgba($color-white, 0.1);
 $color-gradient-2: rgba($color-white, 0.15);
@@ -16,6 +16,24 @@ $color-gradient-2: rgba($color-white, 0.15);
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-delay: 1s;
+}
+
+.skeleton {
+  position: relative;
+  color: transparent;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::after {
+    @include background-wipe();
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
 }
 
 @keyframes background-wipe {
