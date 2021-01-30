@@ -1,31 +1,14 @@
-@import '../styles/_colors.scss';
-@import '../styles/_effects.scss';
+@import '../styles/_theme.scss';
 
 .control-bar {
   width: 100%;
-  background-color: $color-dark-3;
-  box-shadow: $box-shadow-top;
+  background-color: $color-dark-2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   box-sizing: border-box;
-  z-index: 2;
-  position: fixed;
-  bottom: 0;
-  left: 0;
   height: 5rem;
-
-  &--will-appear {
-    transform: translateY(100%);
-    will-change: transform;
-  }
-
-  &--is-appearing {
-    transform: none;
-    transition: transform 200ms;
-  }
-
   &__left {
     width: 20rem;
   }
@@ -43,5 +26,11 @@
     &--is-flipping {
       transform: rotate(180deg);
     }
+  }
+}
+
+@include is-narrow-screen() {
+  .control-bar {
+    height: 4rem;
   }
 }

@@ -23,3 +23,13 @@
     }
   }
 }
+
+@include is-narrow-screen() {
+  .browse-grid__header {
+    padding-left: 0.5rem;
+    margin-top: 1rem;
+    &__title {
+      font-size: 1.25rem;
+    }
+  }
+}

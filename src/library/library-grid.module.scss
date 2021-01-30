@@ -4,7 +4,6 @@
   &__header {
     max-width: 100rem;
     margin: 2rem auto 0;
-    overflow: none;
     padding: 0 2rem 0 3rem;
     box-sizing: border-box;
     display: flex;
@@ -15,6 +14,16 @@
       @include type-more-prominent();
       color: $color-white;
       font-size: 2rem;
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .library-grid__header {
+    padding-left: 0.5rem;
+    margin-top: 1rem;
+    &__title {
+      font-size: 1.25rem;
     }
   }
 }

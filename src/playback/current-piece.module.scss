@@ -29,3 +29,13 @@
     }
   }
 }
+
+@include is-narrow-screen() {
+  .current-piece__more {
+    justify-content: center;
+
+    &__title {
+      font-size: 0.9rem;
+    }
+  }
+}

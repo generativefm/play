@@ -38,15 +38,24 @@ const Piece = () => {
   }
 
   const piece = byId[id];
-  const hasGlobalPlayTime =
-    Boolean(globalPlayTime) && Object.keys(globalPlayTime).length > 0;
   const hasUserPlayTime =
     Object.keys(userPlayTime).length > 0 || !isLoadingUserPlayTime;
 
   return (
     <div className={styles.piece}>
       <div className={styles['piece__info']}>
-        <img className={styles['piece__info__image']} src={piece.imageSrc} />
+        <div
+          className={styles['piece__info__image']}
+          style={{ backgroundImage: `url(${piece.imageSrc})` }}
+        >
+          {!canPlay && (
+            <div className={styles['piece__info__image__status']}>
+              <CloudOff
+                className={styles['piece__info__image__status__icon']}
+              />
+            </div>
+          )}
+        </div>
         <div className={styles['piece__info__other']}>
           <div className={styles['piece__info__other__status']}>
             {!canPlay && (

@@ -1,57 +1,56 @@
-import React, { useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import React from 'react';
 import { ExpandLess } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import PlaybackControls from './playback-controls';
 import CurrentPiece from '../playback/current-piece';
 import VolumeSlider from '../volume/volume-slider';
 import IconButton from '../button/icon-button';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
-import userOpenedPlayback from '../playback/user-opened-playback';
-import userClosedPlayback from '../playback/user-closed-playback';
+import useIsNarrowScreen from '../layout/use-is-narrow-screen';
+import CompactPlaybackControls from './compact-playback-controls';
 import styles from './control-bar.module.scss';
 
-const ControlBar = () => {
-  const dispatch = useDispatch();
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
+const ControlBar = ({ onExpandCollapse }) => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
+  const isNarrowScreen = useIsNarrowScreen();
 
-  const handleExpansionClick = useCallback(() => {
-    if (isPlaybackOpen) {
-      return dispatch(userClosedPlayback());
-    }
-    dispatch(userOpenedPlayback());
-  }, [isPlaybackOpen, dispatch]);
-
-  return (
-    <CSSTransition
-      classNames={{
-        appear: styles['control-bar--will-appear'],
-        appearActive: styles['control-bar--is-appearing'],
-      }}
-      timeout={200}
-      appear
-      in
-    >
-      <div className={styles['control-bar']}>
+  if (isNarrowScreen) {
+    return (
+      <div className={styles['control-bar']} onClick={onExpandCollapse}>
         <div className={styles['control-bar__left']}>
           <CurrentPiece />
         </div>
-        <div>
-          <PlaybackControls />
-        </div>
-        <div className={styles['control-bar__right']}>
-          <VolumeSlider />
-          <IconButton onClick={handleExpansionClick}>
-            <ExpandLess
-              className={classnames(styles['flip-vertical'], {
-                [styles['flip-vertical--is-flipping']]: isPlaybackOpen,
-              })}
-            />
-          </IconButton>
+        <div className={styles['control-bar__right']} onClick={stopPropagation}>
+          <CompactPlaybackControls />
         </div>
       </div>
-    </CSSTransition>
+    );
+  }
+
+  return (
+    <div className={styles['control-bar']}>
+      <div className={styles['control-bar__left']}>
+        <CurrentPiece />
+      </div>
+      <div>
+        <PlaybackControls />
+      </div>
+      <div className={styles['control-bar__right']}>
+        <VolumeSlider />
+        <IconButton onClick={onExpandCollapse}>
+          <ExpandLess
+            className={classnames(styles['flip-vertical'], {
+              [styles['flip-vertical--is-flipping']]: isPlaybackOpen,
+            })}
+          />
+        </IconButton>
+      </div>
+    </div>
   );
 };
 

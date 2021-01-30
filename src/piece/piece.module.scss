@@ -15,6 +15,24 @@
       height: 27rem;
       border-radius: $border-radius-lg;
       box-shadow: $box-shadow-bottom;
+      background-size: contain;
+
+      &__status {
+        @include type-normal();
+        display: none;
+        background-color: rgba($color-dark-1, 0.5);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        align-items: center;
+        justify-content: center;
+        color: $color-white;
+        svg {
+          font-size: 4rem;
+        }
+      }
     }
 
     &__other {
@@ -75,16 +93,25 @@
 
 @include is-narrow-screen() {
   .piece {
-    margin-top: 0;
+    margin-top: 3rem;
     &__info {
       flex-direction: column;
       &__image {
         width: 12rem;
         height: 12rem;
+        position: relative;
+
+        &__status {
+          display: flex;
+        }
       }
       &__other {
         padding-left: 0;
         text-align: center;
+
+        &__status {
+          display: none;
+        }
 
         &__title {
           font-size: 1.75rem;
@@ -94,6 +121,10 @@
 
         &__skeleton {
           height: 0.8rem;
+        }
+
+        &__controls {
+          justify-content: center;
         }
       }
     }

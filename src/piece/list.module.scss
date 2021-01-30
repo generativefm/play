@@ -1,0 +1,76 @@
+@import '../styles/_theme.scss';
+
+.list {
+  margin-top: 1rem;
+
+  &--is-not-touched {
+    .list-item {
+      &:hover {
+        background-color: rgba($color-white, 0.1);
+        border-color: transparent;
+      }
+    }
+  }
+}
+
+.list-item {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba($color-white, 0.1);
+  }
+
+  &__image {
+    width: 3rem;
+    height: 3rem;
+    flex-grow: 0;
+    border-radius: $border-radius-sm;
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $box-shadow-bottom;
+  }
+
+  &__info {
+    margin-left: 1rem;
+    flex-grow: 1;
+
+    &__title {
+      @include type-normal();
+      color: $color-white;
+      font-size: 0.9rem;
+      font-weight: $font-weight-medium;
+    }
+
+    &__subtitle {
+      @include type-normal();
+      color: $color-grey;
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  &__more {
+    flex-grow: 0;
+  }
+}
+
+@include is-narrow-screen() {
+  .list-item {
+    padding: 0.5rem;
+
+    &:not(:last-child) {
+      border: none;
+    }
+
+    &__info {
+      margin-left: 0.5rem;
+    }
+  }
+}

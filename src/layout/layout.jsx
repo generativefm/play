@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import classnames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import TopNav from '../top-nav/top-nav';
 import BottomNav from '../bottom-nav/bottom-nav';
@@ -10,10 +10,13 @@ import Piece from '../piece/piece';
 import Browse from '../browse/browse';
 import Flavor from '../flavor/flavor';
 import Playback from '../playback/playback';
+import PlaybackWithControls from '../playback/playback-with-controls';
 import Library from '../library/library';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
+import userOpenedPlayback from '../playback/user-opened-playback';
+import userClosedPlayback from '../playback/user-closed-playback';
 import BrowseGrid from '../browse/browse-grid';
 import LibraryGrid from '../library/library-grid';
 import Settings from '../settings/settings';
@@ -25,11 +28,29 @@ const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
   const currentPieceId = useSelector(selectCurrentPieceId);
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
+  const [isPlaybackClosing, setIsPlaybackClosing] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleControlBarExpandCollapse = useCallback(() => {
+    if (isPlaybackOpen) {
+      dispatch(userClosedPlayback());
+      return;
+    }
+    dispatch(userOpenedPlayback());
+  }, [isPlaybackOpen, dispatch]);
+
+  const handlePlaybackExiting = useCallback(() => {
+    setIsPlaybackClosing(true);
+  }, []);
+
+  const handlePlaybackExited = useCallback(() => {
+    setIsPlaybackClosing(false);
+  }, []);
 
   return (
     <div
       className={classnames(styles.layout, {
-        [styles['layout--is-narrow']]: isNarrowScreen,
+        //        [styles['layout--is-narrow']]: isNarrowScreen,
         [styles['layout--has-controls']]: currentPieceId !== null,
         [styles['layout--has-playback-content']]: isPlaybackOpen,
       })}
@@ -62,13 +83,35 @@ const Layout = () => {
             exit: styles['layout__content__playback--will-exit'],
             exitActive: styles['layout__content__playback--is-exiting'],
           }}
+          onExiting={handlePlaybackExiting}
+          onExited={handlePlaybackExited}
         >
           <div className={styles['layout__content__playback']}>
-            <Playback />
+            {isNarrowScreen ? <PlaybackWithControls /> : <Playback />}
           </div>
         </CSSTransition>
       </div>
-      {currentPieceId && <ControlBar />}
+      <CSSTransition
+        classNames={{
+          appear: styles['layout__control-bar--will-enter'],
+          appearActive: styles['layout__control-bar--is-entering'],
+          enter: styles['layout__control-bar--will-enter'],
+          enterActive: styles['layout__control-bar--is-entering'],
+        }}
+        timeout={200}
+        appear
+        unmountOnExit
+        in={Boolean(currentPieceId)}
+      >
+        <div
+          className={classnames(styles['layout__control-bar'], {
+            [styles['layout__control-bar--has-playback-above']]:
+              isPlaybackOpen || isPlaybackClosing,
+          })}
+        >
+          <ControlBar onExpandCollapse={handleControlBarExpandCollapse} />
+        </div>
+      </CSSTransition>
       {isNarrowScreen && <BottomNav />}
     </div>
   );

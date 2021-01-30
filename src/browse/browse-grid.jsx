@@ -5,6 +5,8 @@ import Select from '../select/select';
 import useContentWidth from '../layout/use-content-width';
 import useSortings from './use-sortings';
 import Grid from '../piece/grid';
+import useIsNarrowScreen from '../layout/use-is-narrow-screen';
+import List from '../piece/list';
 import styles from './browse-grid.module.scss';
 
 const SORT_LABELS = {
@@ -26,6 +28,7 @@ const BrowseGrid = ({
   const { search: queryString } = useLocation();
   const history = useHistory();
   const queryStringSortMatch = queryString.match(SORT_REGEX);
+  const isNarrowScreen = useIsNarrowScreen();
 
   const [sorting, setSorting] = useState(
     (queryStringSortMatch &&
@@ -81,7 +84,11 @@ const BrowseGrid = ({
           />
         </div>
       </div>
-      <Grid pieceIds={sortedPieceIds} />
+      {isNarrowScreen ? (
+        <List pieceIds={sortedPieceIds} />
+      ) : (
+        <Grid pieceIds={sortedPieceIds} />
+      )}
     </>
   );
 };

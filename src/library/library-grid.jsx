@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import Grid from '../piece/grid';
 import useContentWidth from '../layout/use-content-width';
 import useLibraryCategories from './use-library-categories';
+import List from '../piece/list';
+import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import styles from './library-grid.module.scss';
 
 const titlesByPage = {
@@ -15,6 +17,7 @@ const LibraryGrid = () => {
   const contentWidth = useContentWidth();
   const location = useLocation();
   const categories = useLibraryCategories();
+  const isNarrowScreen = useIsNarrowScreen();
   const page = useMemo(
     () =>
       location.pathname
@@ -32,7 +35,11 @@ const LibraryGrid = () => {
       >
         <h1 className={styles['library-grid__header__title']}>{title}</h1>
       </div>
-      <Grid pieceIds={orderedPieceIds} getSubtitle={getSubtitle} />
+      {isNarrowScreen ? (
+        <List pieceIds={orderedPieceIds} getSubtitle={getSubtitle} />
+      ) : (
+        <Grid pieceIds={orderedPieceIds} getSubtitle={getSubtitle} />
+      )}
     </>
   );
 };

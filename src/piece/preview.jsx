@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,6 +21,7 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
   const piece = byId[pieceId];
   const dispatch = useDispatch();
   const canPlay = useCanPlay(pieceId);
+  const [isTouched, setIsTouched] = useState(false);
 
   const createContextMenuForMouseEvent = useCreateContextMenuForMouseEvent(
     <PieceContextMenu pieceId={pieceId} />
@@ -45,15 +46,33 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
     [pieceId, onPlay, isCurrentlyPlaying, dispatch]
   );
 
+  const handleTouchStart = useCallback(() => {
+    setIsTouched(true);
+  }, []);
+
+  const handleClick = useCallback(
+    (event) => {
+      if (!isTouched) {
+        return;
+      }
+      event.preventDefault();
+      onPlay(pieceId);
+    },
+    [isTouched, onPlay, pieceId]
+  );
+
   const subtitle = getSubtitle(piece);
 
   return (
     <div
-      className={styles.preview}
+      className={classnames(styles.preview, {
+        [styles['preview--is-not-touched']]: !isTouched,
+      })}
       style={{ width }}
       onContextMenu={createContextMenuForMouseEvent}
+      onTouchStart={handleTouchStart}
     >
-      <Link to={`/generator/${pieceId}`}>
+      <Link to={`/generator/${pieceId}`} onClick={handleClick}>
         <div
           className={classnames(styles['preview__image'], {
             [styles['preview__image--is-loading']]: isCurrentlyLoading,

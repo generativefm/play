@@ -83,6 +83,17 @@
       }
     }
   }
+
+  &--is-secondary {
+    width: 4rem;
+    height: 4rem;
+    background-color: $color-dark-4;
+    border-radius: 50%;
+
+    svg {
+      font-size: 3rem;
+    }
+  }
 }
 
 @keyframes tick {

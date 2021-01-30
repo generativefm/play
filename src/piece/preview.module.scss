@@ -5,14 +5,8 @@
   display: inline-block;
   box-sizing: border-box;
 
-  &__image {
-    border-radius: $border-radius-md;
-    box-shadow: $box-shadow-bottom;
-    transition: filter 200ms;
-    position: relative;
-    background-size: contain;
-
-    &:hover {
+  &--is-not-touched {
+    .preview__image:hover {
       .preview__image__more,
       .preview__image__action {
         visibility: visible;
@@ -39,6 +33,18 @@
         animation: 200ms fade-in;
       }
     }
+
+    .preview__title:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__image {
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-bottom;
+    transition: filter 200ms;
+    position: relative;
+    background-size: contain;
 
     &__more {
       z-index: 2;
@@ -82,10 +88,6 @@
     margin-top: 0.5rem;
     text-decoration: none;
     display: block;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   &__subtitle {

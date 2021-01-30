@@ -6,20 +6,14 @@ import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStoppedPlayback from '../playback/user-stopped-playback';
 import userPlayedPiece from '../playback/user-played-piece';
-import TimerControl from '../timer/timer-control';
-import ShuffleControl from '../queue/shuffle-control';
-import LoopControl from '../queue/loop-control';
-import PreviousControl from '../queue/previous-control';
 import NextControl from '../queue/next-control';
 import useHotkey from '../app/use-hotkey';
 import selectQueue from '../queue/select-queue';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
-import styles from './playback-controls.module.scss';
+import styles from './compact-playback-controls.module.scss';
 
 const PlaybackControls = () => {
   const dispatch = useDispatch();
   const playbackStatus = useSelector(selectPlaybackStatus);
-  const isNarrowScreen = useIsNarrowScreen();
   const { index, pieceIds: queuedPieceIds } = useSelector(selectQueue);
 
   const handlePlayClick = useCallback(() => {
@@ -35,23 +29,19 @@ const PlaybackControls = () => {
 
   useHotkey(' ', isPlaying ? handleStopClick : handlePlayClick);
   return (
-    <div className={styles['playback-controls']}>
-      {!isNarrowScreen && <TimerControl />}
-      {!isNarrowScreen && <ShuffleControl />}
-      {!isNarrowScreen && <LoopControl />}
-      {!isNarrowScreen && <PreviousControl />}
+    <div className={styles['compact-playback-controls']}>
       {isLoading ? (
         <CircularLoadingIndicator />
       ) : (
         <IconButton>
           {isPlaying ? (
             <Stop
-              className={styles['icon--primary']}
+              className={styles['compact-playback-controls__icon--primary']}
               onClick={handleStopClick}
             />
           ) : (
             <PlayArrow
-              className={styles['icon--primary']}
+              className={styles['compact-playback-controls__icon--primary']}
               onClick={handlePlayClick}
             />
           )}

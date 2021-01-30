@@ -10,8 +10,10 @@ const IconButton = ({
   isActive = false,
   isTicking = false,
   isFloating = false,
+  isSecondary = false,
+  isTouched = false,
 }) => {
-  const [hasBeenTouched, setHasBeenTouched] = useState(false);
+  const [hasBeenTouched, setHasBeenTouched] = useState(isTouched);
 
   const handleTouchStart = useCallback(() => {
     setHasBeenTouched(true);
@@ -28,6 +30,7 @@ const IconButton = ({
           !isDisabled && isActive && isTicking,
         [styles['icon-button--is-floating']]: isFloating,
         [styles['icon-button--is-not-touched']]: !hasBeenTouched,
+        [styles['icon-button--is-secondary']]: isSecondary,
       })}
       onClick={onClick}
       onTouchStart={handleTouchStart}

@@ -1,0 +1,140 @@
+@import '../styles/_theme.scss';
+
+.playback-with-controls {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
+  &__current-piece {
+    padding: 1rem 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(100% - 3rem);
+    box-sizing: border-box;
+
+    &--will-enter {
+      transform: translateY(-100%);
+      will-change: transform;
+    }
+
+    &--is-entering {
+      transform: none;
+      transition: transform 200ms;
+    }
+
+    &--will-exit {
+      transform: none;
+      will-change: transform;
+    }
+
+    &--is-exiting {
+      transform: translateY(-100%);
+      transition: transform 200ms;
+    }
+
+    &__top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    &__title {
+      @include type-less-prominent();
+      color: $color-white;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 100%;
+    }
+
+    &__image {
+      width: 13rem;
+      height: 13rem;
+      border-radius: $border-radius-lg;
+      margin: 0 1rem;
+    }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+
+      &__loader {
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  &__queue-button {
+    @include type-ui();
+    background-color: $color-dark-3;
+    color: $color-white;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $box-shadow-top;
+    cursor: pointer;
+    font-size: 0.85rem;
+
+    svg {
+      margin-right: 1rem;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__control-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &__queue {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: $box-shadow-top;
+    background-color: $color-dark-3;
+
+    &--will-enter {
+      transform: translateY(100%);
+      will-change: transform;
+    }
+
+    &--is-entering {
+      transform: none;
+      transition: transform 200ms;
+    }
+
+    &--will-exit {
+      transform: none;
+      will-change: transform;
+    }
+
+    &--is-exiting {
+      transform: translateY(100%);
+      transition: transform 200ms;
+    }
+  }
+}
