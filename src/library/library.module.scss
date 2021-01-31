@@ -1,0 +1,43 @@
+@import '../styles/_theme.scss';
+
+.category-placeholder {
+  @include type-normal();
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  padding: 1rem 2rem;
+  background-color: $color-dark-3;
+  box-shadow: $box-shadow-bottom;
+  border-radius: $border-radius-md;
+  margin: 2rem;
+
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;
+    transition: color 200ms;
+    color: inherit;
+    padding-bottom: 0.25rem;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__icon {
+    margin: 0 0.5rem;
+    color: $color-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@include is-narrow-screen() {
+  .category-placeholder {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}

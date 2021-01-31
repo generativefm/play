@@ -2,7 +2,7 @@ import React from 'react';
 import Skeleton from './skeleton';
 import styles from '../piece/preview.module.scss';
 
-const PreviewSkeleton = ({ width }) => (
+const PreviewSkeleton = ({ width, isAnimated = true }) => (
   <div className={styles.preview} style={{ width }}>
     <Skeleton
       className={styles['preview__image']}
@@ -11,12 +11,13 @@ const PreviewSkeleton = ({ width }) => (
         height: `calc(${width} - 1rem)`,
       }}
       useDiv={true}
+      isAnimated={isAnimated}
     />
     <div className={styles['preview__title']}>
-      <Skeleton>Loading title...</Skeleton>
+      <Skeleton isAnimated={isAnimated}>Loading title...</Skeleton>
     </div>
     <div className={styles['preview__subtitle']}>
-      <Skeleton>Loading subtitle...</Skeleton>
+      <Skeleton isAnimated={isAnimated}>Loading subtitle...</Skeleton>
     </div>
   </div>
 );

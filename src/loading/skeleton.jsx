@@ -4,23 +4,34 @@ import styles from './skeleton.module.scss';
 
 const Skeleton = ({
   children,
-  isLoading = true,
   className,
   style,
+  isLoading = true,
   useDiv = false,
+  isAnimated = true,
 }) => {
   if (!isLoading) {
     return children;
   }
   if (useDiv) {
     return (
-      <div className={classnames(styles['skeleton'], className)} style={style}>
+      <div
+        className={classnames(styles['skeleton'], className, {
+          [styles['skeleton--is-animated']]: isAnimated,
+        })}
+        style={style}
+      >
         {children}
       </div>
     );
   }
   return (
-    <span className={classnames(styles['skeleton'], className)} style={style}>
+    <span
+      className={classnames(styles['skeleton'], className, {
+        [styles['skeleton--is-animated']]: isAnimated,
+      })}
+      style={style}
+    >
       {children}
     </span>
   );

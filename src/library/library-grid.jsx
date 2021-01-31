@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import Grid from '../piece/grid';
 import useContentWidth from '../layout/use-content-width';
 import useLibraryCategories from './use-library-categories';
@@ -27,6 +27,11 @@ const LibraryGrid = () => {
   );
   const { orderedPieceIds, getSubtitle } = categories[page] || {};
   const title = titlesByPage[page];
+
+  if (Array.isArray(orderedPieceIds) && orderedPieceIds.length === 0) {
+    return <Redirect to="/browse" />;
+  }
+
   return (
     <>
       <div

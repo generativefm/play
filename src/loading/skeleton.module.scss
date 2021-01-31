@@ -23,9 +23,13 @@ $color-gradient-2: rgba($color-white, 0.15);
   color: transparent;
   overflow: hidden;
   pointer-events: none;
+  background: $color-gradient-1;
+
+  &--is-animated::after {
+    @include background-wipe();
+  }
 
   &::after {
-    @include background-wipe();
     content: '';
     position: absolute;
     top: 0;

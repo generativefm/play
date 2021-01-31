@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useRef, useLayoutEffect } from 'react';
-import { byId } from '@generative-music/pieces-alex-bainter';
 import { ChevronRight, ChevronLeft } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +12,13 @@ import useClientWidth from '../layout/use-client-width';
 import useRemValue from '../layout/use-rem-value';
 import styles from './category.module.scss';
 
-const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
+const Category = ({
+  title,
+  pieceIds,
+  getSubtitle,
+  linkTo,
+  placeholder = null,
+}) => {
   const listRef = useRef(null);
   const contentWidth = useContentWidth();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -61,8 +66,13 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
       return;
     }
     const { width } = listRef.current.getBoundingClientRect();
+    console.log(
+      listRef.current.scrollLeft + width,
+      listRef.current.scrollWidth
+    );
     setCanScrollRight(
-      listRef.current.scrollLeft + width < listRef.current.scrollWidth
+      Math.ceil(listRef.current.scrollLeft + width) <
+        listRef.current.scrollWidth
     );
   }, [pieceIds]);
 
@@ -81,14 +91,16 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   if (!Array.isArray(pieceIds)) {
     return (
       <div className={styles.category}>
-        <div className={styles['category__title']}>{title}</div>
+        <Link to={linkTo} className={styles['category__title']}>
+          {title}
+        </Link>
         <div
           className={classnames(
             styles['category__list'],
-            styles['category__list--is-loading']
+            styles['category__list--is-empty']
           )}
         >
-          {Array.from({ length: 6 }, (_, i) => (
+          {Array.from({ length: numVisiblePieces }, (_, i) => (
             <PreviewSkeleton key={i} width={`${previewWidthPx}px`} />
           ))}
         </div>
@@ -97,7 +109,31 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   }
 
   if (pieceIds.length === 0) {
-    return null;
+    if (!placeholder) {
+      return null;
+    }
+    return (
+      <div className={styles.category}>
+        <div className={styles['category__title']}>{title}</div>
+        <div
+          className={classnames(
+            styles['category__list'],
+            styles['category__list--is-empty']
+          )}
+        >
+          {Array.from({ length: numVisiblePieces }, (_, i) => (
+            <PreviewSkeleton
+              key={i}
+              width={`${previewWidthPx}px`}
+              isAnimated={false}
+            />
+          ))}
+          <div className={styles['category__list__placeholder']}>
+            {placeholder}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

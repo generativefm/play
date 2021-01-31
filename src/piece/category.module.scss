@@ -11,10 +11,12 @@
     color: $color-white;
     font-size: 2rem;
     text-decoration: none;
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+  }
 
-    &:hover {
-      border-bottom: 1px solid $color-white;
-    }
+  a#{&}__title:hover {
+    border-color: $color-white;
   }
 
   &__list {
@@ -51,7 +53,19 @@
       margin-bottom: -20px;
     }
 
-    &--is-loading {
+    &__placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba($color-dark-1, 0.66);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--is-empty {
       align-items: center;
       justify-content: center;
     }
