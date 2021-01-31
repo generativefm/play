@@ -88,6 +88,7 @@
     margin-top: 0.5rem;
     text-decoration: none;
     display: block;
+    font-weight: $font-weight-medium;
   }
 
   &__subtitle {
@@ -113,10 +114,10 @@
     padding: 1rem 0.5rem;
 
     &__title {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
     }
     &__subtitle {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
     }
   }
 }
