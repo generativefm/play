@@ -3,40 +3,67 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import sampleLibrary from '../playback/sample-library';
 
 const cache = new Map();
+const checksInProgress = new Map();
+
+window.addEventListener('offline', () => {
+  cache.clear();
+  checksInProgress.clear();
+});
+window.addEventListener('online', () => {
+  cache.clear();
+  checksInProgress.clear();
+});
 
 const useCanPlay = (pieceId) => {
-  const [canPlay, setCanPlay] = useState(true);
+  const [canPlay, setCanPlay] = useState(
+    cache.has(pieceId) ? cache.get(pieceId) : true
+  );
   useEffect(() => {
-    if (!pieceId || !byId[pieceId]) {
-      setCanPlay(false);
-      return;
-    }
     let isCancelled = false;
-    const { sampleNames = [] } = byId[pieceId];
-
-    const checkAndUpdateStatus = () => {
-      cache.delete(pieceId);
-      return sampleLibrary.has(sampleNames).then((result) => {
-        if (isCancelled) {
+    const getResultFromPromise = (promise) =>
+      promise.then((result) => {
+        if (isCancelled || checksInProgress.get(pieceId) !== promise) {
+          if (checksInProgress.get(pieceId) === promise) {
+            checksInProgress.delete(pieceId);
+          }
           return;
         }
+        checksInProgress.delete(promise);
         cache.set(pieceId, result);
         setCanPlay(result);
       });
+
+    const checkAndSetValue = () => {
+      if (!pieceId || !byId[pieceId]) {
+        setCanPlay(false);
+        return;
+      }
+      if (cache.has(pieceId)) {
+        setCanPlay(cache.get(pieceId));
+        return;
+      }
+      const { sampleNames = [] } = byId[pieceId];
+      if (sampleNames.length === 0) {
+        cache.set(pieceId, true);
+        setCanPlay(true);
+        return;
+      }
+      if (checksInProgress.has(pieceId)) {
+        const promise = checksInProgress.get(pieceId);
+        getResultFromPromise(promise);
+        return;
+      }
+      const promise = sampleLibrary.has(sampleNames);
+      checksInProgress.set(pieceId, promise);
+      getResultFromPromise(promise);
     };
-
-    window.addEventListener('offline', checkAndUpdateStatus);
-    window.addEventListener('online', checkAndUpdateStatus);
-
-    if (cache.has(pieceId)) {
-      setCanPlay(cache.get(pieceId));
-    } else {
-      checkAndUpdateStatus();
-    }
+    checkAndSetValue();
+    window.addEventListener('offline', checkAndSetValue);
+    window.addEventListener('online', checkAndSetValue);
     return () => {
       isCancelled = true;
-      window.removeEventListener('offline', checkAndUpdateStatus);
-      window.removeEventListener('online', checkAndUpdateStatus);
+      window.removeEventListener('offline', checkAndSetValue);
+      window.removeEventListener('online', checkAndSetValue);
     };
   }, [pieceId]);
   return canPlay;

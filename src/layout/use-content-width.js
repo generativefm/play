@@ -1,24 +1,18 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useClientWidth from './use-client-width';
+import useRemValue from './use-rem-value';
 
 const MAX_WIDTH_REM = 100;
 
-const getContentWidth = (clientWidth) => {
-  const remPx = Number.parseFloat(
-    getComputedStyle(document.documentElement).fontSize
-  );
-  const maxWidthPx = MAX_WIDTH_REM * remPx;
-  return Math.min(maxWidthPx, clientWidth);
-};
-
 const useContentWidth = () => {
   const clientWidth = useClientWidth();
+  const remValue = useRemValue();
   const [contentWidth, setContentWidth] = useState(
-    getContentWidth(clientWidth)
+    Math.min(remValue * MAX_WIDTH_REM, clientWidth)
   );
-  useLayoutEffect(() => {
-    setContentWidth(getContentWidth(clientWidth));
-  }, [clientWidth]);
+  useEffect(() => {
+    setContentWidth(Math.min(remValue * MAX_WIDTH_REM, clientWidth));
+  }, [clientWidth, remValue]);
   return contentWidth;
 };
 

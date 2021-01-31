@@ -10,6 +10,7 @@ import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';
 import PreviewSkeleton from '../loading/preview-skeleton';
 import useClientWidth from '../layout/use-client-width';
+import useRemValue from '../layout/use-rem-value';
 import styles from './category.module.scss';
 
 const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
@@ -19,8 +20,15 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
   const [canScrollRight, setCanScrollRight] = useState(false);
   const dispatch = useDispatch();
   const clientWidth = useClientWidth();
+  const remPx = useRemValue();
 
   const numVisiblePieces = Math.min(Math.floor(clientWidth / 175), 6);
+  const previewWidthPx = (contentWidth - remPx) / numVisiblePieces;
+
+  const [renderedStartIndex, setRenderedStartIndex] = useState(0);
+  const [renderedStopIndex, setRenderedStopIndex] = useState(
+    numVisiblePieces * 2 - 1
+  );
 
   const handlePreviousClick = useCallback(() => {
     const { width } = listRef.current.getBoundingClientRect();
@@ -40,7 +48,13 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
     setCanScrollRight(
       listRef.current.scrollLeft + width < listRef.current.scrollWidth
     );
-  }, []);
+    setRenderedStartIndex(
+      Math.floor(listRef.current.scrollLeft / previewWidthPx)
+    );
+    setRenderedStopIndex(
+      Math.ceil((listRef.current.scrollLeft + width) / previewWidthPx)
+    );
+  }, [previewWidthPx]);
 
   useLayoutEffect(() => {
     if (!listRef.current) {
@@ -75,10 +89,7 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
           )}
         >
           {Array.from({ length: 6 }, (_, i) => (
-            <PreviewSkeleton
-              key={i}
-              width={`calc((${contentWidth}px - 1rem) / ${numVisiblePieces})`}
-            />
+            <PreviewSkeleton key={i} width={`${previewWidthPx}px`} />
           ))}
         </div>
       </div>
@@ -110,17 +121,29 @@ const Category = ({ title, pieceIds, getSubtitle, linkTo }) => {
           ref={listRef}
           onScroll={handleScroll}
         >
+          <div
+            style={{
+              minWidth: `${previewWidthPx * renderedStartIndex}px`,
+            }}
+          />
           {pieceIds
-            .filter((pieceId) => Boolean(byId[pieceId]))
+            .filter((_, i) => i >= renderedStartIndex && i <= renderedStopIndex)
             .map((pieceId) => (
               <Preview
                 key={pieceId}
                 pieceId={pieceId}
-                width={`calc((${contentWidth}px - 1rem) / ${numVisiblePieces})`}
+                width={`${previewWidthPx}px`}
                 getSubtitle={getSubtitle}
                 onPlay={handlePiecePlay}
               />
             ))}
+          <div
+            style={{
+              minWidth: `${
+                previewWidthPx * (pieceIds.length - 1 - renderedStopIndex)
+              }px`,
+            }}
+          />
         </div>
         <div
           className={styles['category__list__button-container']}
