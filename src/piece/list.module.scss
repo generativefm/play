@@ -25,6 +25,10 @@
     border-bottom: 1px solid rgba($color-white, 0.1);
   }
 
+  &--is-current {
+    background-color: rgba($color-white, 0.1);
+  }
+
   &__image {
     width: 3rem;
     height: 3rem;
@@ -64,6 +68,10 @@
 @include is-narrow-screen() {
   .list-item {
     padding: 0.5rem 1rem;
+
+    &--is-current {
+      background-color: transparent;
+    }
 
     &:not(:last-child) {
       border: none;

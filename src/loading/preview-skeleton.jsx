@@ -3,7 +3,10 @@ import Skeleton from './skeleton';
 import styles from '../piece/preview.module.scss';
 
 const PreviewSkeleton = ({ width, isAnimated = true }) => (
-  <div className={styles.preview} style={{ width }}>
+  <div
+    className={styles.preview}
+    style={{ width, height: `calc(${width} * 1.4)` }}
+  >
     <Skeleton
       className={styles['preview__image']}
       style={{

@@ -96,9 +96,11 @@ const Category = ({
             styles['category__list--is-empty']
           )}
         >
-          {Array.from({ length: numVisiblePieces }, (_, i) => (
-            <PreviewSkeleton key={i} width={`${previewWidthPx}px`} />
-          ))}
+          <div className={styles['category__list__pieces']}>
+            {Array.from({ length: numVisiblePieces }, (_, i) => (
+              <PreviewSkeleton key={i} width={`${previewWidthPx}px`} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -117,13 +119,15 @@ const Category = ({
             styles['category__list--is-empty']
           )}
         >
-          {Array.from({ length: numVisiblePieces }, (_, i) => (
-            <PreviewSkeleton
-              key={i}
-              width={`${previewWidthPx}px`}
-              isAnimated={false}
-            />
-          ))}
+          <div className={styles['category__list__pieces']}>
+            {Array.from({ length: numVisiblePieces }, (_, i) => (
+              <PreviewSkeleton
+                key={i}
+                width={`${previewWidthPx}px`}
+                isAnimated={false}
+              />
+            ))}
+          </div>
           <div className={styles['category__list__placeholder']}>
             {placeholder}
           </div>

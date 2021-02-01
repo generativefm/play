@@ -71,7 +71,7 @@ const useLibraryCategories = () => {
     isLoadingUser,
     userId,
   ]);
-  const [combinedPlayTime, setCombinedPlayTime] = useState({});
+  const [combinedPlayTime, setCombinedPlayTime] = useState(syncedPlayTime);
 
   useEffect(() => {
     let isCancelled = false;
@@ -91,7 +91,7 @@ const useLibraryCategories = () => {
     return () => {
       isCancelled = true;
     };
-  }, [syncedPlayTime]);
+  }, [syncedPlayTime, isLoadingUser]);
 
   const orderedHistoryPieceIds = useMemo(
     () =>

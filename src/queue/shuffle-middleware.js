@@ -7,7 +7,7 @@ import selectIsShuffleActive from './select-is-shuffle-active';
 
 const shuffleArray = (arr) => {
   const arrCopy = arr.slice();
-  for (let i = arrCopy.length; i > 0; i--) {
+  for (let i = arrCopy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arrCopy[i], arrCopy[j]] = [arrCopy[j], arrCopy[i]];
   }

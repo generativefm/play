@@ -1,7 +1,7 @@
 @import '../styles/theme.scss';
 
-$color-gradient-1: rgba($color-white, 0.1);
-$color-gradient-2: rgba($color-white, 0.15);
+$color-gradient-1: rgba($color-white, 0.05);
+$color-gradient-2: rgba($color-white, 0.1);
 
 @mixin background-wipe() {
   background: linear-gradient(

@@ -45,7 +45,6 @@
     }
 
     &__pieces {
-      max-width: $max-width-rem;
       display: flex;
       overflow-x: scroll;
       scroll-behavior: smooth;
@@ -59,7 +58,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba($color-dark-1, 0.66);
+      background-color: rgba($color-dark-1, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;

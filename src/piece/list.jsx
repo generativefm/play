@@ -21,6 +21,7 @@ const ListItem = ({
   onClick,
   isLoading,
   isPlaying,
+  isCurrentPiece,
 }) => {
   const piece = byId[pieceId];
   const { title, imageSrc } = piece;
@@ -30,7 +31,12 @@ const ListItem = ({
   const canPlay = useCanPlay(pieceId);
 
   return (
-    <div className={styles['list-item']} onClick={handleClick}>
+    <div
+      className={classnames(styles['list-item'], {
+        [styles['list-item--is-current']]: isCurrentPiece,
+      })}
+      onClick={handleClick}
+    >
       <div
         className={styles['list-item__image']}
         style={{ backgroundImage: `url(${imageSrc})` }}
@@ -126,6 +132,7 @@ const List = ({ pieceIds, getSubtitle }) => {
             key={pieceId}
             pieceId={pieceId}
             getSubtitle={getSubtitle}
+            isCurrentPiece={isCurrentPiece}
             isLoading={isCurrentPiece && playbackStatus === 'loading'}
             isPlaying={isCurrentPiece && playbackStatus === 'playing'}
             onClick={handlePieceClick}

@@ -68,7 +68,7 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
       className={classnames(styles.preview, {
         [styles['preview--is-not-touched']]: !isTouched,
       })}
-      style={{ width }}
+      style={{ width, height: `calc(${width} * 1.4)` }}
       onContextMenu={createContextMenuForMouseEvent}
       onTouchStart={handleTouchStart}
     >
