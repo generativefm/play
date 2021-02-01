@@ -20,7 +20,7 @@
 
 @include is-narrow-screen() {
   .library-grid__header {
-    padding-left: 0.5rem;
+    padding-left: 1rem;
     margin-top: 1rem;
     &__title {
       font-size: 1.25rem;

@@ -18,7 +18,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
 
     &__logo {
       width: 15rem;
@@ -47,6 +46,7 @@
       opacity: 0;
       margin-top: 1rem;
       text-align: center;
+      font-size: 1.25rem;
 
       &--will-appear {
         opacity: 0;
@@ -76,6 +76,36 @@
 
         &:hover {
           color: $color-primary;
+        }
+      }
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .about {
+    margin-top: 1rem;
+
+    &__header {
+      font-size: 1.25rem;
+    }
+
+    &__body {
+      margin-top: 1rem;
+
+      &__logo {
+        margin-bottom: 0.5rem;
+        height: 12rem;
+        width: 12rem;
+      }
+
+      &__text {
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+        line-height: 2;
+
+        &__title {
+          font-size: 1.25rem;
         }
       }
     }

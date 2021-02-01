@@ -43,3 +43,17 @@
     margin-top: 1rem;
   }
 }
+
+@include is-narrow-screen() {
+  .settings {
+    margin-top: 1rem;
+
+    &__header {
+      font-size: 1.25rem;
+    }
+  }
+
+  .setting {
+    margin-top: 1.5rem;
+  }
+}

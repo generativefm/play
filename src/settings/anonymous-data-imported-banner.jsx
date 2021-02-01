@@ -72,9 +72,9 @@ const AnonymousDataImportedBanner = () => {
     setDialogActions(createDialogActions());
   }, [createDialogActions]);
 
-  if (!hasAnonymousData(anonymousData)) {
-    return null;
-  }
+  // if (!hasAnonymousData(anonymousData)) {
+  //   return null;
+  // }
 
   const totalPlayTime =
     anonymousData.playTime &&

@@ -15,6 +15,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
+  box-shadow: $box-shadow-bottom;
 
   &--will-appear {
     opacity: 0;
@@ -54,5 +55,23 @@
   &__buttons {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+@include is-narrow-screen() {
+  .banner {
+    flex-direction: column;
+    top: 4rem;
+
+    &__content {
+      align-self: flex-start;
+    }
+
+    &__buttons {
+      align-self: flex-end;
+      margin-top: 1rem;
+      margin-bottom: -0.5rem;
+      margin-right: -0.5rem;
+    }
   }
 }

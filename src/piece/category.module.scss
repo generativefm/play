@@ -74,6 +74,7 @@
 
 @include is-narrow-screen() {
   .category {
+    padding-top: 1rem;
     &__title {
       font-size: 1.25rem;
     }

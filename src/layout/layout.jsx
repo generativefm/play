@@ -22,6 +22,7 @@ import LibraryGrid from '../library/library-grid';
 import Settings from '../settings/settings';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import About from '../about/about';
+import TopBar from '../top-bar/top-bar';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -56,6 +57,7 @@ const Layout = () => {
       })}
     >
       {!isNarrowScreen && <TopNav />}
+      {isNarrowScreen && <TopBar />}
       <AnonymousDataImportedBanner />
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>

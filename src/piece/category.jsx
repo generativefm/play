@@ -66,10 +66,6 @@ const Category = ({
       return;
     }
     const { width } = listRef.current.getBoundingClientRect();
-    console.log(
-      listRef.current.scrollLeft + width,
-      listRef.current.scrollWidth
-    );
     setCanScrollRight(
       Math.ceil(listRef.current.scrollLeft + width) <
         listRef.current.scrollWidth
