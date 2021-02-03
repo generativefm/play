@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Share, ArtTrack, FiberManualRecord } from '@material-ui/icons';
+import { Share, ArtTrack, FiberManualRecord, Album } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
@@ -70,14 +70,24 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
           Go to generator
         </ContextMenuOption>
       )}
-      <ContextMenuOption
-        href={`https://record.generative.fm/browse?new-recording=${pieceId}`}
-      >
-        <FiberManualRecord
-          className={contextMenuOptionStyles['context-menu-option__icon']}
-        />
-        Record with Generative.fm Record
-      </ContextMenuOption>
+      {byId[pieceId].downloadUrl && (
+        <ContextMenuOption href={byId[pieceId].downloadUrl}>
+          <Album
+            className={contextMenuOptionStyles['context-menu-option__icon']}
+          />
+          Download recordings
+        </ContextMenuOption>
+      )}
+      {byId[pieceId].isRecordable && (
+        <ContextMenuOption
+          href={`https://record.generative.fm/browse?new-recording=${pieceId}`}
+        >
+          <FiberManualRecord
+            className={contextMenuOptionStyles['context-menu-option__icon']}
+          />
+          Record with Generative.fm Record
+        </ContextMenuOption>
+      )}
     </>
   );
 };

@@ -1,0 +1,238 @@
+@import '../styles/_theme.scss';
+
+.donate {
+  max-width: 100rem;
+  margin: 2rem auto 1rem;
+  padding: 0 1rem;
+  line-height: 1.2;
+
+  &__title {
+    @include type-more-prominent();
+    color: $color-white;
+    font-size: 2rem;
+  }
+
+  &__subtitle {
+    @include type-less-prominent();
+    color: $color-grey;
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  &__campaign {
+    width: 100%;
+
+    &__metric {
+      @include type-normal();
+      font-weight: $font-weight-medium;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+      font-size: 1.1rem;
+
+      &__current {
+        color: $color-primary;
+      }
+
+      &__objective {
+        color: $color-white;
+        text-align: right;
+      }
+    }
+
+    &__meter {
+      position: relative;
+      width: 100%;
+      margin-top: 1rem;
+      &__track {
+        background-color: rgba($color-white, 0.25);
+        border-radius: 10rem;
+        height: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      &__fill {
+        background-color: $color-primary;
+        border-radius: 10rem;
+        height: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: width 200ms;
+      }
+    }
+  }
+
+  &__shout-out {
+    width: 100%;
+    text-align: right;
+    margin-top: 3rem;
+
+    &__message {
+      @include type-normal();
+      text-align: right;
+      margin-left: auto;
+      color: $color-grey;
+      opacity: 0;
+      text-decoration: none;
+      border-bottom: 1px solid $color-primary;
+      transition: color 200ms;
+      padding-bottom: 0.25rem;
+      display: inline-block;
+
+      $class-shout-out: &;
+      &:hover {
+        color: $color-primary;
+        #{$class-shout-out}__name {
+          color: $color-primary;
+        }
+      }
+
+      &__name {
+        color: $color-white;
+        transition: color 200ms;
+      }
+
+      &--will-enter {
+        opacity: 0;
+        will-change: opacity;
+      }
+
+      &--is-entering {
+        opacity: 1;
+        transition: opacity 200ms;
+      }
+
+      &--has-entered {
+        opacity: 1;
+      }
+
+      &--will-exit {
+        opacity: 1;
+        will-change: opacity;
+      }
+
+      &--is-exiting {
+        opacity: 0;
+        transition: opacity 200ms;
+      }
+    }
+  }
+
+  &__text {
+    @include type-normal();
+    color: $color-white;
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  &__methods {
+    display: flex;
+
+    &__column {
+      width: 50%;
+      &:first-child {
+        padding-right: 5rem;
+      }
+
+      &:last-child {
+        padding-left: 5rem;
+      }
+
+      &__method {
+        @include type-normal();
+        font-size: 1.25rem;
+        color: $color-white;
+
+        &__title {
+          font-weight: $font-weight-medium;
+          margin-bottom: 1rem;
+        }
+        a#{&}__title {
+          color: $color-white;
+          text-decoration: none;
+          border-bottom: 1px solid $color-primary;
+          transition: color 200ms;
+          display: inline-block;
+          padding-bottom: 0.25rem;
+
+          &:hover {
+            color: $color-primary;
+          }
+        }
+        &__description {
+          margin-bottom: 2rem;
+
+          a {
+            text-decoration: none;
+            color: $color-white;
+            border-bottom: 1px solid $color-primary;
+            transition: color 200ms;
+            padding-bottom: 0.25rem;
+
+            &:hover {
+              color: $color-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .donate {
+    margin-top: 1rem;
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__subtitle {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+    }
+
+    &__campaign {
+      &__metric {
+        font-size: 1rem;
+      }
+    }
+
+    &__shout-out {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+
+      &__message {
+        padding-bottom: 0.15rem;
+      }
+    }
+
+    &__text {
+      font-size: 1rem;
+    }
+
+    &__methods {
+      flex-direction: column;
+
+      &__column {
+        width: 100%;
+        &:first-child {
+          padding-right: 0;
+        }
+
+        &:last-child {
+          padding-left: 0;
+        }
+
+        &__method {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

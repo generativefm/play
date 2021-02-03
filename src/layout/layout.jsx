@@ -23,6 +23,7 @@ import Settings from '../settings/settings';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import About from '../about/about';
 import TopBar from '../top-bar/top-bar';
+import Donate from '../donate/donate';
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -72,6 +73,7 @@ const Layout = () => {
             <Route path="/library/playtime" exact component={LibraryGrid} />
             <Route path="/settings" component={Settings} />
             <Route path="/about" component={About} />
+            <Route path="/donate" component={Donate} />
             <Redirect to="/browse" />
           </Switch>
         </div>

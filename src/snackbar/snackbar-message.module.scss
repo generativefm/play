@@ -24,7 +24,7 @@
   }
 
   &--is-above-controls#{&}--is-above-bottom-nav {
-    margin-bottom: 9rem;
+    margin-bottom: 8rem;
   }
 
   &--will-appear {
@@ -55,4 +55,7 @@
     opacity: 0;
     transform: translateY(100%);
   }
+}
+
+@include is-narrow-screen() {
 }
