@@ -85,9 +85,15 @@ const BrowseGrid = ({
         </div>
       </div>
       {isNarrowScreen ? (
-        <List pieceIds={sortedPieceIds} />
+        <List
+          pieceIds={sortedPieceIds}
+          getSubtitle={sortings[sorting].getSubtitle}
+        />
       ) : (
-        <Grid pieceIds={sortedPieceIds} />
+        <Grid
+          pieceIds={sortedPieceIds}
+          getSubtitle={sortings[sorting].getSubtitle}
+        />
       )}
     </>
   );

@@ -2,6 +2,8 @@ import { useCallback, useMemo } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import usePlayTimePerDay from './use-play-time-per-day';
 import usePlayTime from '../piece/use-play-time';
+import formatReleaseDate from '../dates/format-release-date';
+import formatPlayTime from '../piece/format-play-time';
 
 const sortAlphabetically = (pieceIds) =>
   pieceIds.sort((a, b) => byId[a].title.localeCompare(byId[b].title));
@@ -31,6 +33,21 @@ const useSortings = () => {
     [playTimePerDay]
   );
 
+  const getNewestSubtitle = useCallback(
+    (piece) => formatReleaseDate(piece.releaseDate),
+    []
+  );
+
+  const getMostPlayedSubtitle = useCallback(
+    (piece) => `${formatPlayTime(playTime[piece.id])} played`,
+    [playTime]
+  );
+
+  const getTrendingSubtitle = useCallback(
+    (piece) => `${formatPlayTime(playTimePerDay[piece.id])} played per day`,
+    [playTimePerDay]
+  );
+
   const sortings = useMemo(
     () => ({
       atoz: { isLoading: false, isAvailable: true, sort: sortAlphabetically },
@@ -39,20 +56,35 @@ const useSortings = () => {
         isAvailable: true,
         sort: sortAlphabeticallyReverse,
       },
-      newest: { isLoading: false, isAvailable: true, sort: sortByNewest },
+      newest: {
+        isLoading: false,
+        isAvailable: true,
+        sort: sortByNewest,
+        getSubtitle: getNewestSubtitle,
+      },
       playtime: {
         isLoading: playTime === null,
         isAvailable: Boolean(playTime) && Object.keys(playTime).length > 0,
         sort: sortByPlayTime,
+        getSubtitle: getMostPlayedSubtitle,
       },
       trending: {
         isLoading: playTimePerDay === null,
         isAvailable:
           Boolean(playTimePerDay) && Object.keys(playTimePerDay).length > 0,
         sort: sortByTrending,
+        getSubtitle: getTrendingSubtitle,
       },
     }),
-    [playTime, playTimePerDay, sortByPlayTime, sortByTrending]
+    [
+      playTime,
+      playTimePerDay,
+      sortByPlayTime,
+      sortByTrending,
+      getNewestSubtitle,
+      getMostPlayedSubtitle,
+      getTrendingSubtitle,
+    ]
   );
 
   return sortings;

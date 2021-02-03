@@ -1,18 +1,12 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
-import { useSelector } from 'react-redux';
 import Category from '../piece/category';
-import formatReleaseDate from '../dates/format-release-date';
-import formatPlayTime from '../piece/format-play-time';
-import selectPlayTime from '../piece/select-play-time';
 import useSortings from './use-sortings';
-import usePlayTimePerDay from './use-play-time-per-day';
 import selectDislikes from '../user/select-dislikes';
 import useSelectorOnce from '../app/use-selector-once';
 import styles from './browse.module.scss';
 
 const Browse = () => {
-  const playTime = useSelector(selectPlayTime);
   const dislikes = useSelectorOnce(selectDislikes);
   const sortings = useSortings();
 
@@ -33,8 +27,6 @@ const Browse = () => {
       sortings.playtime.sort(nonDislikedPieceIds),
     [sortings, nonDislikedPieceIds]
   );
-
-  const playTimePerDay = usePlayTimePerDay();
 
   const orderedTrendingPieceIds = useMemo(
     () =>
@@ -62,28 +54,13 @@ const Browse = () => {
     }, new Map());
   }, [orderedTrendingPieceIds, orderedNewestPieceIds]);
 
-  const getNewestSubtitle = useCallback(
-    (piece) => formatReleaseDate(piece.releaseDate),
-    []
-  );
-
-  const getMostPlayedSubtitle = useCallback(
-    (piece) => `${formatPlayTime(playTime[piece.id])} played`,
-    [playTime]
-  );
-
-  const getTrendingSubtitle = useCallback(
-    (piece) => `${formatPlayTime(playTimePerDay[piece.id])} played per day`,
-    [playTimePerDay]
-  );
-
   return (
     <div className={styles.browse}>
       {(sortings.trending.isLoading || sortings.trending.isAvailable) && (
         <Category
           title={'Trending'}
           pieceIds={orderedTrendingPieceIds}
-          getSubtitle={getTrendingSubtitle}
+          getSubtitle={sortings.trending.getSubtitle}
           linkTo="/browse/all?sort=trending"
         />
       )}
@@ -91,14 +68,14 @@ const Browse = () => {
         <Category
           title={'Most played'}
           pieceIds={orderedMostPlayedPieceIds}
-          getSubtitle={getMostPlayedSubtitle}
+          getSubtitle={sortings.playtime.getSubtitle}
           linkTo="/browse/all?sort=playtime"
         />
       )}
       <Category
         title={'Newest'}
         pieceIds={orderedNewestPieceIds}
-        getSubtitle={getNewestSubtitle}
+        getSubtitle={sortings.newest.getSubtitle}
         linkTo="/browse/all?sort=newest"
       />
       {Array.from(pieceIdsByTag).map(([tag, pieceIds]) => (

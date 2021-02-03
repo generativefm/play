@@ -11,6 +11,8 @@ import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import copyToClipboard from '../app/copy-to-clipboard';
 import useShowSnackbarMessage from '../snackbar/use-show-snackbar-message';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
+import useIsNarrowScreen from '../layout/use-is-narrow-screen';
+import styles from './piece-context-menu.module.scss';
 
 const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const isLiked = Boolean(likes[pieceId]);
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const showSnackbarMessage = useShowSnackbarMessage();
+  const isNarrowScreen = useIsNarrowScreen();
 
   const pieceRoute = `/generator/${pieceId}`;
   const { pathname } = useLocation();
@@ -47,6 +50,23 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
 
   return (
     <>
+      {isNarrowScreen && (
+        <div className={styles['piece-context-menu__info']}>
+          <img
+            src={byId[pieceId].imageSrc}
+            className={styles['piece-context-menu__info__image']}
+          />
+          <div className={styles['piece-context-menu__info__text']}>
+            <div className={styles['piece-context-menu__info__text__title']}>
+              {byId[pieceId].title}
+            </div>
+            <div className={styles['piece-context-menu__info__text__subtitle']}>
+              {byId[pieceId].releaseDate.getFullYear()} • v
+              {byId[pieceId].version}
+            </div>
+          </div>
+        </div>
+      )}
       {shouldEnableLike && (
         <ContextMenuOption onClick={handleLikeClick}>
           <LikeIcon

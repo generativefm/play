@@ -12,9 +12,17 @@ import styles from './context-menu-provider.module.scss';
 //     Send feedback
 //   </ContextMenuOption>
 // );
+import UserContextMenu from '../user/user-context-menu';
 
 const ContextMenuProvider = ({ children }) => {
-  const [currentMenu, setCurrentMenu] = useState(null);
+  const [
+    currentMenu,
+    setCurrentMenu,
+  ] = useState(/*{
+    x: 100,
+    y: 100,
+    content: <UserContextMenu />,
+  }*/);
   const createContextMenu = useCallback((contextMenuOptions) => {
     setCurrentMenu(contextMenuOptions);
   }, []);
