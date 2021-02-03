@@ -72,7 +72,7 @@ const Donate = () => {
             Current monthly support:
           </div>
           <div className={styles['donate__campaign__metric__objective']}>
-            Full-time development starts at:
+            Full-time dedication at:
           </div>
         </div>
         <div className={styles['donate__campaign__metric']}>

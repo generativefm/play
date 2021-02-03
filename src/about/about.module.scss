@@ -4,7 +4,11 @@
   max-width: 100rem;
   margin: 2rem auto 0;
   padding: 0 1rem;
-  overflow-x: hidden;
+  overflow: visible;
+
+  a {
+    padding-bottom: 0.25rem;
+  }
 
   &__header {
     @include type-more-prominent();
@@ -13,9 +17,8 @@
   }
 
   &__body {
-    margin-top: 3rem;
+    margin-top: 2rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 
@@ -24,17 +27,19 @@
       height: 15rem;
       border-radius: $border-radius-md;
       box-shadow: $box-shadow-bottom;
-      transition: opacity 500ms;
-      margin-bottom: 1rem;
+      transition: opacity 500ms, transform 500ms 500ms;
+      margin-right: 1rem;
       z-index: 1;
 
       &--will-appear {
         opacity: 0;
-        will-change: opacity;
+        will-change: opacity, transform;
+        transform: translateX(50%);
       }
 
       &--is-appearing {
         opacity: 1;
+        transform: none;
       }
     }
 
@@ -44,13 +49,13 @@
       line-height: 2.5;
       transition: opacity 0ms 500ms, transform 500ms 500ms;
       opacity: 0;
-      margin-top: 1rem;
       text-align: center;
       font-size: 1.25rem;
+      margin-left: 1rem;
 
       &--will-appear {
         opacity: 0;
-        transform: translateY(-100%);
+        transform: translateX(-50%);
         will-change: transform;
       }
 
@@ -80,33 +85,114 @@
       }
     }
   }
+
+  &__text {
+    @include type-normal();
+    color: $color-white;
+    font-size: 1.25rem;
+    line-height: 1.5;
+
+    a {
+      color: $color-white;
+      text-decoration: none;
+      border-bottom: 1px solid $color-primary;
+      transition: color 200ms;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    &__subtitle {
+      @include type-less-prominent();
+      color: $color-grey;
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    &__sponsors {
+      margin-top: 2rem;
+      &--seeders {
+        @include type-more-prominent();
+        font-size: 1.75rem;
+        color: $color-primary;
+      }
+
+      &--fans {
+        @include type-less-prominent();
+        font-size: 1.25rem;
+      }
+
+      &--benefactors {
+        color: $color-grey;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    &__sponsor-message {
+      margin-top: 0.5rem;
+      color: $color-grey;
+      font-size: 0.9rem;
+    }
+  }
 }
 
 @include is-narrow-screen() {
   .about {
     margin-top: 1rem;
 
+    a {
+      padding-bottom: 0.15rem;
+    }
+
     &__header {
       font-size: 1.25rem;
     }
 
     &__body {
-      margin-top: 1rem;
-
       &__logo {
         margin-bottom: 0.5rem;
-        height: 12rem;
-        width: 12rem;
+        height: 9rem;
+        width: 9rem;
+        margin-right: 0.5rem;
       }
 
       &__text {
-        margin-top: 0.5rem;
-        font-size: 1.1rem;
-        line-height: 2;
+        font-size: 1rem;
+        line-height: 1.75;
+        margin-left: 0.5rem;
 
         &__title {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    &__text {
+      font-size: 1rem;
+
+      &__subtitle {
+        font-size: 1.1rem;
+      }
+
+      &__sponsors {
+        &--seeders {
           font-size: 1.25rem;
         }
+
+        &--fans {
+          font-size: 1.1rem;
+        }
+
+        &--benefactors {
+          font-size: 0.9rem;
+        }
+      }
+
+      &__sponsor-message {
+        font-size: 0.8rem;
       }
     }
   }
