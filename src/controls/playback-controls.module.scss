@@ -6,8 +6,31 @@
   align-items: center;
   justify-content: center;
 
-  .icon--primary {
-    font-size: 2.5rem;
-    margin: 0;
+  &__primary {
+    position: relative;
+
+    &--is-loading {
+      .playback-controls__primary__button {
+        visibility: hidden;
+      }
+    }
+
+    &__loading-indicator {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__button {
+      svg {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { PlayArrow, Stop } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
+import classnames from 'classnames';
 import IconButton from '../button/icon-button';
 import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
@@ -34,29 +35,36 @@ const PlaybackControls = () => {
   const isPlaying = playbackStatus === 'playing';
 
   useHotkey(' ', isPlaying ? handleStopClick : handlePlayClick);
+
   return (
     <div className={styles['playback-controls']}>
       {!isNarrowScreen && <TimerControl />}
       {!isNarrowScreen && <ShuffleControl />}
       {!isNarrowScreen && <LoopControl />}
       {!isNarrowScreen && <PreviousControl />}
-      {isLoading ? (
-        <CircularLoadingIndicator />
-      ) : (
-        <IconButton>
-          {isPlaying ? (
-            <Stop
-              className={styles['icon--primary']}
-              onClick={handleStopClick}
-            />
-          ) : (
-            <PlayArrow
-              className={styles['icon--primary']}
-              onClick={handlePlayClick}
-            />
-          )}
-        </IconButton>
-      )}
+      <div
+        className={classnames(styles['playback-controls__primary'], {
+          [styles['playback-controls__primary--is-loading']]: isLoading,
+        })}
+      >
+        {isLoading && (
+          <div
+            className={styles['playback-controls__primary__loading-indicator']}
+          >
+            <CircularLoadingIndicator />
+          </div>
+        )}
+        <div className={styles['playback-controls__primary__button']}>
+          <IconButton>
+            {isPlaying ? (
+              <Stop onClick={handleStopClick} />
+            ) : (
+              <PlayArrow onClick={handlePlayClick} />
+            )}
+          </IconButton>
+        </div>
+      </div>
+
       <NextControl />
     </div>
   );
