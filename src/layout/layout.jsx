@@ -1,30 +1,32 @@
-import React, { useCallback, useState } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import TopNav from '../top-nav/top-nav';
 import BottomNav from '../bottom-nav/bottom-nav';
 import ControlBar from '../controls/control-bar';
-import Piece from '../piece/piece';
-import Browse from '../browse/browse';
-import Flavor from '../flavor/flavor';
 import Playback from '../playback/playback';
 import PlaybackWithControls from '../playback/playback-with-controls';
-import Library from '../library/library';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import userOpenedPlayback from '../playback/user-opened-playback';
 import userClosedPlayback from '../playback/user-closed-playback';
-import BrowseGrid from '../browse/browse-grid';
-import LibraryGrid from '../library/library-grid';
-import Settings from '../settings/settings';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
-import About from '../about/about';
 import TopBar from '../top-bar/top-bar';
-import Donate from '../donate/donate';
+import withSuspense from './with-suspense';
 import styles from './layout.module.scss';
+
+const Browse = withSuspense(() => import('../browse/browse'));
+const BrowseGrid = withSuspense(() => import('../browse/browse-grid'));
+const Flavor = withSuspense(() => import('../flavor/flavor'));
+const Piece = withSuspense(() => import('../piece/piece'));
+const Library = withSuspense(() => import('../library/library'));
+const LibraryGrid = withSuspense(() => import('../library/library-grid'));
+const Settings = withSuspense(() => import('../settings/settings'));
+const About = withSuspense(() => import('../about/about'));
+const Donate = withSuspense(() => import('../donate/donate'));
 
 const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
@@ -32,6 +34,10 @@ const Layout = () => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const [isPlaybackClosing, setIsPlaybackClosing] = useState(false);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const handleControlBarExpandCollapse = useCallback(() => {
     if (isPlaybackOpen) {

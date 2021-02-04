@@ -17,9 +17,11 @@
   background: none;
   border: none;
   font-size: 1rem;
-  padding: 0;
+  padding: 0 0 2rem;
   cursor: pointer;
   text-align: left;
+  width: 100%;
+  border-bottom: 1px solid rgba($color-white, 0.1);
 
   &:focus {
     outline: none;
@@ -55,5 +57,6 @@
 
   .setting {
     margin-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 }

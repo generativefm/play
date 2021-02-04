@@ -77,6 +77,11 @@ const config = {
         test: /\.png$/,
         use: 'file-loader',
       },
+      {
+        test: /\.mp3$/,
+        include: path.resolve('./src'),
+        use: 'file-loader',
+      },
     ],
   },
   plugins: [
