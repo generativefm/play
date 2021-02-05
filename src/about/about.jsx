@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import { byId } from '@generative-music/pieces-alex-bainter';
 import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import useActivePatrons from '../donate/use-active-patrons';
 import { version } from '../../package.json';
+import logo from './Play.png';
 import styles from './about.module.scss';
 
 const ALEX_BAINTER_URL = 'https://alexbainter.com';
@@ -66,7 +66,7 @@ const About = () => {
           }}
         >
           <img
-            src={byId['day-dream'].imageSrc}
+            src={logo}
             className={styles['about__body__logo']}
           />
         </CSSTransition>

@@ -18,11 +18,11 @@
   }
 
   $insetMargin: 0.5rem;
-  &:first-of-type {
+  &:first-child {
     margin-top: $insetMargin;
   }
 
-  &:last-of-type {
+  &:last-child {
     margin-bottom: $insetMargin;
   }
 

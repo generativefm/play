@@ -201,7 +201,7 @@ const Donate = () => {
             <div
               className={styles['donate__methods__column__method__description']}
             >
-              Choose a cryptocurrency below to see an address where you can send
+              Select a cryptocurrency to see an address where you can send
               payments. If you'd like to use a cryptocurrency that isn't listed
               here,{' '}
               <a

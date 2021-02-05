@@ -54,11 +54,11 @@ const importLegacyData = (store) => {
             const action = mergeData(convertLegacyStateToUserData(parsedState));
             action.meta = Object.assign({}, action.meta, {
               snackbar: {
-                message: 'Play time and favorites imported',
+                message: 'Play time and favorites imported from the old player',
               },
             });
             store.dispatch();
-            // TO DO: uncomment this
+            // TODO: uncomment this
             //source.postMessage({ type: 'set-import-request' }, origin);
           } else {
             closeIframe();
