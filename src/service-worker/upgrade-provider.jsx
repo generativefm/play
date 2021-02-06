@@ -26,7 +26,7 @@ const UpgradeProvider = ({ children }) => {
     }
     //TODO this needs to be undone in a callback
     //that said, this will never actually run more than once
-    register({ onUpdateInstalled: handleUpdateInstalled });
+    //register({ onUpdateInstalled: handleUpdateInstalled });
   }, [handleUpdateInstalled]);
 
   return (

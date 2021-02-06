@@ -68,7 +68,7 @@ const config = {
               plugins: ['@babel/plugin-syntax-dynamic-import'],
             },
           },
-          path.resolve('./piece-loader.js'),
+          path.join(__dirname, './piece-loader.js'),
         ],
         include: path.resolve('./node_modules/@generative-music'),
         type: 'javascript/auto',

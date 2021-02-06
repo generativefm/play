@@ -4,7 +4,6 @@ import Category from '../piece/category';
 import useSortings from './use-sortings';
 import selectDislikes from '../user/select-dislikes';
 import useSelectorOnce from '../app/use-selector-once';
-import styles from './browse.module.scss';
 
 const Browse = () => {
   const dislikes = useSelectorOnce(selectDislikes);
@@ -55,7 +54,7 @@ const Browse = () => {
   }, [orderedTrendingPieceIds, orderedNewestPieceIds]);
 
   return (
-    <div className={styles.browse}>
+    <div>
       {(sortings.trending.isLoading || sortings.trending.isAvailable) && (
         <Category
           title={'Trending'}

@@ -12,8 +12,6 @@ const assetPaths = __WEBPACK_ASSETS__
 
 const assetPathSet = new Set(assetPaths);
 
-console.log('hi3');
-
 const cacheFonts = () =>
   caches
     .open(FONT_CACHE_NAME)

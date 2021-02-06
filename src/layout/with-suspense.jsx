@@ -2,11 +2,12 @@ import React, { lazy, Suspense } from 'react';
 
 const withSpinner = (loadComponent) => {
   const LazyComponent = lazy(loadComponent);
-  const ComponentWithFallback = () => (
+  const ComponentWithFallback = (props) => (
     <Suspense fallback={null}>
-      <LazyComponent />
+      <LazyComponent {...props} />
     </Suspense>
   );
+
   return ComponentWithFallback;
 };
 

@@ -5,9 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import TopNav from '../top-nav/top-nav';
 import BottomNav from '../bottom-nav/bottom-nav';
-import ControlBar from '../controls/control-bar';
-import Playback from '../playback/playback';
-import PlaybackWithControls from '../playback/playback-with-controls';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
@@ -27,6 +24,11 @@ const LibraryGrid = withSuspense(() => import('../library/library-grid'));
 const Settings = withSuspense(() => import('../settings/settings'));
 const About = withSuspense(() => import('../about/about'));
 const Donate = withSuspense(() => import('../donate/donate'));
+const ControlBar = withSuspense(() => import('../controls/control-bar'));
+const Playback = withSuspense(() => import('../playback/playback'));
+const PlaybackWithControls = withSuspense(() =>
+  import('../playback/playback-with-controls')
+);
 
 const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
