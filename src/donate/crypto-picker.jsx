@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import classnames from 'classnames';
 import TextButton from '../button/text-button';
 import copyToClipboard from '../app/copy-to-clipboard';
-import useShowSnackbarMessage from '../snackbar/use-show-snackbar-message';
+import useShowSnackbar from '../snackbar/use-show-snackbar';
 import bitcoinImageSrc from './qr-codes/bitcoin.png';
 import bitcoinCashImageSrc from './qr-codes/bitcoin-cash.png';
 import ethereumImageSrc from './qr-codes/ethereum.png';
@@ -40,11 +40,11 @@ const CryptoPicker = () => {
   const tabCallbacksRef = useRef(
     CRYPTOS.map((crypto) => () => setCurrentCrypto(crypto))
   );
-  const showSnackbarMessage = useShowSnackbarMessage();
+  const showSnackbar = useShowSnackbar();
   const handleCopyClick = useCallback(() => {
     copyToClipboard(currentCrypto.address);
-    showSnackbarMessage(`${currentCrypto.ticker} address copied`);
-  }, [currentCrypto, showSnackbarMessage]);
+    showSnackbar(`${currentCrypto.ticker} address copied`);
+  }, [currentCrypto, showSnackbar]);
   return (
     <div className={styles['crypto-picker']}>
       <div className={styles['crypto-picker__tabs']}>

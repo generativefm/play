@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,7 +32,6 @@ const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
   const currentPieceId = useSelector(selectCurrentPieceId);
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
-  const [isPlaybackClosing, setIsPlaybackClosing] = useState(false);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   useEffect(() => {
@@ -46,14 +45,6 @@ const Layout = () => {
     }
     dispatch(userOpenedPlayback());
   }, [isPlaybackOpen, dispatch]);
-
-  const handlePlaybackExiting = useCallback(() => {
-    setIsPlaybackClosing(true);
-  }, []);
-
-  const handlePlaybackExited = useCallback(() => {
-    setIsPlaybackClosing(false);
-  }, []);
 
   return (
     <div
@@ -93,8 +84,6 @@ const Layout = () => {
             exit: styles['layout__content__playback--will-exit'],
             exitActive: styles['layout__content__playback--is-exiting'],
           }}
-          onExiting={handlePlaybackExiting}
-          onExited={handlePlaybackExited}
         >
           <div className={styles['layout__content__playback']}>
             {isNarrowScreen ? <PlaybackWithControls /> : <Playback />}
@@ -113,12 +102,7 @@ const Layout = () => {
         unmountOnExit
         in={Boolean(currentPieceId)}
       >
-        <div
-          className={classnames(styles['layout__control-bar'], {
-            [styles['layout__control-bar--has-playback-above']]:
-              isPlaybackOpen || isPlaybackClosing,
-          })}
-        >
+        <div className={classnames(styles['layout__control-bar'])}>
           <ControlBar onExpandCollapse={handleControlBarExpandCollapse} />
         </div>
       </CSSTransition>

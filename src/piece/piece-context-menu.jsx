@@ -9,7 +9,7 @@ import ContextMenuOption from '../context-menu/context-menu-option';
 import LikeIcon from './like-icon';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import copyToClipboard from '../app/copy-to-clipboard';
-import useShowSnackbarMessage from '../snackbar/use-show-snackbar-message';
+import useShowSnackbar from '../snackbar/use-show-snackbar';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import styles from './piece-context-menu.module.scss';
@@ -19,7 +19,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const likes = useSelector(selectLikes);
   const isLiked = Boolean(likes[pieceId]);
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
-  const showSnackbarMessage = useShowSnackbarMessage();
+  const showSnackbar = useShowSnackbar();
   const isNarrowScreen = useIsNarrowScreen();
 
   const pieceRoute = `/generator/${pieceId}`;
@@ -45,8 +45,8 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
       }
     }
     await copyToClipboard(url);
-    showSnackbarMessage('Link copied');
-  }, [pieceRoute, pieceId, showSnackbarMessage]);
+    showSnackbar('Link copied');
+  }, [pieceRoute, pieceId, showSnackbar]);
 
   return (
     <>

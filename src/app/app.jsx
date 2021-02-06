@@ -15,6 +15,7 @@ import IS_STORAGE_SUPPORTED from '../storage/is-supported';
 import SnackbarProvider from '../snackbar/snackbar-provider';
 import beforeInstallPromptContext from './before-install-prompt-context';
 import useActivePatrons from '../donate/use-active-patrons';
+import UpgradeProvider from '../service-worker/upgrade-provider';
 
 const App = () => {
   const [reduxStore, setReduxStore] = useState(null);
@@ -85,17 +86,20 @@ const App = () => {
       redirectUri={window.location.origin}
       audience="https://api.generative.fm"
       useRefreshTokens={true}
+      cacheLocation="localstorage"
     >
       <beforeInstallPromptContext.Provider value={beforeInstallPromptEvent}>
         {reduxStore && (
           <Provider store={reduxStore}>
             <SnackbarProvider>
               <MasterGainProvider>
-                <Router>
-                  <ContextMenuProvider>
-                    <Layout />
-                  </ContextMenuProvider>
-                </Router>
+                <UpgradeProvider>
+                  <Router>
+                    <ContextMenuProvider>
+                      <Layout />
+                    </ContextMenuProvider>
+                  </Router>
+                </UpgradeProvider>
               </MasterGainProvider>
             </SnackbarProvider>
           </Provider>

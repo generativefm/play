@@ -15,12 +15,21 @@
     margin-bottom: 0;
 
     .timer-input__digit--has-cursor {
-      border-color: $color-white;
+      border-right-color: $color-white;
+    }
+
+    .timer-input__digit--has-cursor-before {
+      border-left-color: $color-white !important; // TODO don't be lazy
     }
   }
 
   &__digit {
     font-size: 2rem;
+    border-right: 1px solid transparent;
+
+    &:first-of-type {
+      border-left: 1px solid transparent;
+    }
 
     &:nth-of-type(4) {
       margin-left: 0.5rem;
@@ -28,10 +37,6 @@
 
     &--is-user-input {
       color: $color-white;
-    }
-
-    &--has-cursor {
-      border-right: 1px solid transparent;
     }
   }
 

@@ -12,7 +12,7 @@ const config = {
   devtool: 'source-map',
   entry: {
     main: { import: './src', filename: '[name].[contenthash].js' },
-    serviceWorker: { import: './src/sw.js', filename: 'sw.js' },
+    serviceWorker: { import: './src/service-worker/sw.js', filename: 'sw.js' },
   },
   output: {
     publicPath: '/',
@@ -75,7 +75,7 @@ const config = {
       },
       {
         test: /\.png$/,
-        use: 'file-loader',
+        use: ['file-loader', 'image-webpack-loader'],
       },
       {
         test: /\.mp3$/,

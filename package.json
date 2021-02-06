@@ -36,6 +36,7 @@
     "eslint": "^7.15.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
+    "image-webpack-loader": "^6.0.0",
     "node-fetch": "^2.6.1",
     "node-sass": "^5.0.0",
     "prettier": "^2.2.1",

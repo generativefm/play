@@ -17,20 +17,25 @@ const SnackbarProvider = ({ children }) => {
     []
   );
 
-  const showSnackbarMessage = useCallback((message) => {
-    const timestamp = Date.now();
-    setMessages((previousValue) => [...previousValue, { message, timestamp }]);
+  const showSnackbar = useCallback((snackbar) => {
+    const snackbarConfig = Object.assign(
+      {},
+      typeof snackbar === 'string' ? { message: snackbar } : snackbar,
+      { timestamp: Date.now() }
+    );
+    setMessages((previousValue) => [...previousValue, snackbarConfig]);
   }, []);
 
   return (
     <>
-      <snackbarContext.Provider value={showSnackbarMessage}>
+      <snackbarContext.Provider value={showSnackbar}>
         {children}
       </snackbarContext.Provider>
-      {messages.map(({ message, timestamp }, i) => (
+      {messages.map(({ message, timestamp, action }, i) => (
         <SnackbarMessage
           key={timestamp}
           message={message}
+          action={action}
           shouldExitNow={i < messages.length - 1}
           onExited={() =>
             setMessages((previousValue) => {

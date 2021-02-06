@@ -23,6 +23,8 @@ const TimerInputDigit = ({ fullValue, reverseIndex, cursorIndex, onClick }) => {
       className={classnames(styles['timer-input__digit'], {
         [styles['timer-input__digit--is-user-input']]: isUserInput,
         [styles['timer-input__digit--has-cursor']]: hasCursor,
+        [styles['timer-input__digit--has-cursor-before']]:
+          reverseIndex === 3 && cursorIndex === 0 && fullValue.length === 4,
       })}
     >
       {currentValue}
@@ -98,6 +100,7 @@ const TimerInput = ({ onChange }) => {
           return chars.join('');
         });
         setCursorIndex((previousValue) => previousValue + 1);
+        return;
       }
       if (event.key === 'Backspace' && cursorIndex > 0) {
         setCurrentValue((value) => {
@@ -106,6 +109,7 @@ const TimerInput = ({ onChange }) => {
           return chars.join('');
         });
         setCursorIndex((previousValue) => previousValue - 1);
+        return;
       }
       if (event.key === 'Delete' && cursorIndex < currentValue.length) {
         setCurrentValue((value) => {
@@ -113,6 +117,14 @@ const TimerInput = ({ onChange }) => {
           chars.splice(cursorIndex, 1);
           return chars.join('');
         });
+        return;
+      }
+      if (event.key === 'ArrowLeft' && cursorIndex > 0) {
+        setCursorIndex((previousValue) => previousValue - 1);
+        return;
+      }
+      if (event.key === 'ArrowRight' && cursorIndex < currentValue.length) {
+        setCursorIndex((previousValue) => previousValue + 1);
       }
     },
     [currentValue, cursorIndex]

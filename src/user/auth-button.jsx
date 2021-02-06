@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle, MoreVert } from '@material-ui/icons';
 import {
@@ -14,6 +14,7 @@ import styles from './auth-button.module.scss';
 
 const AuthButton = () => {
   const dispatch = useDispatch();
+  const [imageFailed, setImageFailed] = useState(false);
 
   const {
     isLoading,
@@ -40,6 +41,10 @@ const AuthButton = () => {
     });
   }, [isLoading, isAuthenticated, getAccessTokenSilently, user, dispatch]);
 
+  const handleImageError = useCallback(() => {
+    setImageFailed(true);
+  }, []);
+
   if (isLoading) {
     return <div></div>;
   }
@@ -57,14 +62,18 @@ const AuthButton = () => {
     );
   }
 
-  if (user.picture) {
+  if (user.picture && !imageFailed) {
     return (
       <button
         className={styles['auth-button']}
         type="button"
         onClick={createContextMenuForTarget}
       >
-        <img className={styles['auth-button__image']} src={user.picture}></img>
+        <img
+          className={styles['auth-button__image']}
+          src={user.picture}
+          onError={handleImageError}
+        ></img>
       </button>
     );
   }

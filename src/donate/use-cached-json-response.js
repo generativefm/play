@@ -62,10 +62,10 @@ const useCachedJsonResponse = ({ url, isGreedy = false }) => {
         setJson(json);
       });
       fetchFromNetworkAndCache({ url, cachePromise }).then((json) => {
-        isAlreadyFresh = true;
         if (isCancelled || json === null) {
           return;
         }
+        isAlreadyFresh = true;
         setJson(json);
       });
       return;

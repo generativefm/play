@@ -58,7 +58,7 @@
     left: 0;
     right: 0;
     box-shadow: $box-shadow-top;
-    z-index: 2;
+    z-index: 3;
 
     &--will-enter {
       transform: translateY(100%);
@@ -68,10 +68,6 @@
     &--is-entering {
       transform: none;
       transition: transform 200ms;
-    }
-
-    &--has-playback-above {
-      box-shadow: none;
     }
   }
 }
@@ -88,7 +84,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 3;
+        z-index: 4;
         width: auto;
         height: 100%;
 

@@ -1,6 +1,13 @@
 import React, { useCallback, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { ExitToApp, Settings, Help, Info, GetApp } from '@material-ui/icons';
+import {
+  ExitToApp,
+  Settings,
+  Help,
+  Info,
+  GetApp,
+  Update,
+} from '@material-ui/icons';
 import { userLoggedOut } from '@generative.fm/user';
 import { clearData } from '@generative.fm/stats';
 import { useDispatch } from 'react-redux';
@@ -8,6 +15,7 @@ import ContextMenuOption from '../context-menu/context-menu-option';
 import styles from './user-context-menu.module.scss';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 import beforeInstallPromptContext from '../app/before-install-prompt-context';
+import useUpgrade from '../service-worker/use-upgrade';
 
 const HELP_URL =
   'https://www.notion.so/generativefm/Get-help-with-Generative-fm-0efd0280b87d4132a66d212f125d9f4f';
@@ -16,6 +24,7 @@ const UserContextMenu = () => {
   const { user, logout, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const beforeInstallPromptEvent = useContext(beforeInstallPromptContext);
+  const upgrade = useUpgrade();
 
   const handleSignoutClick = useCallback(() => {
     clearData().then(() => {
@@ -68,6 +77,14 @@ const UserContextMenu = () => {
             className={contextMenuOptionStyles['context-menu-option__icon']}
           />
           Install
+        </ContextMenuOption>
+      )}
+      {upgrade && (
+        <ContextMenuOption onClick={upgrade}>
+          <Update
+            className={contextMenuOptionStyles['context-menu-option__icon']}
+          />
+          Upgrade and reload
         </ContextMenuOption>
       )}
     </div>

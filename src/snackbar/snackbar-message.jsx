@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
+import TextButton from '../button/text-button';
 
 import styles from './snackbar-message.module.scss';
 
 const TIMEOUT = 5000;
 
-const SnackbarMessage = ({ message, shouldExitNow = false, onExited }) => {
+const SnackbarMessage = ({
+  message,
+  action,
+  shouldExitNow = false,
+  onExited,
+}) => {
   const [isVisible, setIsVisible] = useState(true);
   const isNarrowScreen = useIsNarrowScreen();
   const currentPieceId = useSelector(selectCurrentPieceId);
@@ -27,6 +33,14 @@ const SnackbarMessage = ({ message, shouldExitNow = false, onExited }) => {
       clearTimeout(timeout);
     };
   }, [message, shouldExitNow]);
+
+  const handleActionClick = useCallback(() => {
+    if (!action.onClick) {
+      return;
+    }
+    setIsVisible(false);
+    action.onClick();
+  }, [action]);
 
   if (!message) {
     return null;
@@ -54,6 +68,14 @@ const SnackbarMessage = ({ message, shouldExitNow = false, onExited }) => {
         })}
       >
         {message}
+        {action && (
+          <TextButton
+            className={styles['snackbar-message__button']}
+            onClick={action.onClick}
+          >
+            {action.label}
+          </TextButton>
+        )}
       </div>
     </CSSTransition>
   );
