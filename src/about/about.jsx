@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import useActivePatrons from '../donate/use-active-patrons';
 import { version } from '../../package.json';
-import logo from './Play.png';
+import logo from '../logo.png';
 import styles from './about.module.scss';
 
 const ALEX_BAINTER_URL = 'https://alexbainter.com';
@@ -65,10 +65,7 @@ const About = () => {
             appearActive: styles['about__body__logo--is-appearing'],
           }}
         >
-          <img
-            src={logo}
-            className={styles['about__body__logo']}
-          />
+          <img src={logo} className={styles['about__body__logo']} />
         </CSSTransition>
         <CSSTransition
           timeout={1000}

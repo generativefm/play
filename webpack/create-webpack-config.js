@@ -2,14 +2,11 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const fetch = require('node-fetch');
-const { EnvironmentPlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const createInjectAssetsPlugin = require('./create-inject-assets-plugin');
 
-const config = {
-  mode: 'development',
+const createWebpackConfig = ({ styleLoader }) => ({
   devtool: 'source-map',
   entry: {
     main: { import: './src', filename: '[name].[contenthash].js' },
@@ -24,21 +21,6 @@ const config = {
     extensions: ['.json', '.js', '.jsx'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
   },
-  devServer: {
-    historyApiFallback: true,
-    before: (app) => {
-      app.get('/api/global/playtime', (req, res) =>
-        fetch('http://stats.api.generative.fm/v1/global/playtime').then(
-          (response) => {
-            response.body.pipe(res);
-          }
-        )
-      );
-      app.post('/api/emissions', (req, res) => {
-        res.sendStatus(200);
-      });
-    },
-  },
   module: {
     rules: [
       {
@@ -50,7 +32,7 @@ const config = {
         test: /\.(s?css)$/,
         include: path.join(__dirname, '../src'),
         use: [
-          'style-loader',
+          styleLoader,
           {
             loader: 'css-loader',
             options: {
@@ -91,11 +73,6 @@ const config = {
       template: 'src/index.template.html',
       excludeChunks: ['serviceWorker'],
     }),
-    new EnvironmentPlugin({
-      SAMPLE_FILE_HOST: '//localhost:6969',
-      GFM_STATS_ENDPOINT: '/api',
-      GFM_USER_ENDPOINT: 'https://user.api.generative.fm/v1',
-    }),
     createInjectAssetsPlugin('sw.js'),
     new FaviconsWebpackPlugin({
       logo: './src/logo.png',
@@ -107,6 +84,6 @@ const config = {
       },
     }),
   ],
-};
+});
 
-module.exports = config;
+module.exports = createWebpackConfig;

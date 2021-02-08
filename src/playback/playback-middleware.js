@@ -68,6 +68,7 @@ const playbackMiddleware = (store) => (next) => {
           return;
         }
         const end = schedule();
+        const userId = selectUserId(state) || 'ANONYMOUS_PLAY_USER';
         activePieces.set(pieceId, {
           deactivate,
           schedule,
@@ -75,7 +76,6 @@ const playbackMiddleware = (store) => (next) => {
           gainNode: pieceGain,
           emissionIdPromise: startEmission({ pieceId, userId }),
         });
-        const userId = selectUserId(state);
         Transport.start();
         store.dispatch(pieceStartedPlaying());
       })

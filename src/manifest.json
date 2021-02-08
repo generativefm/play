@@ -1,0 +1,10 @@
+{
+  "name": "Generative.fm Play",
+  "short_name": "Generative.fm",
+  "description": "Ambient music generators",
+  "lang": "en-US",
+  "start_url": "/",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "display": "standalone"
+}

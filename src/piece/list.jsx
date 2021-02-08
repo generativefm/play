@@ -11,6 +11,8 @@ import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import IconButton from '../button/icon-button';
 import useCanPlay from './use-can-play';
 import Skeleton from '../loading/skeleton';
+import useCreateContextMenuForMouseEvent from '../context-menu/use-create-context-menu-for-mouse-event';
+import PieceContextMenu from './piece-context-menu';
 import styles from './list.module.scss';
 
 const getReleaseDate = ({ releaseDate }) => releaseDate.getFullYear();
@@ -29,6 +31,9 @@ const ListItem = ({
     onClick(pieceId);
   }, [pieceId, onClick]);
   const canPlay = useCanPlay(pieceId);
+  const createContextMenuForMouseEvent = useCreateContextMenuForMouseEvent(
+    <PieceContextMenu pieceId={pieceId} />
+  );
 
   return (
     <div
@@ -36,6 +41,7 @@ const ListItem = ({
         [styles['list-item--is-current']]: isCurrentPiece,
       })}
       onClick={handleClick}
+      onContextMenu={createContextMenuForMouseEvent}
     >
       <div
         className={styles['list-item__image']}
