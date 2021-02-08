@@ -14,6 +14,16 @@ const Playback = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    history.push(
+      [
+        history.location.pathname,
+        history.location.search,
+        history.location.hash,
+      ].join('')
+    );
+  }, [history]);
+
   useEffect(
     () =>
       history.listen(() => {

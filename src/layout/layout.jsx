@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
@@ -9,7 +15,6 @@ import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import userOpenedPlayback from '../playback/user-opened-playback';
-import userClosedPlayback from '../playback/user-closed-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import TopBar from '../top-bar/top-bar';
 import withSuspense from './with-suspense';
@@ -36,22 +41,22 @@ const Layout = () => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   const handleControlBarExpandCollapse = useCallback(() => {
     if (isPlaybackOpen) {
-      dispatch(userClosedPlayback());
+      history.goBack();
       return;
     }
     dispatch(userOpenedPlayback());
-  }, [isPlaybackOpen, dispatch]);
+  }, [isPlaybackOpen, dispatch, history]);
 
   return (
     <div
       className={classnames(styles.layout, {
-        //        [styles['layout--is-narrow']]: isNarrowScreen,
         [styles['layout--has-controls']]: currentPieceId !== null,
         [styles['layout--has-playback-content']]: isPlaybackOpen,
       })}
