@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Close } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
 import useDismissable from '../app/use-dismissable';
@@ -82,6 +83,18 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       </div>
     </CSSTransition>
   );
+};
+
+Dialog.propTypes = {
+  title: PropTypes.string.isRequired,
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      onClick: PropTypes.func,
+    })
+  ),
+  children: PropTypes.node.isRequired,
+  onDismiss: PropTypes.func.isRequired,
 };
 
 export default Dialog;

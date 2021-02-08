@@ -33,23 +33,48 @@ const PlaybackWithControls = () => {
   const [isQueueOpen, setIsQueueOpen] = useState(false);
   const handleOpenQueueClick = useCallback(() => {
     setIsQueueOpen(true);
-  }, []);
+    history.push(
+      [
+        history.location.pathname,
+        history.location.search,
+        history.location.hash,
+      ].join(''),
+      { isQueueOpen: true }
+    );
+    const unlisten = history.listen(() => {
+      unlisten();
+      setIsQueueOpen(false);
+    });
+  }, [history]);
+
+  useEffect(() => {
+    history.push(
+      [
+        history.location.pathname,
+        history.location.search,
+        history.location.hash,
+      ].join('')
+    );
+  }, [history]);
 
   useEffect(
     () =>
-      history.listen(() => {
+      history.listen((location) => {
+        if (location.state && location.state.isQueueOpen) {
+          return;
+        }
         dispatch(userClosedPlayback());
       }),
-    [history, dispatch]
+    [history, dispatch, isQueueOpen]
   );
 
   const handleCollapseClick = useCallback(() => {
-    dispatch(userClosedPlayback());
-  }, [dispatch]);
+    history.goBack();
+  }, [history]);
 
   const handleControlBarExpand = useCallback(() => {
-    setIsQueueOpen(false);
-  }, []);
+    history.goBack();
+  }, [history]);
 
   const isPlaying = playbackStatus === 'playing';
   const isLoading = playbackStatus === 'loading';

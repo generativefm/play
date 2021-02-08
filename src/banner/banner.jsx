@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import useContentWidth from '../layout/use-content-width';
 import TextButton from '../button/text-button';
 import styles from './banner.module.scss';
@@ -60,6 +61,18 @@ const Banner = ({ text, actions, icon = null, onDismiss }) => {
       </div>
     </CSSTransition>
   );
+};
+
+Banner.propTypes = {
+  text: PropTypes.string.isRequired,
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      onClick: PropTypes.func,
+      text: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onDismiss: PropTypes.func,
+  icon: PropTypes.node,
 };
 
 export default Banner;

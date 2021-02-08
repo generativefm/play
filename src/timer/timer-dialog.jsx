@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import Dialog from '../dialog/dialog';
 import TextButton from '../button/text-button';
 import TimerInput from './timer-input';
@@ -40,6 +41,10 @@ const TimerDialog = ({ onDismiss }) => {
       </div>
     </Dialog>
   );
+};
+
+TimerDialog.propTypes = {
+  onDismiss: PropTypes.func.isRequired,
 };
 
 export default TimerDialog;

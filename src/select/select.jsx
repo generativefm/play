@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import classnames from 'classnames';
 import { ArrowDropDown } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import useDismissable from '../app/use-dismissable';
 import styles from './select.module.scss';
 
@@ -14,6 +15,12 @@ const SelectListOption = ({ display, isSelected, onClick }) => (
     {display}
   </button>
 );
+
+SelectListOption.propTypes = {
+  display: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 const SelectList = ({ options, selectedValue, onChange, isOpen }) => (
   <div
@@ -33,6 +40,13 @@ const SelectList = ({ options, selectedValue, onChange, isOpen }) => (
     </div>
   </div>
 );
+
+SelectList.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.array).isRequired,
+  selectedValue: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+};
 
 const Select = ({ options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,6 +106,12 @@ const Select = ({ options, value, onChange }) => {
       ></SelectList>
     </div>
   );
+};
+
+Select.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.array).isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Select;

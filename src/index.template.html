@@ -8,6 +8,45 @@
       content="width=device-width, initial-scale=1, minimum-scale=1"
     />
     <title>Generative.fm - Play</title>
+    <meta name="theme-color" content="#121212" />
+    <meta name="author" content="Alex Bainter" />
+    <meta
+      name="description"
+      content="Listen to ambient music generators that never end or repeat. Composed by a human, performed by computers."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://play.generative.fm" />
+    <meta
+      name="og:title"
+      content="Endless ambient music on Generative.fm Play"
+    />
+    <meta
+      name="og:description"
+      content="Listen to ambient music generators that never end or repeat. Composed by a human, performed by computers."
+    />
+    <meta
+      name="og:image"
+      content="<%= `https://play.generative.fm/${require('./social-image.png').default}` %>"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://play.generative.fm" />
+    <meta
+      property="twitter:title"
+      content="Endless ambient music on Generative.fm Play"
+    />
+    <meta
+      property="twitter:description"
+      content="Listen to ambient music generators that never end or repeat. Composed by a human, performed by computers."
+    />
+    <meta
+      property="twitter:image"
+      content="<%= `https://play.generative.fm/${require('./social-image.png').default}` %>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="preload"
+      as="style"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       rel="stylesheet"
@@ -15,6 +54,5 @@
   </head>
   <body>
     <main id="root"></main>
-    <div id="overlay-root"></div>
   </body>
 </html>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import PropTypes from 'prop-types';
 import selectLikes from '../user/select-likes';
 import ContextMenuOption from '../context-menu/context-menu-option';
 import LikeIcon from './like-icon';
@@ -110,6 +111,11 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
       )}
     </>
   );
+};
+
+PieceContextMenu.propTypes = {
+  pieceId: PropTypes.string.isRequired,
+  shouldEnableLike: PropTypes.bool,
 };
 
 export default PieceContextMenu;

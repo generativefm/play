@@ -3,16 +3,15 @@ const FONT_CACHE_NAME = '@generative.fm/play/fonts';
 const FONT_STYLESHEET_URL =
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
 
-const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^\)\s]+)\)/g;
+const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^)\s]+)\)/g;
 
+//eslint-disable-next-line no-undef
 const assetPaths = __WEBPACK_ASSETS__
   .filter((filename) => filename !== 'sw.js')
   .concat([''])
   .map((path) => [self.location.origin, path].join('/'));
 
 const assetPathSet = new Set(assetPaths);
-
-console.log('hi3');
 
 const cacheFonts = () =>
   caches

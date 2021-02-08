@@ -4,6 +4,7 @@ import userPlayedPiece from '../playback/user-played-piece';
 import { useDispatch, useSelector } from 'react-redux';
 import { VolumeUp, CloudOff } from '@material-ui/icons';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import MoreButton from './more-button';
@@ -11,6 +12,8 @@ import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import IconButton from '../button/icon-button';
 import useCanPlay from './use-can-play';
 import Skeleton from '../loading/skeleton';
+import useCreateContextMenuForMouseEvent from '../context-menu/use-create-context-menu-for-mouse-event';
+import PieceContextMenu from './piece-context-menu';
 import styles from './list.module.scss';
 
 const getReleaseDate = ({ releaseDate }) => releaseDate.getFullYear();
@@ -29,6 +32,9 @@ const ListItem = ({
     onClick(pieceId);
   }, [pieceId, onClick]);
   const canPlay = useCanPlay(pieceId);
+  const createContextMenuForMouseEvent = useCreateContextMenuForMouseEvent(
+    <PieceContextMenu pieceId={pieceId} />
+  );
 
   return (
     <div
@@ -36,6 +42,7 @@ const ListItem = ({
         [styles['list-item--is-current']]: isCurrentPiece,
       })}
       onClick={handleClick}
+      onContextMenu={createContextMenuForMouseEvent}
     >
       <div
         className={styles['list-item__image']}
@@ -64,6 +71,15 @@ const ListItem = ({
       </div>
     </div>
   );
+};
+
+ListItem.propTypes = {
+  pieceId: PropTypes.string.isRequired,
+  getSubtitle: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isCurrentPiece: PropTypes.bool.isRequired,
 };
 
 const ListItemSkeleton = () => (
@@ -141,6 +157,11 @@ const List = ({ pieceIds, getSubtitle }) => {
       })}
     </div>
   );
+};
+
+List.propTypes = {
+  pieceIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getSubtitle: PropTypes.func,
 };
 
 export default List;

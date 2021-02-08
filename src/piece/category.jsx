@@ -3,6 +3,7 @@ import { ChevronRight, ChevronLeft } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import IconButton from '../button/icon-button';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
@@ -194,6 +195,14 @@ const Category = ({
       </div>
     </div>
   );
+};
+
+Category.propTypes = {
+  title: PropTypes.string,
+  pieceIds: PropTypes.arrayOf(PropTypes.string),
+  getSubtitle: PropTypes.func,
+  linkTo: PropTypes.string,
+  placeholder: PropTypes.node,
 };
 
 export default Category;

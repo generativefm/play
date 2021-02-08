@@ -3,7 +3,7 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import { startEmission, stopEmission } from '@generative.fm/stats';
 import { USER_PLAYED_PIECE, playTimeIncreased } from '@generative.fm/user';
 import MersenneTwister from 'mersenne-twister';
-import sampleLibrary from './sample-library';
+import getSampleLibrary from './get-sample-library';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import pieceStartedPlaying from './piece-started-playing';
 import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
@@ -52,33 +52,33 @@ const playbackMiddleware = (store) => (next) => {
     const pieceGain = new Gain().connect(masterGainNode);
     const piece = byId[pieceId];
     activatingPieces.add(pieceId);
-    piece
-      .loadActivate()
-      .then((activate) =>
+    Promise.all([getSampleLibrary(), piece.loadActivate()])
+      .then(([sampleLibrary, activate]) =>
         activate({
           context: getContext(),
           sampleLibrary,
           destination: pieceGain,
-        }).then(([deactivate, schedule]) => {
-          activatingPieces.delete(pieceId);
-          const state = store.getState();
-          const currentPieceId = selectCurrentPieceId(state);
-          if (currentPieceId !== pieceId) {
-            return;
-          }
-          const end = schedule();
-          activePieces.set(pieceId, {
-            deactivate,
-            schedule,
-            end,
-            gainNode: pieceGain,
-            emissionIdPromise: startEmission({ pieceId, userId }),
-          });
-          const userId = selectUserId(state);
-          Transport.start();
-          store.dispatch(pieceStartedPlaying());
         })
       )
+      .then(([deactivate, schedule]) => {
+        activatingPieces.delete(pieceId);
+        const state = store.getState();
+        const currentPieceId = selectCurrentPieceId(state);
+        if (currentPieceId !== pieceId) {
+          return;
+        }
+        const end = schedule();
+        const userId = selectUserId(state) || 'ANONYMOUS_PLAY_USER';
+        activePieces.set(pieceId, {
+          deactivate,
+          schedule,
+          end,
+          gainNode: pieceGain,
+          emissionIdPromise: startEmission({ pieceId, userId }),
+        });
+        Transport.start();
+        store.dispatch(pieceStartedPlaying());
+      })
       .catch((err) => {
         console.error(err);
         store.dispatch(piecePlaybackFailed());

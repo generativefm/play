@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { subscribe } from './snackbar-middleware';
 import SnackbarMessage from './snackbar-message';
 import snackbarContext from './snackbar-context';
@@ -50,6 +51,10 @@ const SnackbarProvider = ({ children }) => {
       ))}
     </>
   );
+};
+
+SnackbarProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default SnackbarProvider;

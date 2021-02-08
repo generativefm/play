@@ -1,18 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import TopNav from '../top-nav/top-nav';
 import BottomNav from '../bottom-nav/bottom-nav';
-import ControlBar from '../controls/control-bar';
-import Playback from '../playback/playback';
-import PlaybackWithControls from '../playback/playback-with-controls';
 import useIsNarrowScreen from './use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import userOpenedPlayback from '../playback/user-opened-playback';
-import userClosedPlayback from '../playback/user-closed-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import TopBar from '../top-bar/top-bar';
 import withSuspense from './with-suspense';
@@ -27,6 +29,11 @@ const LibraryGrid = withSuspense(() => import('../library/library-grid'));
 const Settings = withSuspense(() => import('../settings/settings'));
 const About = withSuspense(() => import('../about/about'));
 const Donate = withSuspense(() => import('../donate/donate'));
+const ControlBar = withSuspense(() => import('../controls/control-bar'));
+const Playback = withSuspense(() => import('../playback/playback'));
+const PlaybackWithControls = withSuspense(() =>
+  import('../playback/playback-with-controls')
+);
 
 const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
@@ -34,22 +41,22 @@ const Layout = () => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   const handleControlBarExpandCollapse = useCallback(() => {
     if (isPlaybackOpen) {
-      dispatch(userClosedPlayback());
+      history.goBack();
       return;
     }
     dispatch(userOpenedPlayback());
-  }, [isPlaybackOpen, dispatch]);
+  }, [isPlaybackOpen, dispatch, history]);
 
   return (
     <div
       className={classnames(styles.layout, {
-        //        [styles['layout--is-narrow']]: isNarrowScreen,
         [styles['layout--has-controls']]: currentPieceId !== null,
         [styles['layout--has-playback-content']]: isPlaybackOpen,
       })}

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import styles from './icon-button.module.scss';
 
 const IconButton = ({
@@ -38,6 +39,18 @@ const IconButton = ({
       {children}
     </button>
   );
+};
+
+IconButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  withBackground: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isTicking: PropTypes.bool,
+  isFloating: PropTypes.bool,
+  isSecondary: PropTypes.bool,
+  isTouched: PropTypes.bool,
 };
 
 export default IconButton;

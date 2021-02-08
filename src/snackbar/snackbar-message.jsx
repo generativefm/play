@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import TextButton from '../button/text-button';
@@ -17,6 +18,7 @@ const SnackbarMessage = ({
   onExited,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
   const isNarrowScreen = useIsNarrowScreen();
   const currentPieceId = useSelector(selectCurrentPieceId);
 
@@ -26,21 +28,32 @@ const SnackbarMessage = ({
       return;
     }
     setIsVisible(true);
+    if (isHovering) {
+      return;
+    }
     const timeout = setTimeout(() => {
       setIsVisible(false);
     }, TIMEOUT);
     return () => {
       clearTimeout(timeout);
     };
-  }, [message, shouldExitNow]);
+  }, [message, shouldExitNow, isHovering]);
 
   const handleActionClick = useCallback(() => {
+    setIsVisible(false);
     if (!action.onClick) {
       return;
     }
-    setIsVisible(false);
     action.onClick();
   }, [action]);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsHovering(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+  }, []);
 
   if (!message) {
     return null;
@@ -66,12 +79,14 @@ const SnackbarMessage = ({
           [styles['snackbar-message--is-above-controls']]: currentPieceId,
           [styles['snackbar-message--is-above-bottom-nav']]: isNarrowScreen,
         })}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {message}
         {action && (
           <TextButton
             className={styles['snackbar-message__button']}
-            onClick={action.onClick}
+            onClick={handleActionClick}
           >
             {action.label}
           </TextButton>
@@ -79,6 +94,16 @@ const SnackbarMessage = ({
       </div>
     </CSSTransition>
   );
+};
+
+SnackbarMessage.propTypes = {
+  message: PropTypes.string.isRequired,
+  action: PropTypes.shape({
+    onClick: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+  }),
+  shouldExitNow: PropTypes.bool,
+  onExited: PropTypes.func,
 };
 
 export default SnackbarMessage;

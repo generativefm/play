@@ -6,6 +6,8 @@ import {
   userStartedAnonymousSession,
 } from '@generative.fm/user';
 import { useDispatch } from 'react-redux';
+import classnames from 'classnames';
+import useUpgrade from '../service-worker/use-upgrade';
 import TextButton from '../button/text-button';
 import IconButton from '../button/icon-button';
 import useCreateContextMenuForTarget from '../context-menu/use-create-context-menu-for-target';
@@ -15,7 +17,6 @@ import styles from './auth-button.module.scss';
 const AuthButton = () => {
   const dispatch = useDispatch();
   const [imageFailed, setImageFailed] = useState(false);
-
   const {
     isLoading,
     isAuthenticated,
@@ -23,6 +24,7 @@ const AuthButton = () => {
     user,
     getAccessTokenSilently,
   } = useAuth0();
+  const upgrade = useUpgrade();
 
   const createContextMenuForTarget = useCreateContextMenuForTarget(
     <UserContextMenu />
@@ -53,7 +55,13 @@ const AuthButton = () => {
     return (
       <>
         <IconButton onClick={createContextMenuForTarget}>
-          <MoreVert />
+          <div
+            className={classnames({
+              [styles['auth-button--has-badge']]: Boolean(upgrade),
+            })}
+          >
+            <MoreVert />
+          </div>
         </IconButton>
         <TextButton onClick={loginWithRedirect} isPrimary>
           Sign In
@@ -65,7 +73,9 @@ const AuthButton = () => {
   if (user.picture && !imageFailed) {
     return (
       <button
-        className={styles['auth-button']}
+        className={classnames(styles['auth-button'], {
+          [styles['auth-button--has-badge']]: Boolean(upgrade),
+        })}
         type="button"
         onClick={createContextMenuForTarget}
       >
@@ -80,7 +90,13 @@ const AuthButton = () => {
 
   return (
     <IconButton onClick={createContextMenuForTarget}>
-      <AccountCircle />
+      <div
+        className={classnames({
+          [styles['auth-button--has-badge']]: Boolean(upgrade),
+        })}
+      >
+        <AccountCircle />
+      </div>
     </IconButton>
   );
 };

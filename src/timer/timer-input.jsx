@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import selectTimer from './select-timer';
 import userStoppedTimer from './user-stopped-timer';
 import styles from './timer-input.module.scss';
@@ -30,6 +31,13 @@ const TimerInputDigit = ({ fullValue, reverseIndex, cursorIndex, onClick }) => {
       {currentValue}
     </div>
   );
+};
+
+TimerInputDigit.propTypes = {
+  fullValue: PropTypes.string.isRequired,
+  reverseIndex: PropTypes.number.isRequired,
+  cursorIndex: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 const padZero = (num) => {
@@ -222,6 +230,10 @@ const TimerInput = ({ onChange }) => {
       />
     </div>
   );
+};
+
+TimerInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TimerInput;

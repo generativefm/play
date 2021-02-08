@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import sampleLibrary from '../playback/sample-library';
+import getSampleLibrary from '../playback/get-sample-library';
 
 const cache = new Map();
 const checksInProgress = new Map();
@@ -53,7 +53,9 @@ const useCanPlay = (pieceId) => {
         getResultFromPromise(promise);
         return;
       }
-      const promise = sampleLibrary.has(sampleNames);
+      const promise = getSampleLibrary().then((sampleLibrary) =>
+        sampleLibrary.has(sampleNames)
+      );
       checksInProgress.set(pieceId, promise);
       getResultFromPromise(promise);
     };
