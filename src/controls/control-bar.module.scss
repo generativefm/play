@@ -32,5 +32,6 @@
 @include is-narrow-screen() {
   .control-bar {
     height: 4rem;
+    background-color: $color-dark-2;
   }
 }

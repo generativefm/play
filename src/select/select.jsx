@@ -110,7 +110,7 @@ const Select = ({ options, value, onChange }) => {
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.array).isRequired,
-  value: PropTypes.value.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
