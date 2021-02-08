@@ -29,7 +29,7 @@ const UserContextMenu = () => {
   const handleSignoutClick = useCallback(() => {
     clearData().then(() => {
       dispatch(userLoggedOut());
-      logout();
+      logout({ returnTo: window.location.origin });
     });
   }, [logout, dispatch]);
 
