@@ -33,7 +33,7 @@ if (process.env.SENTRY_AUTH_TOKEN) {
       authToken: process.env.SENTRY_AUTH_TOKEN,
       release: version,
       org: 'ab-0v',
-      project: 'record-web',
+      project: 'play-web',
       include: ['./src', './dist'],
       deploy: {
         env: 'production',
