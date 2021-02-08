@@ -1,9 +1,11 @@
+/* global __WEBPACK_ASSETS__ */
+
 const ASSET_CACHE_NAME = '@generative.fm/play/assets';
 const FONT_CACHE_NAME = '@generative.fm/play/fonts';
 const FONT_STYLESHEET_URL =
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
 
-const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^\)\s]+)\)/g;
+const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^)\s]+)\)/g;
 
 const assetPaths = __WEBPACK_ASSETS__
   .filter((filename) => filename !== 'sw.js')

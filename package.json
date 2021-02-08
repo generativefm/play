@@ -58,6 +58,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
     "build:production": "webpack -c ./webpack/webpack.production.config.js",
