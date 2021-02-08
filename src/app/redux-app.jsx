@@ -25,7 +25,7 @@ const ReduxApp = ({ store }) => {
     }
     const seedString = seedNames.join('');
     let i = 0;
-    let sum = 0;
+    let sum = Date.now();
     while (i < seedString.length) {
       sum += seedString.charCodeAt(i++);
     }
