@@ -2,11 +2,6 @@ import { mergeData } from '@generative.fm/user';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import setImported from './set-imported';
 
-const LEGACY_ORIGIN =
-  process.env.NODE_ENV === 'production'
-    ? 'https://generative.fm'
-    : 'http://localhost:9999';
-
 const convertLegacyPieceId = (legacyPieceId) =>
   legacyPieceId.replace('alex-bainter-', '');
 
@@ -32,6 +27,26 @@ const convertLegacyStateToUserData = (legacyState) => {
 };
 
 const importLegacyData = (store) => {
+  let legacyOrigin;
+  switch (window.location.origin) {
+    case 'https://play.generative.fm': {
+      legacyOrigin = 'https://generative.fm';
+      break;
+    }
+    case 'https://staging.play.generative.fm': {
+      legacyOrigin = 'https://staging.generative.fm';
+      break;
+    }
+    case 'http://localhost:8080': {
+      legacyOrigin = 'http://localhost:9999';
+      break;
+    }
+  }
+
+  if (!legacyOrigin) {
+    return;
+  }
+
   const iframe = document.createElement('iframe');
 
   const closeIframe = () => {
@@ -41,10 +56,10 @@ const importLegacyData = (store) => {
   };
 
   iframe.onload = () => {
-    iframe.contentWindow.postMessage({ type: 'export-request' }, LEGACY_ORIGIN);
+    iframe.contentWindow.postMessage({ type: 'export-request' }, legacyOrigin);
     window.addEventListener('message', (event) => {
       const { data, origin, source } = event;
-      if (origin !== LEGACY_ORIGIN) {
+      if (origin !== legacyOrigin) {
         return;
       }
       if (data.type === 'export') {
@@ -58,8 +73,7 @@ const importLegacyData = (store) => {
               },
             });
             store.dispatch();
-            // TODO: uncomment this
-            //source.postMessage({ type: 'set-import-request' }, origin);
+            source.postMessage({ type: 'set-import-request' }, origin);
           } else {
             closeIframe();
           }
@@ -76,7 +90,7 @@ const importLegacyData = (store) => {
       }
     });
   };
-  iframe.src = LEGACY_ORIGIN;
+  iframe.src = legacyOrigin;
   iframe.style.visibility = 'hidden';
   document.body.append(iframe);
 };
