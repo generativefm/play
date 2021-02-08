@@ -43,7 +43,7 @@ const getHumanReadableTimeSince = (timestamp) => {
   const previousDate = new Date(
     fullPreviousDate.getFullYear(),
     fullPreviousDate.getMonth(),
-    fullPreviousDate.getDay()
+    fullPreviousDate.getDate()
   );
   const elapsedTime = today.getTime() - previousDate.getTime();
   const duration = elapsedDurations.find(
