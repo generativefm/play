@@ -63,6 +63,7 @@
     "lint": "eslint . --ext \".js,.jsx\"",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
+    "build": "webpack -c ./webpack/webpack.dev.config.js",
     "build:production": "webpack -c ./webpack/webpack.production.config.js",
     "build:profile": "webpack -c ./webpack/webpack.profile.config.js",
     "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy --mutables index.html sw.js"

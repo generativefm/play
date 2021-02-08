@@ -1,5 +1,3 @@
-/* global __WEBPACK_ASSETS__ */
-
 const ASSET_CACHE_NAME = '@generative.fm/play/assets';
 const FONT_CACHE_NAME = '@generative.fm/play/fonts';
 const FONT_STYLESHEET_URL =
@@ -7,6 +5,7 @@ const FONT_STYLESHEET_URL =
 
 const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^)\s]+)\)/g;
 
+//eslint-disable-next-line no-undef
 const assetPaths = __WEBPACK_ASSETS__
   .filter((filename) => filename !== 'sw.js')
   .concat([''])

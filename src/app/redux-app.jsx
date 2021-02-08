@@ -57,7 +57,7 @@ const ReduxApp = ({ store }) => {
 };
 
 ReduxApp.propTypes = {
-  store: PropTypes.object.isRequired,
+  store: PropTypes.object,
 };
 
 export default ReduxApp;

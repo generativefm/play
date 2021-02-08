@@ -7,11 +7,11 @@ const {
 
 function createInjectAssetsPlugin(fileName) {
   const apply = (compiler) => {
-    compiler.hooks.thisCompilation.tap('ServiceWorkerPlugin', (compilation) => {
+    compiler.hooks.thisCompilation.tap('InjectAssetsPlugin', (compilation) => {
       compilation.hooks.processAssets.tap(
         {
           name: 'ServiceWorkerPlugin',
-          stage: Compilation.PROCESS_ASSETS_STAGE_DERIVED,
+          stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         () => {
           const updateSource = (oldSource) => {
