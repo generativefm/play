@@ -66,7 +66,7 @@ const VolumeSlider = () => {
     [setValueFromXPosition]
   );
 
-  const handleMouseOver = useCallback(() => {
+  const handleMouseEnter = useCallback(() => {
     isMouseOverRef.current = true;
   }, []);
 
@@ -107,7 +107,7 @@ const VolumeSlider = () => {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onMouseOver={handleMouseOver}
+        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div className={styles['slider__rail']}></div>
