@@ -19,9 +19,7 @@ jobs:
         run: npm run lint
 
       - name: Build
-        run: npm run build
-        env:          
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: npm run build:production
 
       - name: Deploy
         run: npm run deploy
