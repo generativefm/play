@@ -64,7 +64,7 @@
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
     "build:production": "webpack -c ./webpack/webpack.production.config.js",
     "build:profile": "webpack -c ./webpack/webpack.profile.config.js",
-    "deploy:staging": "node -r dotenv/config node_modules/.bin/s3-sync deploy"
+    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy"
   },
   "repository": {
     "type": "git",
