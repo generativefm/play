@@ -72,7 +72,7 @@ const importLegacyData = (store) => {
                 message: 'Play time and favorites imported from the old player',
               },
             });
-            store.dispatch();
+            store.dispatch(action);
             source.postMessage({ type: 'set-import-request' }, origin);
           } else {
             closeIframe();

@@ -18,7 +18,7 @@ const DIALOG_TITLE = 'Anonymous activity moved into your account';
 const AnonymousDataImportedBanner = () => {
   const dispatch = useDispatch();
   const [isBannerVisible, setIsBannerVisible] = useState(false);
-  const [isDialogVisible, setIsDialogVisible] = useState(true);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
   const anonymousData = useSelector(selectAnonymousData);
   const isAnonymousImportingEnabled = useSelector(selectAnonymousImporting);
   const [bannerActions] = useState([
@@ -121,7 +121,7 @@ const AnonymousDataImportedBanner = () => {
           >
             {playCount > 0 && (
               <li>
-                {playCount} generator{likeCount > 1 ? 's' : ''} played
+                {playCount} generator{playCount > 1 ? 's' : ''} played
               </li>
             )}
             {totalPlayTime > 0 && (
