@@ -2,7 +2,9 @@
 
 const { EnvironmentPlugin } = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const createWebpackConfig = require('./create-webpack-config');
+const { version } = require('../package.json');
 
 const config = createWebpackConfig({
   styleLoader: MiniCssExtractPlugin.loader,
@@ -24,5 +26,24 @@ config.plugins.push(
     filename: '[name].[contenthash].css',
   })
 );
+
+if (process.env.SENTRY_AUTH_TOKEN) {
+  config.plugins.push(
+    new SentryWebpackPlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: version,
+      org: 'ab-0v',
+      project: 'record-web',
+      include: ['./src', './dist'],
+      deploy: {
+        env: 'production',
+        name: `${version} automatic deployment`,
+        url:
+          process.env.GITHUB_RUN_NUMBER &&
+          `https://github.com/generative-fm/record/actions/runs/${process.env.GITHUB_RUN_NUMBER}`,
+      },
+    })
+  );
+}
 
 module.exports = config;
