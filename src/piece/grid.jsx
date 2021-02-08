@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import Preview from './preview';
 import PreviewSkeleton from '../loading/preview-skeleton';
 import useContentWidth from '../layout/use-content-width';
@@ -42,6 +43,11 @@ const Grid = ({ pieceIds, getSubtitle }) => {
           ))}
     </div>
   );
+};
+
+Grid.propTypes = {
+  pieceIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getSubtitle: PropTypes.func,
 };
 
 export default Grid;

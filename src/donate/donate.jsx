@@ -173,8 +173,8 @@ const Donate = () => {
             <div
               className={styles['donate__methods__column__method__description']}
             >
-              You can make a one-time payment with PayPal even if you don't have
-              an account with them.
+              You can make a one-time payment with PayPal even if you don&apos;t
+              have an account with them.
             </div>
           </div>
           <div className={styles['donate__methods__column__method']}>
@@ -202,7 +202,7 @@ const Donate = () => {
               className={styles['donate__methods__column__method__description']}
             >
               Select a cryptocurrency to see an address where you can send
-              payments. If you'd like to use a cryptocurrency that isn't listed
+              payments. If you&apos;d prefer to use a cryptocurrency not listed
               here,{' '}
               <a
                 href="https://alexbainter.com"

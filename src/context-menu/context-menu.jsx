@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import useDismissable from '../app/use-dismissable';
 import useCreateContextMenu from './use-create-context-menu';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
@@ -61,6 +62,12 @@ const ContextMenu = ({ x, y, children }) => {
       {children}
     </div>
   );
+};
+
+ContextMenu.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default ContextMenu;

@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import styles from './skeleton.module.scss';
 
 const Skeleton = ({
@@ -35,6 +36,15 @@ const Skeleton = ({
       {children}
     </span>
   );
+};
+
+Skeleton.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  style: PropTypes.object,
+  isLoading: PropTypes.bool,
+  useDiv: PropTypes.bool,
+  isAnimated: PropTypes.bool,
 };
 
 export default Skeleton;

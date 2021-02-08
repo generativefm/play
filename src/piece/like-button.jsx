@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
+import PropTypes from 'prop-types';
 import selectLikes from '../user/select-likes';
 import IconButton from '../button/icon-button';
 import LikeIcon from './like-icon';
@@ -19,6 +20,10 @@ const LikeButton = ({ pieceId }) => {
       <LikeIcon pieceId={pieceId} />
     </IconButton>
   );
+};
+
+LikeButton.propTypes = {
+  pieceId: PropTypes.string.isRequired,
 };
 
 export default LikeButton;

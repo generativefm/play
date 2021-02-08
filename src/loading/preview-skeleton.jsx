@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Skeleton from './skeleton';
 import styles from '../piece/preview.module.scss';
 
@@ -24,5 +25,10 @@ const PreviewSkeleton = ({ width, isAnimated = true }) => (
     </div>
   </div>
 );
+
+PreviewSkeleton.propTypes = {
+  width: PropTypes.string.isRequired,
+  isAnimated: PropTypes.bool,
+};
 
 export default PreviewSkeleton;

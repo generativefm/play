@@ -16,8 +16,9 @@ const Library = () => {
         placeholder={
           <div className={styles['category-placeholder']}>
             <span>
-              This is where you'll find the generators you played recently. Find
-              one to listen to from the <Link to="/browse">Browse page</Link>.
+              This is where you&apos;ll find the generators you played recently.
+              Find one to listen to from the{' '}
+              <Link to="/browse">Browse page</Link>.
             </span>
           </div>
         }
@@ -30,8 +31,9 @@ const Library = () => {
         placeholder={
           <div className={styles['category-placeholder']}>
             <span>
-              This is where you'll find the generators you played the most. Find
-              one to listen to from the <Link to="/browse">Browse page</Link>.
+              This is where you&apos;ll find the generators you played the most.
+              Find one to listen to from the{' '}
+              <Link to="/browse">Browse page</Link>.
             </span>
           </div>
         }

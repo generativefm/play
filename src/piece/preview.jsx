@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import { Stop, PlayArrow, VolumeUp, CloudOff } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import IconButton from '../button/icon-button';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectPlaybackStatus from '../playback/select-playback-status';
@@ -121,6 +122,13 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
       <div className={styles['preview__subtitle']}>{subtitle}</div>
     </div>
   );
+};
+
+Preview.propTypes = {
+  pieceId: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  getSubtitle: PropTypes.func,
 };
 
 export default Preview;

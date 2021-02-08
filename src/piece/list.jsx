@@ -4,6 +4,7 @@ import userPlayedPiece from '../playback/user-played-piece';
 import { useDispatch, useSelector } from 'react-redux';
 import { VolumeUp, CloudOff } from '@material-ui/icons';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import MoreButton from './more-button';
@@ -70,6 +71,15 @@ const ListItem = ({
       </div>
     </div>
   );
+};
+
+ListItem.propTypes = {
+  pieceId: PropTypes.string.isRequired,
+  getSubtitle: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isCurrentPiece: PropTypes.bool.isRequired,
 };
 
 const ListItemSkeleton = () => (
@@ -147,6 +157,11 @@ const List = ({ pieceIds, getSubtitle }) => {
       })}
     </div>
   );
+};
+
+List.propTypes = {
+  pieceIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getSubtitle: PropTypes.func,
 };
 
 export default List;

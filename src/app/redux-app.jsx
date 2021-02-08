@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MersenneTwister from 'mersenne-twister';
+import PropTypes from 'prop-types';
 import Layout from '../layout/layout';
 import MasterGainProvider from '../volume/master-gain-provider';
 import ContextMenuProvider from '../context-menu/context-menu-provider';
@@ -53,6 +54,10 @@ const ReduxApp = ({ store }) => {
       </SnackbarProvider>
     </Provider>
   );
+};
+
+ReduxApp.propTypes = {
+  store: PropTypes.object.isRequired,
 };
 
 export default ReduxApp;

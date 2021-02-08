@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { now } from 'tone';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import selectCurrentGainValue from './select-current-gain-value';
 import masterGainContext from './master-gain-context';
 import masterGainNode from './master-gain-node';
@@ -21,6 +22,10 @@ const MasterGainProvider = ({ children }) => {
       {children}
     </masterGainContext.Provider>
   );
+};
+
+MasterGainProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default MasterGainProvider;

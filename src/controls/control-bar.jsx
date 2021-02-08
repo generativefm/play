@@ -2,6 +2,7 @@ import React from 'react';
 import { ExpandLess } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import PlaybackControls from './playback-controls';
 import CurrentPiece from '../playback/current-piece';
 import VolumeSlider from '../volume/volume-slider';
@@ -52,6 +53,10 @@ const ControlBar = ({ onExpandCollapse }) => {
       </div>
     </div>
   );
+};
+
+ControlBar.propTypes = {
+  onExpandCollapse: PropTypes.func.isRequired,
 };
 
 export default ControlBar;

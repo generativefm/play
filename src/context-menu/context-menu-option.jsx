@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from './context-menu-option.module.scss';
 import useCreateContextMenu from './use-create-context-menu';
 
@@ -42,6 +43,13 @@ const ContextMenuOption = ({ children, onClick, href, linkTo }) => {
       {children}
     </div>
   );
+};
+
+ContextMenuOption.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+  href: PropTypes.string,
+  linkTo: PropTypes.string,
 };
 
 export default ContextMenuOption;

@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import Switch from './switch';
 import selectAnonymousImporting from './select-anonymous-importing';
 import userChangedSetting from './user-changed-setting';
@@ -25,6 +26,13 @@ const Setting = ({ label, help, setting, selector }) => {
       <div className={styles['setting__help']}>{help}</div>
     </button>
   );
+};
+
+Setting.propTypes = {
+  label: PropTypes.string.isRequired,
+  help: PropTypes.string.isRequired,
+  setting: PropTypes.string.isRequired,
+  selector: PropTypes.func.isRequired,
 };
 
 const Settings = () => {

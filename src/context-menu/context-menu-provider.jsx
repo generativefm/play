@@ -1,18 +1,8 @@
 import React, { useCallback, useState } from 'react';
-// import { Feedback } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import contextMenuContext from './context-menu-context';
 import ContextMenu from './context-menu';
-// import ContextMenuOption from './context-menu-option';
 import styles from './context-menu-provider.module.scss';
-// import optionStyles from './context-menu-option.module.scss';
-
-// const fmo = (
-//   <ContextMenuOption href="beepboop">
-//     <Feedback className={optionStyles['context-menu-option__icon']} />
-//     Send feedback
-//   </ContextMenuOption>
-// );
-import UserContextMenu from '../user/user-context-menu';
 
 const ContextMenuProvider = ({ children }) => {
   const [
@@ -38,6 +28,10 @@ const ContextMenuProvider = ({ children }) => {
       </div>
     </contextMenuContext.Provider>
   );
+};
+
+ContextMenuProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export default ContextMenuProvider;
