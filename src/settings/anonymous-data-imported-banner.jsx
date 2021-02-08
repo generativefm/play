@@ -18,7 +18,7 @@ const DIALOG_TITLE = 'Anonymous activity moved into your account';
 const AnonymousDataImportedBanner = () => {
   const dispatch = useDispatch();
   const [isBannerVisible, setIsBannerVisible] = useState(false);
-  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(true);
   const anonymousData = useSelector(selectAnonymousData);
   const isAnonymousImportingEnabled = useSelector(selectAnonymousImporting);
   const [bannerActions] = useState([
@@ -72,9 +72,9 @@ const AnonymousDataImportedBanner = () => {
     setDialogActions(createDialogActions());
   }, [createDialogActions]);
 
-  // if (!hasAnonymousData(anonymousData)) {
-  //   return null;
-  // }
+  if (!hasAnonymousData(anonymousData)) {
+    return null;
+  }
 
   const totalPlayTime =
     anonymousData.playTime &&
@@ -86,6 +86,8 @@ const AnonymousDataImportedBanner = () => {
     anonymousData.likes && Object.keys(anonymousData.likes).length;
   const dislikeCount =
     anonymousData.dislikes && Object.keys(anonymousData.dislikes).length;
+  const playCount =
+    anonymousData.history && Object.keys(anonymousData.history).length;
 
   return (
     <>
@@ -117,6 +119,11 @@ const AnonymousDataImportedBanner = () => {
               styles['dialog-body-part--summary']
             )}
           >
+            {playCount > 0 && (
+              <li>
+                {playCount} generator{likeCount > 1 ? 's' : ''} played
+              </li>
+            )}
             {totalPlayTime > 0 && (
               <li>{formatPlayTime(totalPlayTime)} of play time</li>
             )}
