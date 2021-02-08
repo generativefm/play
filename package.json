@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@alexbainter/eslint-config": "^0.1.2",
-    "@alexbainter/s3-sync": "^0.3.0",
+    "@alexbainter/s3-sync": "^0.3.1",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
@@ -65,7 +65,7 @@
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
     "build:production": "webpack -c ./webpack/webpack.production.config.js",
     "build:profile": "webpack -c ./webpack/webpack.profile.config.js",
-    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy --mutables index.html,sw.js"
+    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy --mutables index.html sw.js"
   },
   "repository": {
     "type": "git",
