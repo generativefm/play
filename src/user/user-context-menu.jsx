@@ -80,7 +80,7 @@ const UserContextMenu = () => {
         </ContextMenuOption>
       )}
       {upgrade && (
-        <ContextMenuOption onClick={upgrade}>
+        <ContextMenuOption onClick={upgrade} isHighlighted={true}>
           <Update
             className={contextMenuOptionStyles['context-menu-option__icon']}
           />

@@ -5,7 +5,7 @@ import register from './register';
 import useShowSnackbar from '../snackbar/use-show-snackbar';
 
 const UpgradeProvider = ({ children }) => {
-  const [upgrade, setUpgrade] = useState(null);
+  const [upgrade, setUpgrade] = useState(() => () => {});
   const showSnackbar = useShowSnackbar();
   const handleUpdateInstalled = useCallback(
     (upgradeToNew) => {

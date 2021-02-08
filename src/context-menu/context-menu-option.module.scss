@@ -29,4 +29,8 @@
   &__icon {
     margin-right: 0.5rem;
   }
+
+  &--is-highlighted {
+    color: $color-primary;
+  }
 }

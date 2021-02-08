@@ -1,3 +1,5 @@
+@import '../styles/_theme.scss';
+
 .auth-button {
   background: none;
   border: none;
@@ -5,6 +7,20 @@
 
   &:focus {
     outline: none;
+  }
+
+  &--has-badge {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background-color: $color-primary;
+    }
   }
 
   &__image {

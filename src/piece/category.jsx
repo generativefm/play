@@ -199,7 +199,7 @@ const Category = ({
 
 Category.propTypes = {
   title: PropTypes.string,
-  pieceIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  pieceIds: PropTypes.arrayOf(PropTypes.string),
   getSubtitle: PropTypes.func,
   linkTo: PropTypes.string,
   placeholder: PropTypes.node,
