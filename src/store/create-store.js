@@ -22,6 +22,7 @@ import mediaSessionMiddleware from '../playback/media-session-middleware';
 import silentHtml5AudioMiddleware from '../playback/silent-html5-audio-middleware';
 import confirmExitMiddleware from '../settings/confirm-exit-middleware';
 import sentryMiddleware from '../sentry/sentry-middleware';
+import resumeAudioContextMiddleware from '../playback/resume-audio-context-middleware';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -47,6 +48,7 @@ const createStore = (preloadedState) =>
       snackbarMiddleware,
       mediaSessionMiddleware,
       silentHtml5AudioMiddleware,
+      resumeAudioContextMiddleware,
       confirmExitMiddleware
     )
   );

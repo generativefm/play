@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import unmuteiOSAudio from 'unmute-ios-audio';
 import importLegacyData from '../import/import-legacy-data';
 import persistConfigs from '../storage/persist-configs';
 import loadState from '../storage/load-state';
@@ -6,6 +7,8 @@ import hasImportedLegacyData from '../import/has-imported-legacy-data';
 import IS_STORAGE_SUPPORTED from '../storage/is-supported';
 import beforeInstallPromptContext from './before-install-prompt-context';
 import withSuspense from '../layout/with-suspense';
+
+unmuteiOSAudio();
 
 const getCreateStore = () =>
   import('../store/create-store').then((module) => module.default);
