@@ -12,7 +12,6 @@ import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
 import { TIMER_PROGRESSED } from '../timer/timer-progressed';
 import piecePlaybackFailed from './piece-playback-failed';
-import startAudioContext from './start-audio-context';
 
 const playbackMiddleware = (store) => (next) => {
   const generator = new MersenneTwister();
@@ -47,7 +46,6 @@ const playbackMiddleware = (store) => (next) => {
   };
 
   const playPiece = ({ pieceId }) => {
-    startAudioContext();
     if (activatingPieces.has(pieceId)) {
       return;
     }
