@@ -38,7 +38,6 @@ const createStore = (preloadedState) =>
     preloadedState,
     applyMiddleware(
       sentryMiddleware,
-      resumeAudioContextMiddleware,
       anonymousImportMiddleware,
       playbackMiddleware,
       storeUserStateMiddleware,
@@ -49,6 +48,7 @@ const createStore = (preloadedState) =>
       snackbarMiddleware,
       mediaSessionMiddleware,
       silentHtml5AudioMiddleware,
+      resumeAudioContextMiddleware,
       confirmExitMiddleware
     )
   );

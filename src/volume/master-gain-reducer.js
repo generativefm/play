@@ -2,7 +2,7 @@ import { USER_ADJUSTED_MASTER_GAIN } from './user-adjusted-master-gain';
 import { USER_CLICKED_VOLUME_BUTTON } from './user-clicked-volume-button';
 
 const DEFAULT_STATE = {
-  currentGain: 0.75,
+  currentGain: 1,
   swapValue: 0,
 };
 

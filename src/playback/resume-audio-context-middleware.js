@@ -15,9 +15,10 @@ const resumeAudioContextMiddleware = (store) => (next) => (action) => {
   source.buffer = buffer;
   connect(source, context.destination);
   source.start(0);
-  if (context.state && context.state !== 'running' && context.resume) {
-    context.resume();
+  if (context.state === 'running' || typeof context.resume !== 'function') {
+    return result;
   }
+  context.resume();
   return result;
 };
 
