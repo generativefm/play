@@ -20,6 +20,8 @@
     &__main {
       max-width: 110rem;
       margin: 0 auto;
+      padding: 0 1rem;
+      box-sizing: border-box;
     }
 
     &__playback {
@@ -78,6 +80,11 @@
 
     &__content {
       padding-bottom: 8rem;
+
+      &__main {
+        padding: 0;
+      }
+
       &__playback {
         position: fixed;
         top: auto;

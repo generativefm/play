@@ -38,7 +38,7 @@ const importLegacyData = (store) => {
       break;
     }
     case 'http://localhost:8080': {
-      legacyOrigin = 'http://localhost:9999';
+      legacyOrigin = 'http://localhost:3000';
       break;
     }
   }
@@ -65,6 +65,13 @@ const importLegacyData = (store) => {
       if (data.type === 'export') {
         try {
           const parsedState = JSON.parse(data.state);
+          if (parsedState === null || typeof parsedState !== 'object') {
+            setImported().catch((error) => {
+              console.error('Unable to store imported state:', error);
+            });
+            closeIframe();
+            return;
+          }
           if (!parsedState.isImported) {
             const action = mergeData(convertLegacyStateToUserData(parsedState));
             action.meta = Object.assign({}, action.meta, {
