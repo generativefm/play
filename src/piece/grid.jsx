@@ -27,10 +27,7 @@ const Grid = ({ pieceIds, getSubtitle }) => {
     <div className={styles.grid} style={{ width: `${contentWidth}px` }}>
       {!Array.isArray(pieceIds)
         ? Array.from({ length: 30 }, (_, i) => (
-            <PreviewSkeleton
-              key={i}
-              width={`calc((${contentWidth}px - 4rem) / 8)`}
-            />
+            <PreviewSkeleton key={i} width={`calc(${contentWidth}px / 8)`} />
           ))
         : pieceIds.map((pieceId) => (
             <Preview
@@ -38,7 +35,7 @@ const Grid = ({ pieceIds, getSubtitle }) => {
               pieceId={pieceId}
               getSubtitle={getSubtitle}
               onPlay={handlePiecePlay}
-              width={`calc((${contentWidth}px - 4rem) / 8)`}
+              width={`calc(${contentWidth}px / 8)`}
             />
           ))}
     </div>

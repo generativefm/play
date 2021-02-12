@@ -22,7 +22,7 @@ const UpgradeProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (!navigator.serviceWorker) {
+    if (!navigator.serviceWorker || process.env.NODE_ENV !== 'production') {
       return;
     }
     //TODO this needs to be undone in a callback

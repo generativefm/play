@@ -4,7 +4,7 @@
   &__header {
     max-width: 100rem;
     margin: 2rem auto 0;
-    padding: 0 2rem 0 3rem;
+    padding-left: 0.5rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -19,16 +19,6 @@
     &__options {
       margin-left: 2rem;
       z-index: 1;
-    }
-  }
-}
-
-@include is-narrow-screen() {
-  .browse-grid__header {
-    padding-left: 1rem;
-    margin-top: 1rem;
-    &__title {
-      font-size: 1.25rem;
     }
   }
 }

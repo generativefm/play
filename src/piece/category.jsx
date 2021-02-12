@@ -87,7 +87,7 @@ const Category = ({
 
   if (!Array.isArray(pieceIds)) {
     return (
-      <div className={styles.category}>
+      <div className={styles.category} style={{ width: contentWidth }}>
         <Link to={linkTo} className={styles['category__title']}>
           {title}
         </Link>
@@ -112,7 +112,7 @@ const Category = ({
       return null;
     }
     return (
-      <div className={styles.category}>
+      <div className={styles.category} style={{ width: contentWidth }}>
         <div className={styles['category__title']}>{title}</div>
         <div
           className={classnames(

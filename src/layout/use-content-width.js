@@ -8,10 +8,12 @@ const useContentWidth = () => {
   const clientWidth = useClientWidth();
   const remValue = useRemValue();
   const [contentWidth, setContentWidth] = useState(
-    Math.min(remValue * MAX_WIDTH_REM, clientWidth)
+    Math.min(remValue * MAX_WIDTH_REM, clientWidth) - remValue * 2
   );
   useEffect(() => {
-    setContentWidth(Math.min(remValue * MAX_WIDTH_REM, clientWidth));
+    setContentWidth(
+      Math.min(remValue * MAX_WIDTH_REM, clientWidth) - remValue * 2
+    );
   }, [clientWidth, remValue]);
   return contentWidth;
 };
