@@ -80,6 +80,11 @@
 
     &__content {
       padding-bottom: 8rem;
+
+      &__main {
+        padding: 0;
+      }
+
       &__playback {
         position: fixed;
         top: auto;
