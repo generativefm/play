@@ -34,16 +34,16 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const handleShareClick = useCallback(async () => {
     const url = `https://play.generative.fm${pieceRoute}`;
     if (navigator.share) {
-      try {
-        navigator.share({
+      navigator
+        .share({
           url,
           text: `Listen to ${byId[pieceId].title} on Generative.fm`,
           title: `Generative.fm - ${byId[pieceId].title}`,
+        })
+        .catch(() => {
+          // canceled
         });
-        return;
-      } catch (err) {
-        // fallback
-      }
+      return;
     }
     await copyToClipboard(url);
     showSnackbar('Link copied');
