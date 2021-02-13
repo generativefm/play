@@ -1,6 +1,6 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
@@ -67,7 +67,9 @@
     "build": "webpack -c ./webpack/webpack.dev.config.js",
     "build:production": "webpack -c ./webpack/webpack.production.config.js",
     "build:profile": "webpack -c ./webpack/webpack.profile.config.js",
-    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy --mutables index.html sw.js"
+    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy --mutables index.html sw.js",
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
