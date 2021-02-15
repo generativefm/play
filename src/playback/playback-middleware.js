@@ -81,6 +81,7 @@ const playbackMiddleware = (store) => (next) => {
       })
       .catch((err) => {
         console.error(err);
+        activatingPieces.delete(pieceId);
         store.dispatch(piecePlaybackFailed());
       });
   };
