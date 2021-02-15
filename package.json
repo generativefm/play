@@ -1,12 +1,12 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.1.8",
+  "version": "0.2.1",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
     "@alexbainter/indexed-db": "^0.1.1",
     "@auth0/auth0-react": "^1.2.0",
-    "@generative-music/pieces-alex-bainter": "^4.7.0",
+    "@generative-music/pieces-alex-bainter": "^4.8.1",
     "@generative-music/samples-alex-bainter": "^2.3.0",
     "@generative-music/web-library": "^0.2.2",
     "@generative-music/web-provider": "^2.0.4",

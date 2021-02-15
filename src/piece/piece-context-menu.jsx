@@ -91,12 +91,12 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
           Go to generator
         </ContextMenuOption>
       )}
-      {byId[pieceId].downloadUrl && (
-        <ContextMenuOption href={byId[pieceId].downloadUrl}>
+      {byId[pieceId].bandcampUrl && (
+        <ContextMenuOption href={byId[pieceId].bandcampUrl}>
           <Album
             className={contextMenuOptionStyles['context-menu-option__icon']}
           />
-          Download recordings
+          Download excerpts
         </ContextMenuOption>
       )}
       {byId[pieceId].isRecordable && (
@@ -106,7 +106,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
           <FiberManualRecord
             className={contextMenuOptionStyles['context-menu-option__icon']}
           />
-          Record with Generative.fm Record
+          Make your own recording
         </ContextMenuOption>
       )}
     </>

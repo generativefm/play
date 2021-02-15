@@ -30,9 +30,13 @@ const mediaSessionMiddleware = (store) => (next) => {
   navigator.mediaSession.setActionHandler('pause', () => {
     store.dispatch(userStoppedPlayback());
   });
-  navigator.mediaSession.setActionHandler('stop', () => {
-    store.dispatch(userStoppedPlayback());
-  });
+  try {
+    navigator.mediaSession.setActionHandler('stop', () => {
+      store.dispatch(userStoppedPlayback());
+    });
+  } catch (error) {
+    // some browsers don't like this
+  }
   navigator.mediaSession.setActionHandler('nexttrack', () => {
     const state = store.getState();
     const { index, pieceIds } = selectQueue(state);

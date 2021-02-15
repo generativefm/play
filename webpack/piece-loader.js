@@ -21,7 +21,12 @@ function pieceLoader(source) {
       Array.isArray(instrument)
         ? `[${instrument.map((name) => `"${name}"`)}]`
         : `"${instrument}"`
-    )}]
+    )}],
+    bandcampUrl: ${
+      typeof pieceManifest.bandcampUrl === 'string'
+        ? `"${pieceManifest.bandcampUrl}"`
+        : null
+    }
   }`;
   return output;
 }
