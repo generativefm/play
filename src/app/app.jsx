@@ -28,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     const storedStatePromise = IS_STORAGE_SUPPORTED
-      ? loadState(persistConfigs)
+      ? loadState(persistConfigs).catch(() => undefined)
       : Promise.resolve();
     Promise.all([storedStatePromise, getCreateStore()]).then(
       ([storedState, createStore]) => {

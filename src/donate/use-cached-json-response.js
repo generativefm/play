@@ -12,21 +12,22 @@ const fetchFromNetwork = ({ url }) =>
     });
 
 const fetchFromNetworkAndCache = ({ url, cachePromise }) =>
-  cachePromise.then((cache) =>
-    cache
-      .add(url)
-      .then(() => cache.match(url))
-      .then((response) => {
-        if (typeof response === 'undefined') {
-          return null;
-        }
-        return response.json();
-      })
-      .catch((err) => {
-        console.error(err);
-        return null;
-      })
-  );
+  cachePromise
+    .then((cache) =>
+      cache
+        .add(url)
+        .then(() => cache.match(url))
+        .then((response) => {
+          if (typeof response === 'undefined') {
+            return null;
+          }
+          return response.json();
+        })
+    )
+    .catch((err) => {
+      console.error(err);
+      return fetchFromNetwork({ url });
+    });
 
 const fetchFromCache = ({ url, cachePromise }) =>
   cachePromise.then((cache) =>
