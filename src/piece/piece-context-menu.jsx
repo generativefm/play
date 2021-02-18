@@ -1,5 +1,13 @@
-import React, { useCallback } from 'react';
-import { Share, ArtTrack, FiberManualRecord, Album } from '@material-ui/icons';
+import React, { useCallback, useMemo } from 'react';
+import {
+  Share,
+  ArtTrack,
+  FiberManualRecord,
+  Album,
+  QueueMusic,
+  PlaylistPlay,
+  RemoveCircleOutline,
+} from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
@@ -13,6 +21,10 @@ import copyToClipboard from '../app/copy-to-clipboard';
 import useShowSnackbar from '../snackbar/use-show-snackbar';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
+import selectQueue from '../queue/select-queue';
+import userQueuedPiece from '../queue/user-queued-piece';
+import userPlayedPiece from '../playback/user-played-piece';
+import userUnqueuedPiece from '../queue/user-unqueued-piece';
 import styles from './piece-context-menu.module.scss';
 
 const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
@@ -20,11 +32,66 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const likes = useSelector(selectLikes);
   const isLiked = Boolean(likes[pieceId]);
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
+  const queue = useSelector(selectQueue);
   const showSnackbar = useShowSnackbar();
   const isNarrowScreen = useIsNarrowScreen();
 
   const pieceRoute = `/generator/${pieceId}`;
   const { pathname } = useLocation();
+
+  const handlePlayNextClick = useCallback(() => {
+    if (typeof queue.index !== 'number') {
+      dispatch(userPlayedPiece({ index: 0, selectionPieceIds: [pieceId] }));
+    }
+    dispatch(userQueuedPiece({ pieceId, index: queue.index + 1 }));
+  }, [dispatch, pieceId, queue]);
+
+  const handleAddToQueueClick = useCallback(() => {
+    if (typeof queue.index !== 'number') {
+      dispatch(userPlayedPiece({ index: 0, selectionPieceIds: [pieceId] }));
+      return;
+    }
+    dispatch(userQueuedPiece({ pieceId }));
+  }, [dispatch, pieceId, queue]);
+
+  const handleUnqueueClick = useCallback(() => {
+    const unqueuedPieceIndex = queue.pieceIds.indexOf(pieceId);
+    if (unqueuedPieceIndex < 0) {
+      return;
+    }
+    if (queue.pieceIds.length === 1) {
+      dispatch(userUnqueuedPiece({ pieceId, newIndex: null, isCurrent: true }));
+      return;
+    }
+    if (unqueuedPieceIndex === queue.index) {
+      const newIndex = queue.index;
+      dispatch(
+        userUnqueuedPiece({
+          pieceId,
+          newIndex,
+          isCurrent: true,
+        })
+      );
+      return;
+    }
+    if (unqueuedPieceIndex > queue.index) {
+      const newIndex = queue.index;
+      dispatch(
+        userUnqueuedPiece({
+          pieceId,
+          newIndex,
+        })
+      );
+      return;
+    }
+    const newIndex = queue.index - 1;
+    dispatch(
+      userUnqueuedPiece({
+        pieceId,
+        newIndex,
+      })
+    );
+  }, [dispatch, pieceId, queue]);
 
   const handleLikeClick = useCallback(() => {
     const actionCreator = isLiked ? userUnlikedPiece : userLikedPiece;
@@ -49,6 +116,11 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
     showSnackbar('Link copied');
   }, [pieceRoute, pieceId, showSnackbar]);
 
+  const isInQueue = useMemo(() => queue.pieceIds.indexOf(pieceId) >= 0, [
+    queue.pieceIds,
+    pieceId,
+  ]);
+
   return (
     <>
       {isNarrowScreen && (
@@ -67,6 +139,30 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
             </div>
           </div>
         </div>
+      )}
+      {!isInQueue && (
+        <>
+          <ContextMenuOption onClick={handleAddToQueueClick}>
+            <QueueMusic
+              className={contextMenuOptionStyles['context-menu-option__icon']}
+            />
+            Add to queue
+          </ContextMenuOption>
+          <ContextMenuOption onClick={handlePlayNextClick}>
+            <PlaylistPlay
+              className={contextMenuOptionStyles['context-menu-option__icon']}
+            />
+            Play next
+          </ContextMenuOption>
+        </>
+      )}
+      {isInQueue && (
+        <ContextMenuOption onClick={handleUnqueueClick}>
+          <RemoveCircleOutline
+            className={contextMenuOptionStyles['context-menu-option__icon']}
+          />
+          Remove from queue
+        </ContextMenuOption>
       )}
       {shouldEnableLike && (
         <ContextMenuOption onClick={handleLikeClick}>
