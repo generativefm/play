@@ -6,7 +6,7 @@
   "dependencies": {
     "@alexbainter/indexed-db": "^0.1.1",
     "@auth0/auth0-react": "^1.2.0",
-    "@generative-music/pieces-alex-bainter": "^5.0.1",
+    "@generative-music/pieces-alex-bainter": "^5.0.3",
     "@generative-music/samples-alex-bainter": "^2.3.0",
     "@generative-music/web-library": "^0.2.2",
     "@generative-music/web-provider": "^3.0.0",
