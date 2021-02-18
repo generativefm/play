@@ -7,19 +7,25 @@ import useLatestUser from './use-latest-user';
 const usePlayTime = () => {
   const [pendingPlayTime, setPendingPlayTime] = useState({});
   const isLoadingUser = useLatestUser();
-  const [isLoading, setIsLoading] = useState(isLoadingUser);
+  const [isLoading, setIsLoading] = useState(true);
   const syncedPlayTime = useSelector(selectPlayTime);
 
   useEffect(() => {
     if (isLoadingUser) {
-      setIsLoading(true);
       return;
     }
+    let isCancelled = false;
     getPendingPlayTime().then((pendingPlayTime) => {
+      if (isCancelled) {
+        return;
+      }
       setPendingPlayTime(pendingPlayTime);
       setIsLoading(false);
     });
-  }, [isLoadingUser, syncedPlayTime]);
+    return () => {
+      isCancelled = true;
+    };
+  }, [isLoadingUser]);
 
   const playTime = useMemo(
     () =>
