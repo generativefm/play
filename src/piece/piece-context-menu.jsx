@@ -42,6 +42,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const handlePlayNextClick = useCallback(() => {
     if (typeof queue.index !== 'number') {
       dispatch(userPlayedPiece({ index: 0, selectionPieceIds: [pieceId] }));
+      return;
     }
     dispatch(userQueuedPiece({ pieceId, index: queue.index + 1 }));
   }, [dispatch, pieceId, queue]);
