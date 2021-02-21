@@ -64,6 +64,10 @@ const shuffleMiddleware = (store) => (next) => {
         return next(action);
       }
       case USER_QUEUED_PIECE: {
+        const isShuffleActive = selectIsShuffleActive(store.getState());
+        if (!isShuffleActive) {
+          return next(action);
+        }
         const { pieceId } = action.payload;
         let { index } = action.payload;
         if (Array.isArray(orderedPieceIds)) {
@@ -98,8 +102,10 @@ const shuffleMiddleware = (store) => (next) => {
             (otherPieceId) => otherPieceId !== pieceId
           );
         }
+        return next(action);
       }
     }
+
     return next(action);
   };
 };

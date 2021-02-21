@@ -7,13 +7,13 @@ import { USER_UNQUEUED_PIECE } from './user-unqueued-piece';
 const pieceIdsReducer = (state = [], action) => {
   switch (action.type) {
     case USER_PLAYED_PIECE: {
-      return action.payload.selectionPieceIds;
+      return action.payload.selectionPieceIds.slice();
     }
     case USER_ENABLED_SHUFFLE: {
-      return action.payload.shuffledPieceIds;
+      return action.payload.shuffledPieceIds.slice();
     }
     case USER_DISABLED_SHUFFLE: {
-      return action.payload.unshuffledPieceIds;
+      return action.payload.unshuffledPieceIds.slice();
     }
     case USER_QUEUED_PIECE: {
       const { pieceId, index = state.length } = action.payload;

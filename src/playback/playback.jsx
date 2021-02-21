@@ -7,12 +7,14 @@ import userClosedPlayback from './user-closed-playback';
 import LikeButton from '../piece/like-button';
 import DislikeButton from '../piece/dislike-button';
 import Queue from '../queue/queue';
+import selectQueuedPieceIds from '../queue/select-queued-piece-ids';
 import styles from './playback.module.scss';
 
 const Playback = () => {
   const currentPieceId = useSelector(selectCurrentPieceId);
   const history = useHistory();
   const dispatch = useDispatch();
+  const queuedPieceIds = useSelector(selectQueuedPieceIds);
 
   useEffect(() => {
     history.push(
@@ -31,6 +33,12 @@ const Playback = () => {
       }),
     [history, dispatch]
   );
+
+  useEffect(() => {
+    if (!queuedPieceIds.length) {
+      history.goBack();
+    }
+  }, [queuedPieceIds.length, history]);
 
   if (!currentPieceId || !byId[currentPieceId]) {
     return null;
