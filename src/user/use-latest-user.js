@@ -9,10 +9,9 @@ const useLatestUser = () => {
   const dispatch = useDispatch();
   const isFetchingUser = useSelector(selectIsFetching);
   useEffect(() => {
-    if (!isAuthenticated) {
-      return false;
+    if (isAuthenticated) {
+      dispatch(fetchUser());
     }
-    dispatch(fetchUser());
   }, [isAuthenticated, dispatch]);
   return isLoading || isFetchingUser;
 };
