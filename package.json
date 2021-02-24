@@ -69,6 +69,7 @@
   },
   "scripts": {
     "test": "karma start --single-run",
+    "test:watch": "karma start",
     "lint": "eslint . --ext \".js,.jsx\"",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",

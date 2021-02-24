@@ -18,7 +18,7 @@ import userOpenedPlayback from '../playback/user-opened-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import TopBar from '../top-bar/top-bar';
 import V3VolumeWarning from '../volume/v3-volume-warning';
-import withSuspense from './with-suspense';
+import withSuspense from '../loading/with-suspense';
 import styles from './layout.module.scss';
 
 const Browse = withSuspense(() => import('../browse/browse'));

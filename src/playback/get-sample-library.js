@@ -1,10 +1,13 @@
 import createSampleProvider from '@generative-music/web-provider';
 import createSampleLibrary from '@generative-music/web-library';
+import retryable from '../loading/retryable';
 
-const lazyMp3Index = () =>
-  import('@generative-music/samples-alex-bainter/src/mp3');
-const lazyOggIndex = () =>
-  import('@generative-music/samples-alex-bainter/src/ogg');
+const lazyMp3Index = retryable(() =>
+  import('@generative-music/samples-alex-bainter/src/mp3')
+);
+const lazyOggIndex = retryable(() =>
+  import('@generative-music/samples-alex-bainter/src/ogg')
+);
 
 const provider = createSampleProvider();
 
