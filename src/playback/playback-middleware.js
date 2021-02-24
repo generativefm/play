@@ -1,7 +1,8 @@
 import { Transport, Gain, getContext } from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { startEmission, stopEmission } from '@generative.fm/stats';
-import { USER_PLAYED_PIECE, playTimeIncreased } from '@generative.fm/user';
+import { playTimeIncreased } from '@generative.fm/user';
+import { USER_PLAYED_PIECE } from './user-played-piece';
 import MersenneTwister from 'mersenne-twister';
 import getSampleLibrary from './get-sample-library';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
@@ -12,6 +13,8 @@ import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
 import { TIMER_PROGRESSED } from '../timer/timer-progressed';
 import piecePlaybackFailed from './piece-playback-failed';
+import { USER_UNQUEUED_PIECE } from '../queue/user-unqueued-piece';
+import selectPlaybackStatus from './select-playback-status';
 
 const playbackMiddleware = (store) => (next) => {
   const generator = new MersenneTwister();
@@ -94,18 +97,36 @@ const playbackMiddleware = (store) => (next) => {
         const pieceId = selectionPieceIds[index];
         stopAll();
         playPiece({ pieceId });
-        break;
+        return result;
       }
       case USER_STOPPED_PLAYBACK: {
         stopAll();
-        break;
+        return result;
       }
       case TIMER_PROGRESSED: {
         if (action.payload.durationRemaining) {
-          break;
+          return result;
         }
         stopAll();
-        break;
+        return result;
+      }
+      case USER_UNQUEUED_PIECE: {
+        const { isCurrent } = action.payload;
+        if (!isCurrent) {
+          return result;
+        }
+        stopAll();
+        const state = store.getState();
+        const playbackStatus = selectPlaybackStatus(state);
+        if (playbackStatus === 'stopped') {
+          return result;
+        }
+        const currentPieceId = selectCurrentPieceId(state);
+        if (!currentPieceId) {
+          return result;
+        }
+        playPiece({ pieceId: currentPieceId });
+        return result;
       }
     }
 

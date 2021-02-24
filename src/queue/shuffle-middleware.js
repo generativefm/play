@@ -1,6 +1,8 @@
-import { USER_PLAYED_PIECE } from '@generative.fm/user';
+import { USER_PLAYED_PIECE } from '../playback/user-played-piece';
 import { USER_ENABLED_SHUFFLE } from './user-enabled-shuffle';
 import { USER_DISABLED_SHUFFLE } from './user-disabled-shuffle';
+import { USER_QUEUED_PIECE } from './user-queued-piece';
+import { USER_UNQUEUED_PIECE } from './user-unqueued-piece';
 import selectQueue from './select-queue';
 import selectCurrentPieceId from './select-current-piece-id';
 import selectIsShuffleActive from './select-is-shuffle-active';
@@ -61,7 +63,49 @@ const shuffleMiddleware = (store) => (next) => {
         });
         return next(action);
       }
+      case USER_QUEUED_PIECE: {
+        const isShuffleActive = selectIsShuffleActive(store.getState());
+        if (!isShuffleActive) {
+          return next(action);
+        }
+        const { pieceId } = action.payload;
+        let { index } = action.payload;
+        if (Array.isArray(orderedPieceIds)) {
+          if (typeof index !== 'number') {
+            index = orderedPieceIds.length;
+          }
+          orderedPieceIds = orderedPieceIds
+            .slice(0, index)
+            .concat([pieceId])
+            .concat(orderedPieceIds.slice(index));
+        }
+        if (Array.isArray(shuffledPieceIds)) {
+          if (typeof index !== 'number') {
+            index = shuffledPieceIds.length;
+          }
+          shuffledPieceIds = shuffledPieceIds
+            .slice(0, index)
+            .concat([pieceId])
+            .concat(shuffledPieceIds.slice(index));
+        }
+        return next(action);
+      }
+      case USER_UNQUEUED_PIECE: {
+        const { pieceId } = action.payload;
+        if (Array.isArray(orderedPieceIds)) {
+          orderedPieceIds = orderedPieceIds.filter(
+            (otherPieceId) => otherPieceId !== pieceId
+          );
+        }
+        if (Array.isArray(shuffledPieceIds)) {
+          shuffledPieceIds = shuffledPieceIds.filter(
+            (otherPieceId) => otherPieceId !== pieceId
+          );
+        }
+        return next(action);
+      }
     }
+
     return next(action);
   };
 };
