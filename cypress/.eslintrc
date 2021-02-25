@@ -1,8 +1,6 @@
 {
-  "extends": "@alexbainter/eslint-config/browser",
-  "env": { "mocha": true },
-  "globals": {
-    "expect": "readonly",
-    "cy": "readonly"
-  }
+  "extends": [
+    "@alexbainter/eslint-config/browser",
+    "plugin:cypress/recommended"
+  ]
 }
