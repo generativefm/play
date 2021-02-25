@@ -17,7 +17,7 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  test:
+  run-unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,8 +28,27 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+  run-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        run: npm run cypress:run
+
+      - name: Archive Cypress artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress
+          path: |
+            cypress/screenshots
+            cypress/videos
+
   build:
-    needs: [lint, test]
+    needs: [lint, run-unit-tests, run-e2e-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

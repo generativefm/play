@@ -20,7 +20,7 @@ config.plugins.push(
 
 config.devServer = {
   historyApiFallback: true,
-  before: (app) => {
+  before: (app, server) => {
     app.get('/api/global/playtime', (req, res) =>
       fetch('http://stats.api.generative.fm/v1/global/playtime').then(
         (response) => {
@@ -29,6 +29,10 @@ config.devServer = {
       )
     );
     app.post('/api/emissions', (req, res) => {
+      res.sendStatus(200);
+    });
+    app.get('/webpack-dev-server/shutdown', (req, res) => {
+      server.close();
       res.sendStatus(200);
     });
   },

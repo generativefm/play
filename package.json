@@ -40,6 +40,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.8.1",
     "css-loader": "^5.0.0",
+    "cypress": "^6.5.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.15.0",
     "favicons": "^6.2.0",
@@ -70,6 +71,8 @@
   "scripts": {
     "test": "karma start --single-run",
     "test:watch": "karma start",
+    "cypress:open": "node scripts/open-cypress.js",
+    "cypress:run": "node scripts/run-cypress.js",
     "lint": "eslint . --ext \".js,.jsx\"",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",

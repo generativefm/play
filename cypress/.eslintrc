@@ -1,0 +1,8 @@
+{
+  "extends": "@alexbainter/eslint-config/browser",
+  "env": { "mocha": true },
+  "globals": {
+    "expect": "readonly",
+    "cy": "readonly"
+  }
+}
