@@ -22,7 +22,11 @@ const UpgradeProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (!navigator.serviceWorker || process.env.NODE_ENV !== 'production') {
+    if (
+      !navigator.serviceWorker ||
+      process.env.NODE_ENV !== 'production' ||
+      window.Cypress
+    ) {
       return;
     }
     //TODO this needs to be undone in a callback
