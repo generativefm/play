@@ -58,6 +58,8 @@ jobs:
 
       - name: Build production artifacts
         run: npm run build:production
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Archive production artifiacts
         uses: actions/upload-artifact@v2
