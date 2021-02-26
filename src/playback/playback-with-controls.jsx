@@ -42,7 +42,6 @@ const PlaybackWithControls = () => {
       { isQueueOpen: true }
     );
     const unlisten = history.listen(() => {
-      console.log('closing queue');
       unlisten();
       setIsQueueOpen(false);
     });
@@ -64,7 +63,6 @@ const PlaybackWithControls = () => {
         if (location.state && location.state.isQueueOpen) {
           return;
         }
-        console.log('closing playback');
         dispatch(userClosedPlayback());
       }),
     [history, dispatch]
