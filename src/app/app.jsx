@@ -6,12 +6,14 @@ import loadState from '../storage/load-state';
 import hasImportedLegacyData from '../import/has-imported-legacy-data';
 import IS_STORAGE_SUPPORTED from '../storage/is-supported';
 import beforeInstallPromptContext from './before-install-prompt-context';
-import withSuspense from '../layout/with-suspense';
+import withSuspense from '../loading/with-suspense';
+import retryable from '../loading/retryable';
 
 unmuteiOSAudio();
 
-const getCreateStore = () =>
-  import('../store/create-store').then((module) => module.default);
+const getCreateStore = retryable(() =>
+  import('../store/create-store').then((module) => module.default)
+);
 
 const Auth0Provider = withSuspense(() =>
   import('@auth0/auth0-react').then((module) => ({

@@ -43,7 +43,7 @@ const importLegacyData = (store) => {
     }
   }
 
-  if (!legacyOrigin) {
+  if (!legacyOrigin || window.Cypress) {
     return;
   }
 

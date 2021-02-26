@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react';
+import retryable from './retryable';
 
 const withSpinner = (loadComponent) => {
-  const LazyComponent = lazy(loadComponent);
+  const LazyComponent = lazy(retryable(loadComponent));
   const ComponentWithFallback = (props) => (
     <Suspense fallback={null}>
       <LazyComponent {...props} />

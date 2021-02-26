@@ -2,13 +2,12 @@ name: Deploy Production
 
 on:
   push:
-    branches: [main]
+    branches: [$default-branch]
   workflow_dispatch:
 
 jobs:
-  deploy:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -18,10 +17,70 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+  run-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        run: npm run cypress:run
+
+      - name: Archive Cypress artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress
+          path: |
+            cypress/screenshots
+            cypress/videos
+
+  build:
+    needs: [lint, run-unit-tests, run-e2e-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build production artifacts
         run: npm run build:production
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Archive production artifiacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: Install npm dependencies
+        run: npm ci
 
       - name: Deploy
         run: npm run deploy

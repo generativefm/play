@@ -1,6 +1,7 @@
-import { USER_PLAYED_PIECE } from '@generative.fm/user';
+import { USER_PLAYED_PIECE } from '../playback/user-played-piece';
 import { USER_ENABLED_SHUFFLE } from './user-enabled-shuffle';
 import { USER_DISABLED_SHUFFLE } from './user-disabled-shuffle';
+import { USER_UNQUEUED_PIECE } from './user-unqueued-piece';
 
 const indexReducer = (state = null, action) => {
   switch (action.type) {
@@ -18,6 +19,10 @@ const indexReducer = (state = null, action) => {
         return action.payload.unshuffledIndex;
       }
       return null;
+    }
+    case USER_UNQUEUED_PIECE: {
+      const { newIndex } = action.payload;
+      return newIndex;
     }
   }
   return state;

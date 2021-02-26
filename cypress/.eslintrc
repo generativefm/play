@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "@alexbainter/eslint-config/browser",
+    "plugin:cypress/recommended"
+  ]
+}

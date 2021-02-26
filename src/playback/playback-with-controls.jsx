@@ -65,8 +65,19 @@ const PlaybackWithControls = () => {
         }
         dispatch(userClosedPlayback());
       }),
-    [history, dispatch, isQueueOpen]
+    [history, dispatch]
   );
+
+  useEffect(() => {
+    if (pieceIds.length) {
+      return;
+    }
+    if (history.location.state && history.location.state.isQueueOpen) {
+      history.go(-2);
+      return;
+    }
+    history.goBack();
+  }, [pieceIds.length, history]);
 
   const handleCollapseClick = useCallback(() => {
     history.goBack();

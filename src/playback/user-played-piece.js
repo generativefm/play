@@ -1,10 +1,14 @@
-import { userPlayedPiece } from '@generative.fm/user';
+import { piecePlaybackAction } from '@generative.fm/user';
 
-const wrappedUserPlayedPiece = ({ selectionPieceIds, index }) => {
-  const pieceId = selectionPieceIds[index];
-  const action = userPlayedPiece({ pieceId });
-  Object.assign(action.payload, { selectionPieceIds, index });
-  return action;
-};
+export const USER_PLAYED_PIECE = 'USER_PLAYED_PIECE';
 
-export default wrappedUserPlayedPiece;
+const userPlayedPiece = ({ selectionPieceIds, index }) =>
+  piecePlaybackAction(
+    {
+      type: USER_PLAYED_PIECE,
+      payload: { selectionPieceIds, index },
+    },
+    { pieceId: selectionPieceIds[index] }
+  );
+
+export default userPlayedPiece;
