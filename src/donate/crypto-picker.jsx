@@ -7,6 +7,7 @@ import bitcoinImageSrc from './qr-codes/bitcoin.png';
 import bitcoinCashImageSrc from './qr-codes/bitcoin-cash.png';
 import ethereumImageSrc from './qr-codes/ethereum.png';
 import litecoinImageSrc from './qr-codes/litecoin.png';
+import nanoImageSrc from './qr-codes/nano.png';
 import styles from './crypto-picker.module.scss';
 
 const CRYPTOS = [
@@ -33,6 +34,13 @@ const CRYPTOS = [
     name: 'Litecoin',
     address: 'MUn71TQJy7AJDpEmfbGygn76jTces76bM8',
     imageSrc: litecoinImageSrc,
+  },
+  {
+    ticker: 'Nano',
+    name: 'Nano',
+    address:
+      'nano_1o76hweuqhdboj5e6meqyjcw6idfo7d3udhkb11hzasm3uhz8h69s4es4y11',
+    imageSrc: nanoImageSrc,
   },
 ];
 const CryptoPicker = () => {
