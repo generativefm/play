@@ -1,8 +1,0 @@
-@import '../styles/_theme.scss';
-
-.v3-volume-warning-body {
-  @include type-normal();
-  color: $color-white;
-  line-height: 1.25;
-  margin-bottom: 1rem;
-}
