@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('unregisterServiceWorker', () =>
+  window.navigator.serviceWorker
+    .getRegistrations()
+    .then(function (registrations) {
+      return Promise.map(registrations, function (registration) {
+        return registration.unregister();
+      });
+    })
+);

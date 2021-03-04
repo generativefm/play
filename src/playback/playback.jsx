@@ -47,7 +47,7 @@ const Playback = () => {
   const piece = byId[currentPieceId];
 
   return (
-    <div className={styles.playback}>
+    <div className={styles.playback} data-cy="playback-overlay">
       <div className={styles['playback__current-piece']}>
         <img
           className={styles['playback__current-piece__image']}

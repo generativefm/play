@@ -16,13 +16,21 @@ const PlaybackControls = () => {
   const playbackStatus = useSelector(selectPlaybackStatus);
   const { index, pieceIds: queuedPieceIds } = useSelector(selectQueue);
 
-  const handlePlayClick = useCallback(() => {
-    dispatch(userPlayedPiece({ index, selectionPieceIds: queuedPieceIds }));
-  }, [dispatch, index, queuedPieceIds]);
+  const handlePlayClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      dispatch(userPlayedPiece({ index, selectionPieceIds: queuedPieceIds }));
+    },
+    [dispatch, index, queuedPieceIds]
+  );
 
-  const handleStopClick = useCallback(() => {
-    dispatch(userStoppedPlayback());
-  }, [dispatch]);
+  const handleStopClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      dispatch(userStoppedPlayback());
+    },
+    [dispatch]
+  );
 
   const isLoading = playbackStatus === 'loading';
   const isPlaying = playbackStatus === 'playing';

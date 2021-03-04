@@ -115,7 +115,10 @@ const PlaybackWithControls = () => {
 
   return (
     <>
-      <div className={styles['playback-with-controls']}>
+      <div
+        className={styles['playback-with-controls']}
+        data-cy="playback-overlay"
+      >
         <CSSTransition
           timeout={200}
           in={!isQueueOpen}
@@ -135,7 +138,10 @@ const PlaybackWithControls = () => {
                 styles['playback-with-controls__current-piece__top-bar']
               }
             >
-              <IconButton onClick={handleCollapseClick}>
+              <IconButton
+                onClick={handleCollapseClick}
+                data-cy="playback-overlay__close"
+              >
                 <ExpandMore />
               </IconButton>
               <MoreButton pieceId={currentPieceId} shouldEnableLike={false} />
@@ -194,6 +200,7 @@ const PlaybackWithControls = () => {
           type="button"
           className={styles['playback-with-controls__queue-button']}
           onClick={handleOpenQueueClick}
+          data-cy="playback__open-queue"
         >
           <QueueMusic /> Queue
         </button>
@@ -211,7 +218,10 @@ const PlaybackWithControls = () => {
           appear
           unmountOnExit
         >
-          <div className={styles['playback-with-controls__queue']}>
+          <div
+            className={styles['playback-with-controls__queue']}
+            data-cy="playback__queue"
+          >
             <Queue />
           </div>
         </CSSTransition>

@@ -3,13 +3,14 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './text-button.module.scss';
 
-const TextButton = ({
-  children,
-  onClick,
-  isPrimary = false,
-  isDisabled = false,
-  className,
-}) => {
+const TextButton = (props) => {
+  const {
+    children,
+    onClick,
+    isPrimary = false,
+    isDisabled = false,
+    className,
+  } = props;
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
   const handleTouchStart = useCallback(() => {
@@ -26,6 +27,7 @@ const TextButton = ({
       type="button"
       onClick={onClick}
       onTouchStart={handleTouchStart}
+      data-cy={props['data-cy']}
     >
       {children}
     </button>

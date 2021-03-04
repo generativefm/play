@@ -67,7 +67,11 @@ const Piece = () => {
           </div>
           <h1 className={styles['piece__info__other__title']}>{piece.title}</h1>
           <div className={styles['piece__info__other__controls']}>
-            <TextButton onClick={handlePlayClick} isPrimary>
+            <TextButton
+              onClick={handlePlayClick}
+              isPrimary
+              data-cy="play-piece"
+            >
               <PlayArrow />
               Play
             </TextButton>
