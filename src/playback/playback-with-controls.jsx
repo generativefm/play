@@ -39,7 +39,7 @@ const PlaybackWithControls = () => {
         history.location.search,
         history.location.hash,
       ].join(''),
-      { isQueueOpen: true }
+      { isPlaybackOpen: true, isQueueOpen: true }
     );
     const unlisten = history.listen(() => {
       unlisten();
@@ -53,14 +53,18 @@ const PlaybackWithControls = () => {
         history.location.pathname,
         history.location.search,
         history.location.hash,
-      ].join('')
+      ].join(''),
+      { isPlaybackOpen: true, isQueueOpen: false }
     );
   }, [history]);
 
   useEffect(
     () =>
-      history.listen((location) => {
-        if (location.state && location.state.isQueueOpen) {
+      history.listen((location, action) => {
+        if (
+          action !== 'POP' ||
+          (location.state && location.state.isPlaybackOpen)
+        ) {
           return;
         }
         dispatch(userClosedPlayback());
