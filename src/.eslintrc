@@ -16,5 +16,8 @@
         "expect": "readonly"
       }
     }
-  ]
+  ],
+  "rules": {
+    "react/prop-types": [2, { "ignore": ["data-cy"] }]
+  }
 }

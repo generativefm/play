@@ -3,17 +3,18 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './icon-button.module.scss';
 
-const IconButton = ({
-  children,
-  onClick,
-  withBackground = false,
-  isDisabled = false,
-  isActive = false,
-  isTicking = false,
-  isFloating = false,
-  isSecondary = false,
-  isTouched = false,
-}) => {
+const IconButton = (props) => {
+  const {
+    children,
+    onClick,
+    withBackground = false,
+    isDisabled = false,
+    isActive = false,
+    isTicking = false,
+    isFloating = false,
+    isSecondary = false,
+    isTouched = false,
+  } = props;
   const [hasBeenTouched, setHasBeenTouched] = useState(isTouched);
 
   const handleTouchStart = useCallback(() => {
@@ -35,6 +36,7 @@ const IconButton = ({
       })}
       onClick={onClick}
       onTouchStart={handleTouchStart}
+      data-cy={props['data-cy']}
     >
       {children}
     </button>

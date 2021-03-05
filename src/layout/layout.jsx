@@ -17,7 +17,6 @@ import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import userOpenedPlayback from '../playback/user-opened-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import TopBar from '../top-bar/top-bar';
-import V3VolumeWarning from '../volume/v3-volume-warning';
 import withSuspense from '../loading/with-suspense';
 import styles from './layout.module.scss';
 
@@ -65,7 +64,6 @@ const Layout = () => {
       {!isNarrowScreen && <TopNav />}
       {isNarrowScreen && <TopBar />}
       <AnonymousDataImportedBanner />
-      <V3VolumeWarning />
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>
           <Switch>
