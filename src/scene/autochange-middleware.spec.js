@@ -1,9 +1,7 @@
 import autochangeMiddleware from './autochange-middleware';
 import userEnabledAutochange from './user-enabled-autochange';
 import userDisabledAutochange from './user-disabled-autochange';
-import userPlayedPiece, {
-  USER_PLAYED_PIECE,
-} from '../playback/user-played-piece';
+import { USER_PLAYED_PIECE } from '../playback/user-played-piece';
 
 describe('autochangeMiddleware', () => {
   before(() => {
