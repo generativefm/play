@@ -43,7 +43,11 @@ const SceneDialog = ({ onDismiss }) => {
       <div className={styles['scene-dialog-body']}>
         <div className={styles['scene-dialog-body__input-rows']}>
           <div className={styles['scene-dialog-body__input-rows__row']}>
-            <span>Switch to the next generator every</span>
+            <span
+              className={styles['scene-dialog-body__input-rows__row__label']}
+            >
+              Switch to the next generator every
+            </span>
             <DurationInput
               onChange={setAutochangeInterval}
               value={autochangeInterval}
@@ -58,7 +62,11 @@ const SceneDialog = ({ onDismiss }) => {
             />
           </div>
           <div className={styles['scene-dialog-body__input-rows__row']}>
-            <span>Stop playing after</span>
+            <span
+              className={styles['scene-dialog-body__input-rows__row__label']}
+            >
+              Stop playing after
+            </span>
             <DurationInput
               onChange={setTimerDuration}
               value={timerDuration}

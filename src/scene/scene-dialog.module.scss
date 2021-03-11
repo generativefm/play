@@ -14,6 +14,8 @@
       display: flex;
       width: 100%;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
 
       &:first-child {
         margin-top: 0;
@@ -43,6 +45,12 @@
         transform: translateY(-50%);
       }
     }
+  }
+}
+
+@include is-narrow-screen() {
+  .scene-dialog-body__input-rows__row__label {
+    margin-bottom: 1rem;
   }
 }
 
