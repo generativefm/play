@@ -3,7 +3,7 @@
 // Karma configuration
 // Generated on Tue Feb 23 2021 13:41:43 GMT-0600 (Central Standard Time)
 
-const { ProvidePlugin } = require('webpack');
+const { EnvironmentPlugin } = require('webpack');
 const createWebpackConfig = require('./webpack/create-webpack-config');
 
 const webpackConfig = createWebpackConfig({ styleLoader: null });
@@ -19,7 +19,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      //'node_modules/sinon/pkg/sinon.js',
+      'node_modules/sinon/pkg/sinon.js',
       { pattern: 'src/**/*.spec.js', watched: false },
     ],
 
@@ -44,6 +44,11 @@ module.exports = function (config) {
           },
         ],
       },
+      plugins: [
+        new EnvironmentPlugin({
+          GFM_USER_ENDPOINT: '',
+        }),
+      ],
     },
 
     // test results reporter to use
