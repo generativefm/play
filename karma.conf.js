@@ -3,6 +3,7 @@
 // Karma configuration
 // Generated on Tue Feb 23 2021 13:41:43 GMT-0600 (Central Standard Time)
 
+const { ProvidePlugin } = require('webpack');
 const createWebpackConfig = require('./webpack/create-webpack-config');
 
 const webpackConfig = createWebpackConfig({ styleLoader: null });
@@ -17,7 +18,10 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai', 'webpack'],
 
     // list of files / patterns to load in the browser
-    files: [{ pattern: 'src/**/*.spec.js', watched: false }],
+    files: [
+      //'node_modules/sinon/pkg/sinon.js',
+      { pattern: 'src/**/*.spec.js', watched: false },
+    ],
 
     // list of files / patterns to exclude
     exclude: [],

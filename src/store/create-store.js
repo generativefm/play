@@ -14,8 +14,8 @@ import synchronizeUserMiddleware from '../user/synchronize-user-middleware';
 import persistStateMiddleware from '../storage/persist-state-middleware';
 import settingsReducer from '../settings/settings-reducer';
 import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
-import timerMiddleware from '../timer/timer-middleware';
-import timerReducer from '../timer/timer-reducer';
+import sceneMiddleware from '../scene/scene-middleware';
+import sceneReducer from '../scene/scene-reducer';
 import shuffleMiddleware from '../queue/shuffle-middleware';
 import snackbarMiddleware from '../snackbar/snackbar-middleware';
 import mediaSessionMiddleware from '../playback/media-session-middleware';
@@ -33,7 +33,7 @@ const createStore = (preloadedState) =>
       piece: pieceReducer,
       masterGain: masterGainReducer,
       settings: settingsReducer,
-      timer: timerReducer,
+      scene: sceneReducer,
     }),
     preloadedState,
     applyMiddleware(
@@ -43,7 +43,7 @@ const createStore = (preloadedState) =>
       storeUserStateMiddleware,
       synchronizeUserMiddleware,
       persistStateMiddleware,
-      timerMiddleware,
+      sceneMiddleware,
       shuffleMiddleware,
       snackbarMiddleware,
       mediaSessionMiddleware,

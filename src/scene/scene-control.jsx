@@ -3,10 +3,12 @@ import { HourglassEmpty, HourglassFull } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import IconButton from '../button/icon-button';
 import selectTimer from './select-timer';
-import TimerDialog from './timer-dialog';
+import SceneDialog from './scene-dialog';
+import selectAutochange from './select-autochange';
 
-const TimerControl = () => {
+const SceneControl = () => {
   const timer = useSelector(selectTimer);
+  const autochange = useSelector(selectAutochange);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const handleClick = useCallback(() => {
     setIsDialogVisible(true);
@@ -16,15 +18,16 @@ const TimerControl = () => {
     setIsDialogVisible(false);
   }, []);
 
-  const isRunning = Boolean(timer);
+  const isRunning = Boolean(timer || autochange);
 
   return (
     <>
-      {isDialogVisible && <TimerDialog onDismiss={handleDialogDismiss} />}
+      {isDialogVisible && <SceneDialog onDismiss={handleDialogDismiss} />}
       <IconButton
         isActive={isRunning}
         isTicking={!isDialogVisible && isRunning}
         onClick={handleClick}
+        data-cy="open-scene-dialog"
       >
         {isRunning ? <HourglassFull /> : <HourglassEmpty />}
       </IconButton>
@@ -32,4 +35,4 @@ const TimerControl = () => {
   );
 };
 
-export default TimerControl;
+export default SceneControl;

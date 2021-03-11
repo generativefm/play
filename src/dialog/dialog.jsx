@@ -72,8 +72,12 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
           <div className={styles['dialog__body']}>{children}</div>
           {hasActions && (
             <div className={styles['dialog__footer']}>
-              {actions.map(({ text }, i) => (
-                <TextButton key={i} onClick={clickHandlers[i]}>
+              {actions.map(({ text, isDisabled = false }, i) => (
+                <TextButton
+                  key={i}
+                  onClick={clickHandlers[i]}
+                  isDisabled={isDisabled}
+                >
                   {text}
                 </TextButton>
               ))}
@@ -91,6 +95,7 @@ Dialog.propTypes = {
     PropTypes.shape({
       text: PropTypes.string.isRequired,
       onClick: PropTypes.func,
+      isDisabled: PropTypes.bool,
     })
   ),
   children: PropTypes.node.isRequired,

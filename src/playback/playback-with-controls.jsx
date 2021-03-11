@@ -8,7 +8,7 @@ import selectCurrentPieceId from '../queue/select-current-piece-id';
 import userClosedPlayback from './user-closed-playback';
 import LikeButton from '../piece/like-button';
 import DislikeButton from '../piece/dislike-button';
-import TimerControl from '../timer/timer-control';
+import SceneControl from '../scene/scene-control';
 import ShuffleControl from '../queue/shuffle-control';
 import PreviousControl from '../queue/previous-control';
 import NextControl from '../queue/next-control';
@@ -163,7 +163,7 @@ const PlaybackWithControls = () => {
               />
               <LikeButton pieceId={currentPieceId} />
             </div>
-            <TimerControl />
+            <SceneControl />
             <div
               className={
                 styles['playback-with-controls__current-piece__controls']

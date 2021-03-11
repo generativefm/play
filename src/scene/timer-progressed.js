@@ -1,15 +1,13 @@
 export const TIMER_PROGRESSED = 'TIMER_PROGRESSED';
 
-const timerProgressed = ({ durationRemaining }) => {
+const timerProgressed = ({ durationRemaining = null }) => {
   const action = {
     type: TIMER_PROGRESSED,
     payload: { durationRemaining },
   };
-
   if (durationRemaining === 0) {
     action.meta = { snackbar: { message: 'Timer ended' } };
   }
-
   return action;
 };
 
