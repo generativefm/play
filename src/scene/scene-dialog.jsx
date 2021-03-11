@@ -52,6 +52,7 @@ const SceneDialog = ({ onDismiss }) => {
               onChange={setAutochangeInterval}
               value={autochangeInterval}
               onFocus={disableAutochange}
+              data-cy="autochange-interval-input"
             />
             <Switch
               isActive={autochange.isEnabled}
@@ -59,6 +60,7 @@ const SceneDialog = ({ onDismiss }) => {
               onClick={
                 autochange.isEnabled ? disableAutochange : enableAutochange
               }
+              data-cy="autochange-switch"
             />
           </div>
           <div className={styles['scene-dialog-body__input-rows__row']}>
@@ -71,11 +73,13 @@ const SceneDialog = ({ onDismiss }) => {
               onChange={setTimerDuration}
               value={timerDuration}
               onFocus={stopTimer}
+              data-cy="timer-duration-input"
             />
             <TextButton
               isPrimary
               onClick={isRunning ? stopTimer : startTimer}
               isDisabled={!timerDuration}
+              data-cy="start-timer"
             >
               {isRunning ? 'Stop' : 'Start'}
             </TextButton>

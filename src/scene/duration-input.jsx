@@ -73,7 +73,8 @@ const convertStringValueToDuration = (value) => {
   return null;
 };
 
-const DurationInput = ({ value, onChange, onFocus }) => {
+const DurationInput = (props) => {
+  const { value, onChange, onFocus } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [cursorIndex, setCursorIndex] = useState(0);
   const inputRef = useRef(null);
@@ -216,6 +217,7 @@ const DurationInput = ({ value, onChange, onFocus }) => {
         ref={inputRef}
         onKeyDown={handleKeyDown}
         onFocus={onFocus}
+        data-cy={props['data-cy']}
       />
     </div>
   );

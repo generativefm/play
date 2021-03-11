@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './switch.module.scss';
 
-const Switch = ({ isActive, onClick, isDisabled = false }) => {
+const Switch = (props) => {
+  const { isActive, onClick, isDisabled = false } = props;
   return (
     <button
       type="button"
@@ -13,6 +14,7 @@ const Switch = ({ isActive, onClick, isDisabled = false }) => {
       })}
       onClick={onClick}
       disabled={isDisabled}
+      data-cy={props['data-cy']}
     >
       <div className={styles['switch__rail']} />
       <div className={styles['switch__cap']} />
