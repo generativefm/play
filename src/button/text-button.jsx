@@ -28,6 +28,7 @@ const TextButton = (props) => {
       onClick={onClick}
       onTouchStart={handleTouchStart}
       data-cy={props['data-cy']}
+      disabled={isDisabled}
     >
       {children}
     </button>

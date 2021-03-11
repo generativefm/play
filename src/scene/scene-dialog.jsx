@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import Dialog from '../dialog/dialog';
 import DurationInput from './duration-input';
 import selectTimer from './select-timer';
-import userStartedScene from './user-started-scene';
-import userStoppedScene from './user-stopped-scene';
+import userStartedTimer from './user-started-timer';
+import userStoppedTimer from './user-stopped-timer';
 import TextButton from '../button/text-button';
 import selectAutochange from './select-autochange';
+import userEnabledAutochange from './user-enabled-autochange';
+import userDisabledAutochange from './user-disabled-autochange';
+import Switch from '../button/switch';
 import styles from './scene-dialog.module.scss';
 
 const SceneDialog = ({ onDismiss }) => {
@@ -15,20 +18,26 @@ const SceneDialog = ({ onDismiss }) => {
   const autochange = useSelector(selectAutochange);
   const dispatch = useDispatch();
   const [timerDuration, setTimerDuration] = useState(timer);
-  const [autochangeDuration, setAutochangeDuration] = useState(autochange);
-  const stopScene = useCallback(() => {
-    dispatch(userStoppedScene());
+  const [autochangeInterval, setAutochangeInterval] = useState(autochange);
+  const stopTimer = useCallback(() => {
+    dispatch(userStoppedTimer());
   }, [dispatch]);
-  const startScene = useCallback(() => {
-    dispatch(userStartedScene({ timerDuration, autochangeDuration }));
-  }, [dispatch, timerDuration, autochangeDuration]);
+  const startTimer = useCallback(() => {
+    dispatch(userStartedTimer({ duration: timerDuration }));
+  }, [dispatch, timerDuration]);
+  const enableAutochange = useCallback(() => {
+    dispatch(userEnabledAutochange({ interval: autochangeInterval }));
+  }, [dispatch, autochangeInterval]);
+  const disableAutochange = useCallback(() => {
+    dispatch(userDisabledAutochange());
+  }, [dispatch]);
   useEffect(() => {
     setTimerDuration(timer);
   }, [timer]);
   useEffect(() => {
-    setAutochangeDuration(autochange);
-  }, [autochange]);
-  const isRunning = Boolean(timer || autochange);
+    setAutochangeInterval(autochange.interval);
+  }, [autochange.interval]);
+  const isRunning = Boolean(timer);
   return (
     <Dialog title="Control playback behavior" onDismiss={onDismiss}>
       <div className={styles['scene-dialog-body']}>
@@ -36,9 +45,16 @@ const SceneDialog = ({ onDismiss }) => {
           <div className={styles['scene-dialog-body__input-rows__row']}>
             <span>Switch to the next generator every</span>
             <DurationInput
-              onChange={setAutochangeDuration}
-              value={autochangeDuration}
-              onFocus={stopScene}
+              onChange={setAutochangeInterval}
+              value={autochangeInterval}
+              onFocus={disableAutochange}
+            />
+            <Switch
+              isActive={autochange.isEnabled}
+              isDisabled={!autochangeInterval}
+              onClick={
+                autochange.isEnabled ? disableAutochange : enableAutochange
+              }
             />
           </div>
           <div className={styles['scene-dialog-body__input-rows__row']}>
@@ -46,23 +62,25 @@ const SceneDialog = ({ onDismiss }) => {
             <DurationInput
               onChange={setTimerDuration}
               value={timerDuration}
-              onFocus={stopScene}
+              onFocus={stopTimer}
             />
-          </div>
-          <div className={styles['scene-dialog-body__input-rows__row']}>
             <TextButton
               isPrimary
-              onClick={isRunning ? stopScene : startScene}
-              isDisabled={!timerDuration && !autochangeDuration}
+              onClick={isRunning ? stopTimer : startTimer}
+              isDisabled={!timerDuration}
             >
               {isRunning ? 'Stop' : 'Start'}
             </TextButton>
           </div>
-        </div>
-        <div className={styles['scene-dialog-body__indicator']}>
-          {isRunning && (
-            <div className={styles['scene-dialog-body__indicator__pendulum']} />
-          )}
+          <div className={styles['scene-dialog-body__input-rows__indicator']}>
+            {isRunning && (
+              <div
+                className={
+                  styles['scene-dialog-body__input-rows__indicator__pendulum']
+                }
+              />
+            )}
+          </div>
         </div>
       </div>
     </Dialog>

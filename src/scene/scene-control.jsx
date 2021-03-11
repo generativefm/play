@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { HourglassEmpty, HourglassFull } from '@material-ui/icons';
+import { Radio } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import IconButton from '../button/icon-button';
 import selectTimer from './select-timer';
@@ -18,18 +18,18 @@ const SceneControl = () => {
     setIsDialogVisible(false);
   }, []);
 
-  const isRunning = Boolean(timer || autochange);
+  const isTimerRunning = Boolean(timer);
 
   return (
     <>
       {isDialogVisible && <SceneDialog onDismiss={handleDialogDismiss} />}
       <IconButton
-        isActive={isRunning}
-        isTicking={!isDialogVisible && isRunning}
+        isActive={isTimerRunning || autochange.isEnabled}
+        isTicking={!isDialogVisible && isTimerRunning}
         onClick={handleClick}
         data-cy="open-scene-dialog"
       >
-        {isRunning ? <HourglassFull /> : <HourglassEmpty />}
+        <Radio />
       </IconButton>
     </>
   );

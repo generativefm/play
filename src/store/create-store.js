@@ -14,9 +14,11 @@ import synchronizeUserMiddleware from '../user/synchronize-user-middleware';
 import persistStateMiddleware from '../storage/persist-state-middleware';
 import settingsReducer from '../settings/settings-reducer';
 import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
-import sceneMiddleware from '../scene/scene-middleware';
-import sceneReducer from '../scene/scene-reducer';
+import timerMiddleware from '../scene/timer-middleware';
+import autochangeMiddleware from '../scene/autochange-middleware';
 import shuffleMiddleware from '../queue/shuffle-middleware';
+import timerReducer from '../scene/timer-reducer';
+import autochangeReducer from '../scene/autochange-reducer';
 import snackbarMiddleware from '../snackbar/snackbar-middleware';
 import mediaSessionMiddleware from '../playback/media-session-middleware';
 import silentHtml5AudioMiddleware from '../playback/silent-html5-audio-middleware';
@@ -33,7 +35,8 @@ const createStore = (preloadedState) =>
       piece: pieceReducer,
       masterGain: masterGainReducer,
       settings: settingsReducer,
-      scene: sceneReducer,
+      timer: timerReducer,
+      autochange: autochangeReducer,
     }),
     preloadedState,
     applyMiddleware(
@@ -43,7 +46,8 @@ const createStore = (preloadedState) =>
       storeUserStateMiddleware,
       synchronizeUserMiddleware,
       persistStateMiddleware,
-      sceneMiddleware,
+      timerMiddleware,
+      autochangeMiddleware,
       shuffleMiddleware,
       snackbarMiddleware,
       mediaSessionMiddleware,

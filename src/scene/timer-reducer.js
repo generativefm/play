@@ -1,5 +1,5 @@
-import { USER_STARTED_TIMER } from './user-started-timre';
-import { USER_STOPPED_TIMER } from './user-stopped-timre';
+import { USER_STARTED_TIMER } from './user-started-timer';
+import { USER_STOPPED_TIMER } from './user-stopped-timer';
 import { TIMER_PROGRESSED } from './timer-progressed';
 
 const timerReducer = (state = null, action) => {

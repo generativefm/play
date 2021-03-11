@@ -11,7 +11,7 @@ import { USER_STOPPED_PLAYBACK } from './user-stopped-playback';
 import masterGainNode from '../volume/master-gain-node';
 import selectUserId from '../user/select-user-id';
 import selectToken from '../user/select-token';
-import { SCENE_TIMER_PROGRESSED } from '../scene/scene-timer-progressed';
+import { TIMER_PROGRESSED } from '../scene/timer-progressed';
 import piecePlaybackFailed from './piece-playback-failed';
 import { USER_UNQUEUED_PIECE } from '../queue/user-unqueued-piece';
 import selectPlaybackStatus from './select-playback-status';
@@ -103,10 +103,11 @@ const playbackMiddleware = (store) => (next) => {
         stopAll();
         return result;
       }
-      case SCENE_TIMER_PROGRESSED: {
-        if (action.payload.timerDurationRemaining === 0) {
-          stopAll();
+      case TIMER_PROGRESSED: {
+        if (action.payload.durationRemaining) {
+          return result;
         }
+        stopAll();
         return result;
       }
       case USER_UNQUEUED_PIECE: {

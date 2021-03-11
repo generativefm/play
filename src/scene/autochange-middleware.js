@@ -12,7 +12,7 @@ const autochangeMiddleware = (store) => (next) => {
     currentInterval = setInterval(() => {
       const { pieceIds, index, isLoopActive } = selectQueue(store.getState());
       playNext({ pieceIds, index, isLoopActive, dispatch: store.dispatch });
-    }, delay);
+    }, delay / 60);
   };
   return (action) => {
     if (action.type === USER_DISABLED_AUTOCHANGE) {
