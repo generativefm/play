@@ -50,20 +50,24 @@ const SceneDialog = ({ onDismiss }) => {
             >
               Switch to the next generator every
             </span>
-            <DurationInput
-              onChange={setAutochangeInterval}
-              value={autochangeInterval}
-              onFocus={disableAutochange}
-              data-cy="autochange-interval-input"
-            />
-            <Switch
-              isActive={autochange.isEnabled}
-              isDisabled={!autochangeInterval}
-              onClick={
-                autochange.isEnabled ? disableAutochange : enableAutochange
-              }
-              data-cy="autochange-switch"
-            />
+            <div
+              className={styles['scene-dialog-body__input-rows__row__controls']}
+            >
+              <DurationInput
+                onChange={setAutochangeInterval}
+                value={autochangeInterval}
+                onFocus={disableAutochange}
+                data-cy="autochange-interval-input"
+              />
+              <Switch
+                isActive={autochange.isEnabled}
+                isDisabled={!autochangeInterval}
+                onClick={
+                  autochange.isEnabled ? disableAutochange : enableAutochange
+                }
+                data-cy="autochange-switch"
+              />
+            </div>
           </div>
           <div className={styles['scene-dialog-body__input-rows__row']}>
             <span
@@ -71,20 +75,24 @@ const SceneDialog = ({ onDismiss }) => {
             >
               Stop playing after
             </span>
-            <DurationInput
-              onChange={setTimerDuration}
-              value={timerDuration}
-              onFocus={stopTimer}
-              data-cy="timer-duration-input"
-            />
-            <TextButton
-              isPrimary
-              onClick={isRunning ? stopTimer : startTimer}
-              isDisabled={!timerDuration}
-              data-cy="start-timer"
+            <div
+              className={styles['scene-dialog-body__input-rows__row__controls']}
             >
-              {isRunning ? 'Stop' : 'Start'}
-            </TextButton>
+              <DurationInput
+                onChange={setTimerDuration}
+                value={timerDuration}
+                onFocus={stopTimer}
+                data-cy="timer-duration-input"
+              />
+              <TextButton
+                isPrimary
+                onClick={isRunning ? stopTimer : startTimer}
+                isDisabled={!timerDuration}
+                data-cy="start-timer"
+              >
+                {isRunning ? 'Stop' : 'Start'}
+              </TextButton>
+            </div>
           </div>
           <div className={styles['scene-dialog-body__input-rows__indicator']}>
             {isRunning && (
