@@ -73,6 +73,7 @@ const Preview = ({ pieceId, width, onPlay, getSubtitle = getReleaseDate }) => {
       onContextMenu={createContextMenuForMouseEvent}
       onTouchStart={handleTouchStart}
       data-cy={`preview${isCurrentPiece ? ' preview--is-current' : ''}`}
+      title={piece.title}
     >
       <Link to={`/generator/${pieceId}`} onClick={handleClick}>
         <div

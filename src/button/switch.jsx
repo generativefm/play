@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './switch.module.scss';
 
 const Switch = (props) => {
-  const { isActive, onClick, isDisabled = false } = props;
+  const { isActive, onClick, isDisabled = false, title } = props;
   return (
     <button
       type="button"
@@ -15,6 +15,7 @@ const Switch = (props) => {
       onClick={onClick}
       disabled={isDisabled}
       data-cy={props['data-cy']}
+      title={title}
     >
       <div className={styles['switch__rail']} />
       <div className={styles['switch__cap']} />
@@ -26,6 +27,7 @@ Switch.propTypes = {
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default Switch;

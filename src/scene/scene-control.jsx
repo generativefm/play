@@ -28,6 +28,7 @@ const SceneControl = () => {
         isTicking={!isDialogVisible && isTimerRunning}
         onClick={handleClick}
         data-cy="open-scene-dialog"
+        title="Playback behavior"
       >
         <Radio />
       </IconButton>

@@ -10,7 +10,7 @@ const MoreButton = ({ pieceId, shouldEnableLike = true }) => {
     <PieceContextMenu pieceId={pieceId} shouldEnableLike={shouldEnableLike} />
   );
   return (
-    <IconButton onClick={createContextMenuForTarget}>
+    <IconButton onClick={createContextMenuForTarget} title="More actions">
       <MoreVert />
     </IconButton>
   );

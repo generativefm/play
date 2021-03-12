@@ -47,7 +47,11 @@ const ControlBar = ({ onExpandCollapse }) => {
       </div>
       <div className={styles['control-bar__right']} onClick={stopPropagation}>
         <VolumeSlider />
-        <IconButton onClick={onExpandCollapse} data-cy="toggle-playback">
+        <IconButton
+          onClick={onExpandCollapse}
+          data-cy="toggle-playback"
+          title={isPlaybackOpen ? 'Hide queue' : 'Show queue'}
+        >
           <ExpandLess
             className={classnames(styles['flip-vertical'], {
               [styles['flip-vertical--is-flipping']]: isPlaybackOpen,

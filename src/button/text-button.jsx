@@ -10,6 +10,7 @@ const TextButton = (props) => {
     isPrimary = false,
     isDisabled = false,
     className,
+    title,
   } = props;
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
@@ -29,6 +30,7 @@ const TextButton = (props) => {
       onTouchStart={handleTouchStart}
       data-cy={props['data-cy']}
       disabled={isDisabled}
+      title={title}
     >
       {children}
     </button>
@@ -41,6 +43,7 @@ TextButton.propTypes = {
   isPrimary: PropTypes.bool,
   isDisabled: PropTypes.bool,
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default TextButton;

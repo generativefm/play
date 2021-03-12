@@ -16,7 +16,11 @@ const NextButton = () => {
   const isDisabled = !isLoopActive && index >= pieceIds.length - 1;
 
   return (
-    <IconButton isDisabled={isDisabled} onClick={handleClick}>
+    <IconButton
+      isDisabled={isDisabled}
+      onClick={handleClick}
+      title="Next generator"
+    >
       <SkipNext />
     </IconButton>
   );

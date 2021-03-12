@@ -54,7 +54,7 @@ const PlaybackControls = () => {
           </div>
         )}
         <div className={styles['playback-controls__primary__button']}>
-          <IconButton>
+          <IconButton title={isPlaying ? 'Stop' : 'Play'}>
             {isPlaying ? (
               <Stop onClick={handleStopClick} />
             ) : (

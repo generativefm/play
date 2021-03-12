@@ -16,7 +16,11 @@ const PreviousButton = () => {
   const isDisabled = !isLoopActive && index <= 0;
 
   return (
-    <IconButton isDisabled={isDisabled} onClick={handleClick}>
+    <IconButton
+      isDisabled={isDisabled}
+      onClick={handleClick}
+      title="Previous generator"
+    >
       <SkipPrevious />
     </IconButton>
   );

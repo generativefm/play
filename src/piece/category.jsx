@@ -149,7 +149,7 @@ const Category = ({
             visibility: canScrollLeft ? 'visible' : 'hidden',
           }}
         >
-          <IconButton onClick={handlePreviousClick} isFloating>
+          <IconButton onClick={handlePreviousClick} isFloating title="Previous">
             <ChevronLeft />
           </IconButton>
         </div>
@@ -188,7 +188,7 @@ const Category = ({
             visibility: canScrollRight ? 'visible' : 'hidden',
           }}
         >
-          <IconButton onClick={handleNextClick} isFloating>
+          <IconButton onClick={handleNextClick} isFloating title="Next">
             <ChevronRight />
           </IconButton>
         </div>

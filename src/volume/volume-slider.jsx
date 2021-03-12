@@ -120,7 +120,10 @@ const VolumeSlider = () => {
           style={{ left: `${currentGainValue * 100}%` }}
         ></button>
       </div>
-      <IconButton onClick={handleClick}>
+      <IconButton
+        onClick={handleClick}
+        title={currentGainValue === 0 ? 'Unmute' : 'Mute'}
+      >
         {currentGainValue === 0 ? <VolumeOff /> : <VolumeUp />}
       </IconButton>
     </div>
