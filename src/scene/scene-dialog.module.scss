@@ -1,0 +1,69 @@
+@import '../styles/_theme.scss';
+
+.scene-dialog-body {
+  &__input-rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__row {
+      @include type-normal();
+      color: $color-white;
+      padding: 2rem 0;
+      border-top: 1px solid rgba($color-white, 0.1);
+      display: flex;
+      width: 100%;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &:first-child {
+        margin-top: 0;
+        border-top: none;
+      }
+    }
+
+    &__indicator {
+      margin-bottom: -1rem;
+      width: 100%;
+      height: 0.5rem;
+      position: relative;
+
+      &__pendulum {
+        height: 0.5rem;
+        width: 0.5rem;
+        background-color: $color-primary;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        animation-name: pendulum-swing;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: ease-in-out;
+        will-change: left, height;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+@include is-narrow-screen() {
+  .scene-dialog-body__input-rows__row__label {
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes pendulum-swing {
+  0% {
+    left: 0%;
+  }
+
+  50% {
+    height: 1px;
+  }
+
+  100% {
+    left: 100%;
+  }
+}

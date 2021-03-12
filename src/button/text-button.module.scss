@@ -37,8 +37,6 @@
     color: rgba($color-white, 0.3) !important;
     cursor: default;
     pointer-events: none;
-    background-color: rgba($color-white, 0.2) !important;
-    box-shadow: none !important;
   }
 
   &--is-primary {
@@ -55,5 +53,10 @@
         background-color: rgba($color-primary, 0.6);
       }
     }
+  }
+
+  &--is-primary#{&}--is-disabled {
+    background-color: rgba($color-white, 0.2) !important;
+    box-shadow: none !important;
   }
 }

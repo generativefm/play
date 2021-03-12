@@ -7,6 +7,13 @@
   position: relative;
   height: $diameter-cap;
   width: $width-rail + $diameter-cap / 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 
   &__rail {
     background-color: rgba($color-grey, 0.5);
@@ -38,5 +45,10 @@
     .switch__rail {
       background-color: rgba($color-primary, 0.5);
     }
+  }
+
+  &--is-disabled {
+    opacity: 0.25;
+    cursor: default;
   }
 }
