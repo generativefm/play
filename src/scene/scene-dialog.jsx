@@ -18,7 +18,9 @@ const SceneDialog = ({ onDismiss }) => {
   const autochange = useSelector(selectAutochange);
   const dispatch = useDispatch();
   const [timerDuration, setTimerDuration] = useState(timer);
-  const [autochangeInterval, setAutochangeInterval] = useState(autochange);
+  const [autochangeInterval, setAutochangeInterval] = useState(
+    autochange.interval
+  );
   const stopTimer = useCallback(() => {
     dispatch(userStoppedTimer());
   }, [dispatch]);

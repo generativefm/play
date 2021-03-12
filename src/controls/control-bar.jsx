@@ -12,6 +12,10 @@ import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import CompactPlaybackControls from './compact-playback-controls';
 import styles from './control-bar.module.scss';
 
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
 const ControlBar = ({ onExpandCollapse }) => {
   const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
   const isNarrowScreen = useIsNarrowScreen();
@@ -34,14 +38,14 @@ const ControlBar = ({ onExpandCollapse }) => {
   }
 
   return (
-    <div className={styles['control-bar']}>
-      <div className={styles['control-bar__left']}>
+    <div className={styles['control-bar']} onClick={onExpandCollapse}>
+      <div className={styles['control-bar__left']} onClick={stopPropagation}>
         <CurrentPiece />
       </div>
-      <div>
+      <div onClick={stopPropagation}>
         <PlaybackControls />
       </div>
-      <div className={styles['control-bar__right']}>
+      <div className={styles['control-bar__right']} onClick={stopPropagation}>
         <VolumeSlider />
         <IconButton onClick={onExpandCollapse} data-cy="toggle-playback">
           <ExpandLess

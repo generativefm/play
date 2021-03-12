@@ -2,7 +2,7 @@ import { USER_ENABLED_AUTOCHANGE } from './user-enabled-autochange';
 import { USER_DISABLED_AUTOCHANGE } from './user-disabled-autochange';
 
 const autochangeReducer = (
-  state = { intelval: null, isEnabled: false },
+  state = { interval: null, isEnabled: false },
   action
 ) => {
   switch (action.type) {
