@@ -7,6 +7,10 @@ import IconButton from '../button/icon-button';
 import useDismissable from '../app/use-dismissable';
 import styles from './dialog.module.scss';
 
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
 const Dialog = ({ title, actions, children, onDismiss }) => {
   const [isVisible, setIsVisible] = useState(true);
   const ref = useRef(null);
@@ -59,8 +63,8 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       unmountOnExit
       onExited={onDismiss}
     >
-      <div className={styles['dialog-container']}>
-        <div className={styles.dialog} ref={ref}>
+      <div className={styles['dialog-container']} onClick={handleDismiss}>
+        <div className={styles.dialog} ref={ref} onClick={stopPropagation}>
           <h1 className={styles['dialog__header']}>
             {title}
             {!hasActions && (
