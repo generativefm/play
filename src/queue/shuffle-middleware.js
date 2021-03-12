@@ -16,6 +16,9 @@ const shuffleArray = (arr) => {
   return arrCopy;
 };
 
+const areShallowEqual = (arr1 = [], arr2 = []) =>
+  arr1.length === arr2.length && arr1.every((el, i) => el === arr2[i]);
+
 const shuffleMiddleware = (store) => (next) => {
   let orderedPieceIds;
   let shuffledPieceIds;
@@ -47,7 +50,8 @@ const shuffleMiddleware = (store) => (next) => {
         const isShuffleActive = selectIsShuffleActive(store.getState());
         if (
           !isShuffleActive ||
-          action.payload.selectionPieceIds === shuffledPieceIds
+          action.payload.selectionPieceIds === shuffledPieceIds ||
+          areShallowEqual(action.payload.selectionPieceIds, shuffledPieceIds)
         ) {
           return next(action);
         }
