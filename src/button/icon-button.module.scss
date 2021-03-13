@@ -25,6 +25,19 @@
 
   &--has-background {
     background-color: rgba($color-dark-1, 0.5);
+    transition: background-color 200ms;
+    border: 1px solid rgba($color-white, 0.15);
+  }
+
+  &--is-not-touched#{&}--has-background {
+    &:hover {
+      background-color: $color-dark-1;
+      box-shadow: $box-shadow-bottom;
+    }
+    &:active {
+      background-color: $color-dark-1;
+      opacity: 0.75;
+    }
   }
 
   &--is-disabled {

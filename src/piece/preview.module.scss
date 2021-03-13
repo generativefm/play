@@ -12,7 +12,7 @@
         background-image: linear-gradient(
           to right,
           transparent,
-          rgba(black, 0.75) 75%
+          rgba(black, 0.75) 66%
         );
         position: absolute;
         top: 0;
@@ -58,7 +58,7 @@
       z-index: 2;
       position: absolute;
       top: 1rem;
-      right: 0.5rem;
+      right: 1rem;
       visibility: hidden;
       opacity: 0;
       transition: opacity 200ms;
@@ -68,21 +68,23 @@
       z-index: 2;
       position: absolute;
       bottom: 1rem;
-      right: 0.5rem;
+      right: 1rem;
       visibility: hidden;
       opacity: 0;
       transition: opacity 200ms;
-      font-size: 1rem;
+
+      svg {
+        font-size: 2.5rem;
+      }
     }
 
     &__status {
       z-index: 2;
       position: absolute;
       bottom: 1rem;
-      right: 0.5rem;
+      right: 1rem;
       visibility: visible;
       transition: opacity 200ms;
-      font-size: 1rem;
 
       &--is-loading {
         visibility: visible !important;
