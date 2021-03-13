@@ -54,7 +54,7 @@ const AuthButton = () => {
   if (!isAuthenticated) {
     return (
       <>
-        <IconButton onClick={createContextMenuForTarget}>
+        <IconButton onClick={createContextMenuForTarget} title="Menu">
           <div
             className={classnames({
               [styles['auth-button--has-badge']]: Boolean(upgrade),
@@ -78,6 +78,7 @@ const AuthButton = () => {
         })}
         type="button"
         onClick={createContextMenuForTarget}
+        title="Menu"
       >
         <img
           className={styles['auth-button__image']}
@@ -89,7 +90,7 @@ const AuthButton = () => {
   }
 
   return (
-    <IconButton onClick={createContextMenuForTarget}>
+    <IconButton onClick={createContextMenuForTarget} title="Menu">
       <div
         className={classnames({
           [styles['auth-button--has-badge']]: Boolean(upgrade),

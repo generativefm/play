@@ -16,7 +16,7 @@ const LikeButton = ({ pieceId }) => {
   }, [pieceId, dispatch, isLiked]);
 
   return (
-    <IconButton onClick={handleClick}>
+    <IconButton onClick={handleClick} title="Like">
       <LikeIcon pieceId={pieceId} />
     </IconButton>
   );

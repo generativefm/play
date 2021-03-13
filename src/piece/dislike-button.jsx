@@ -16,7 +16,7 @@ const DislikeButton = ({ pieceId }) => {
   }, [pieceId, dispatch, isDisliked]);
 
   return (
-    <IconButton onClick={handleClick}>
+    <IconButton onClick={handleClick} title="Dislike">
       {isDisliked ? <ThumbDown /> : <ThumbDownOutlined />}
     </IconButton>
   );

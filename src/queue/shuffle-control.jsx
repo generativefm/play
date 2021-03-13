@@ -14,7 +14,11 @@ const ShuffleControl = () => {
     dispatch(action);
   }, [dispatch, isActive]);
   return (
-    <IconButton isActive={isActive} onClick={handleClick}>
+    <IconButton
+      isActive={isActive}
+      onClick={handleClick}
+      title={isActive ? 'Shuffle off' : 'Shuffle on'}
+    >
       <Shuffle />
     </IconButton>
   );

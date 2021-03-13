@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import Switch from './switch';
+import Switch from '../button/switch';
 import selectAnonymousImporting from './select-anonymous-importing';
 import userChangedSetting from './user-changed-setting';
 import { ANONYMOUS_IMPORTING } from './anonymous-importing-reducer';
@@ -18,13 +18,13 @@ const Setting = ({ label, help, setting, selector }) => {
   }, [dispatch, isActive, setting]);
 
   return (
-    <button className={styles.setting} onClick={handleClick}>
+    <div className={styles.setting} onClick={handleClick}>
       <div className={styles['setting__control']}>
         <div className={styles['setting__control__label']}>{label}</div>
-        <Switch isActive={isActive} />
+        <Switch isActive={isActive} onClick={handleClick} />
       </div>
       <div className={styles['setting__help']}>{help}</div>
-    </button>
+    </div>
   );
 };
 

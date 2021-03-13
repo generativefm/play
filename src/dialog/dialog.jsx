@@ -7,6 +7,10 @@ import IconButton from '../button/icon-button';
 import useDismissable from '../app/use-dismissable';
 import styles from './dialog.module.scss';
 
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
 const Dialog = ({ title, actions, children, onDismiss }) => {
   const [isVisible, setIsVisible] = useState(true);
   const ref = useRef(null);
@@ -59,8 +63,8 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       unmountOnExit
       onExited={onDismiss}
     >
-      <div className={styles['dialog-container']}>
-        <div className={styles.dialog} ref={ref}>
+      <div className={styles['dialog-container']} onClick={handleDismiss}>
+        <div className={styles.dialog} ref={ref} onClick={stopPropagation}>
           <h1 className={styles['dialog__header']}>
             {title}
             {!hasActions && (
@@ -72,8 +76,12 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
           <div className={styles['dialog__body']}>{children}</div>
           {hasActions && (
             <div className={styles['dialog__footer']}>
-              {actions.map(({ text }, i) => (
-                <TextButton key={i} onClick={clickHandlers[i]}>
+              {actions.map(({ text, isDisabled = false }, i) => (
+                <TextButton
+                  key={i}
+                  onClick={clickHandlers[i]}
+                  isDisabled={isDisabled}
+                >
                   {text}
                 </TextButton>
               ))}
@@ -91,6 +99,7 @@ Dialog.propTypes = {
     PropTypes.shape({
       text: PropTypes.string.isRequired,
       onClick: PropTypes.func,
+      isDisabled: PropTypes.bool,
     })
   ),
   children: PropTypes.node.isRequired,

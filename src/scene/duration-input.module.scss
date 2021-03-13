@@ -1,6 +1,6 @@
 @import '../styles/_theme.scss';
 
-.timer-input {
+.duration-input {
   @include type-normal();
   color: $color-grey;
   display: inline-flex;
@@ -14,11 +14,11 @@
     border-bottom: 2px solid $color-primary;
     margin-bottom: 0;
 
-    .timer-input__digit--has-cursor {
+    .duration-input__digit--has-cursor {
       border-right-color: $color-white;
     }
 
-    .timer-input__digit--has-cursor-before {
+    .duration-input__digit--has-cursor-before {
       border-left-color: $color-white !important; // TODO don't be lazy
     }
   }

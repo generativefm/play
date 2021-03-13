@@ -14,7 +14,11 @@ const LoopControl = () => {
     dispatch(action);
   }, [dispatch, isActive]);
   return (
-    <IconButton isActive={isActive} onClick={handleClick}>
+    <IconButton
+      isActive={isActive}
+      onClick={handleClick}
+      title={isActive ? 'Loop off' : 'Loop on'}
+    >
       <Repeat />
     </IconButton>
   );

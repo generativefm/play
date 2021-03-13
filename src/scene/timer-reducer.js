@@ -5,7 +5,7 @@ import { TIMER_PROGRESSED } from './timer-progressed';
 const timerReducer = (state = null, action) => {
   switch (action.type) {
     case USER_STARTED_TIMER: {
-      return action.payload.duration;
+      return action.payload.duration || null;
     }
     case USER_STOPPED_TIMER: {
       return null;

@@ -1,4 +1,4 @@
-describe('playback overlay', () => {
+describe('Playback overlay', () => {
   describe('on wide screens', () => {
     it('should close when the user presses the back button', () => {
       cy.visit('/generator/drones');

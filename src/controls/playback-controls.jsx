@@ -7,7 +7,7 @@ import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStoppedPlayback from '../playback/user-stopped-playback';
 import userPlayedPiece from '../playback/user-played-piece';
-import TimerControl from '../timer/timer-control';
+import SceneControl from '../scene/scene-control';
 import ShuffleControl from '../queue/shuffle-control';
 import LoopControl from '../queue/loop-control';
 import PreviousControl from '../queue/previous-control';
@@ -38,9 +38,8 @@ const PlaybackControls = () => {
 
   return (
     <div className={styles['playback-controls']}>
-      {!isNarrowScreen && <TimerControl />}
+      {!isNarrowScreen && <SceneControl />}
       {!isNarrowScreen && <ShuffleControl />}
-      {!isNarrowScreen && <LoopControl />}
       {!isNarrowScreen && <PreviousControl />}
       <div
         className={classnames(styles['playback-controls__primary'], {
@@ -55,7 +54,7 @@ const PlaybackControls = () => {
           </div>
         )}
         <div className={styles['playback-controls__primary__button']}>
-          <IconButton>
+          <IconButton title={isPlaying ? 'Stop' : 'Play'}>
             {isPlaying ? (
               <Stop onClick={handleStopClick} />
             ) : (
@@ -64,8 +63,8 @@ const PlaybackControls = () => {
           </IconButton>
         </div>
       </div>
-
       <NextControl />
+      {!isNarrowScreen && <LoopControl />}
     </div>
   );
 };

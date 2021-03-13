@@ -14,6 +14,7 @@ const IconButton = (props) => {
     isFloating = false,
     isSecondary = false,
     isTouched = false,
+    title,
   } = props;
   const [hasBeenTouched, setHasBeenTouched] = useState(isTouched);
 
@@ -37,6 +38,7 @@ const IconButton = (props) => {
       onClick={onClick}
       onTouchStart={handleTouchStart}
       data-cy={props['data-cy']}
+      title={title}
     >
       {children}
     </button>
@@ -53,6 +55,7 @@ IconButton.propTypes = {
   isFloating: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isTouched: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default IconButton;
