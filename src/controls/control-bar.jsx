@@ -10,6 +10,7 @@ import IconButton from '../button/icon-button';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import CompactPlaybackControls from './compact-playback-controls';
+import CastButton from '../cast/cast-button';
 import styles from './control-bar.module.scss';
 
 const stopPropagation = (event) => {
@@ -46,6 +47,7 @@ const ControlBar = ({ onExpandCollapse }) => {
         <PlaybackControls />
       </div>
       <div className={styles['control-bar__right']} onClick={stopPropagation}>
+        <CastButton />
         <VolumeSlider />
         <IconButton
           onClick={onExpandCollapse}

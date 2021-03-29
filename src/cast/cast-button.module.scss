@@ -1,0 +1,11 @@
+@import '../styles/_theme.scss';
+
+.cast-button {
+  width: 1.5rem;
+  cursor: pointer;
+
+  google-cast-launcher {
+    --connected-color: #{$color-primary};
+    --disconnected-color: #{$color-white};
+  }
+}

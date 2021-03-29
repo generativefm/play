@@ -13,6 +13,7 @@
   &__title {
     @include type-less-prominent();
     color: $color-grey;
+    font-size: 1rem;
   }
 
   &__auth {
