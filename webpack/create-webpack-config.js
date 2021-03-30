@@ -42,6 +42,14 @@ const createWebpackConfig = ({ styleLoader }) => ({
               importLoaders: 1,
             },
           },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: ['postcss-preset-env'],
+              },
+            },
+          },
           'sass-loader',
         ],
       },
