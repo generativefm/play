@@ -21,10 +21,9 @@ import timerReducer from '../scene/timer-reducer';
 import autochangeReducer from '../scene/autochange-reducer';
 import snackbarMiddleware from '../snackbar/snackbar-middleware';
 import mediaSessionMiddleware from '../playback/media-session-middleware';
-import silentHtml5AudioMiddleware from '../playback/silent-html5-audio-middleware';
 import confirmExitMiddleware from '../settings/confirm-exit-middleware';
 import sentryMiddleware from '../sentry/sentry-middleware';
-import resumeAudioContextMiddleware from '../playback/resume-audio-context-middleware';
+import destinationAudioElementMiddleware from '../playback/destination-audio-element-middleware';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -43,6 +42,7 @@ const createStore = (preloadedState) =>
       sentryMiddleware,
       anonymousImportMiddleware,
       playbackMiddleware,
+      destinationAudioElementMiddleware,
       storeUserStateMiddleware,
       synchronizeUserMiddleware,
       persistStateMiddleware,
@@ -51,8 +51,6 @@ const createStore = (preloadedState) =>
       shuffleMiddleware,
       snackbarMiddleware,
       mediaSessionMiddleware,
-      silentHtml5AudioMiddleware,
-      resumeAudioContextMiddleware,
       confirmExitMiddleware
     )
   );
