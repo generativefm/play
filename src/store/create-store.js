@@ -24,6 +24,7 @@ import mediaSessionMiddleware from '../playback/media-session-middleware';
 import confirmExitMiddleware from '../settings/confirm-exit-middleware';
 import sentryMiddleware from '../sentry/sentry-middleware';
 import destinationAudioElementMiddleware from '../playback/destination-audio-element-middleware';
+import silentHtml5AudioMiddleware from '../playback/silent-html5-audio-middleware';
 
 const createStore = (preloadedState) =>
   _createStore(
@@ -43,6 +44,7 @@ const createStore = (preloadedState) =>
       anonymousImportMiddleware,
       playbackMiddleware,
       destinationAudioElementMiddleware,
+      silentHtml5AudioMiddleware,
       storeUserStateMiddleware,
       synchronizeUserMiddleware,
       persistStateMiddleware,
