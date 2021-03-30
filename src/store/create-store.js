@@ -23,7 +23,6 @@ import snackbarMiddleware from '../snackbar/snackbar-middleware';
 import mediaSessionMiddleware from '../playback/media-session-middleware';
 import confirmExitMiddleware from '../settings/confirm-exit-middleware';
 import sentryMiddleware from '../sentry/sentry-middleware';
-import resumeAudioContextMiddleware from '../playback/resume-audio-context-middleware';
 import destinationAudioElementMiddleware from '../playback/destination-audio-element-middleware';
 
 const createStore = (preloadedState) =>
@@ -52,7 +51,6 @@ const createStore = (preloadedState) =>
       shuffleMiddleware,
       snackbarMiddleware,
       mediaSessionMiddleware,
-      //resumeAudioContextMiddleware,
       confirmExitMiddleware
     )
   );
