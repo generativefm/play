@@ -1,4 +1,4 @@
-import { Transport, Gain, getContext } from 'tone';
+import { Transport, Gain, getContext, start } from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { startEmission, stopEmission } from '@generative.fm/stats';
 import { playTimeIncreased } from '@generative.fm/user';
@@ -48,45 +48,47 @@ const playbackMiddleware = (store) => (next) => {
     );
   };
 
-  const playPiece = ({ pieceId }) => {
+  const playPiece = async ({ pieceId }) => {
     if (activatingPieces.has(pieceId)) {
       return;
     }
     const pieceGain = new Gain().connect(masterGainNode);
     const piece = byId[pieceId];
     activatingPieces.add(pieceId);
-    Promise.all([getSampleLibrary(), piece.loadActivate()])
-      .then(([sampleLibrary, activate]) =>
-        activate({
-          context: getContext(),
-          sampleLibrary,
-          destination: pieceGain,
-        })
-      )
-      .then(([deactivate, schedule]) => {
-        activatingPieces.delete(pieceId);
-        const state = store.getState();
-        const currentPieceId = selectCurrentPieceId(state);
-        if (currentPieceId !== pieceId) {
-          return;
-        }
-        const end = schedule();
-        const userId = selectUserId(state) || 'ANONYMOUS_PLAY_USER';
-        activePieces.set(pieceId, {
-          deactivate,
-          schedule,
-          end,
-          gainNode: pieceGain,
-          emissionIdPromise: startEmission({ pieceId, userId }),
-        });
-        Transport.start();
-        store.dispatch(pieceStartedPlaying());
-      })
-      .catch((err) => {
-        console.error(err);
-        activatingPieces.delete(pieceId);
-        store.dispatch(piecePlaybackFailed());
+    await start();
+    try {
+      const [sampleLibrary, activate] = await Promise.all([
+        getSampleLibrary(),
+        piece.loadActivate(),
+      ]);
+      const [deactivate, schedule] = await activate({
+        context: getContext(),
+        sampleLibrary,
+        destination: pieceGain,
       });
+
+      activatingPieces.delete(pieceId);
+      const state = store.getState();
+      const currentPieceId = selectCurrentPieceId(state);
+      if (currentPieceId !== pieceId) {
+        return;
+      }
+      const end = schedule();
+      const userId = selectUserId(state) || 'ANONYMOUS_PLAY_USER';
+      activePieces.set(pieceId, {
+        deactivate,
+        schedule,
+        end,
+        gainNode: pieceGain,
+        emissionIdPromise: startEmission({ pieceId, userId }),
+      });
+      Transport.start();
+      store.dispatch(pieceStartedPlaying());
+    } catch (err) {
+      console.error(err);
+      activatingPieces.delete(pieceId);
+      store.dispatch(piecePlaybackFailed());
+    }
   };
 
   return (action) => {
