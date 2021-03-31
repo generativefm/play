@@ -1,6 +1,6 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.5.5",
+  "version": "0.5.7",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
@@ -26,7 +26,6 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "reset-css": "^5.0.1",
-    "standardized-audio-context": "^25.1.12",
     "tone": "^14.7.58"
   },
   "devDependencies": {
