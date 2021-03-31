@@ -1,6 +1,6 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
@@ -67,7 +67,6 @@
     "sass-loader": "^10.0.5",
     "sinon": "^9.2.4",
     "style-loader": "^2.0.0",
-    "unmute-ios-audio": "^3.3.0",
     "webpack": "^5.21.1",
     "webpack-bundle-analyzer": "^4.4.0",
     "webpack-cli": "^4.5.0",

@@ -1,25 +1,24 @@
 import silence from './silence.mp3';
 import selectPlaybackStatus from './select-playback-status';
 
-const selectIsLoading = (state) => selectPlaybackStatus(state) === 'loading';
+const selectIsStopped = (state) => selectPlaybackStatus(state) === 'stopped';
 
 const silentHtml5AudioMiddleware = (store) => (next) => {
   const audioEl = document.createElement('audio');
   audioEl.src = silence;
   audioEl.loop = true;
   return (action) => {
-    const wasPreviouslyLoading = selectIsLoading(store.getState());
+    const wasStopped = selectIsStopped(store.getState());
     const result = next(action);
-    const isLoading = selectIsLoading(store.getState());
-    if (wasPreviouslyLoading === isLoading) {
+    const isStopped = selectIsStopped(store.getState());
+    if (wasStopped === isStopped) {
       return result;
     }
-    if (isLoading) {
-      audioEl.play();
+    if (isStopped) {
+      audioEl.pause();
       return result;
     }
-    // no longer playing
-    audioEl.pause();
+    audioEl.play();
     return result;
   };
 };
