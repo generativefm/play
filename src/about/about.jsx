@@ -81,7 +81,7 @@ const About = () => {
             <h2 className={styles['about__body__text__title']}>
               Generative.fm Play
             </h2>
-            <p>verison {version}</p>
+            <p>version {version}</p>
             <p>
               made by{' '}
               <a
