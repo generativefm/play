@@ -15,6 +15,9 @@ config.plugins.push(
     SAMPLE_FILE_HOST: '//localhost:6969',
     GFM_STATS_ENDPOINT: '/api',
     GFM_USER_ENDPOINT: 'https://user.api.generative.fm/v1',
+    APP_VERSION: `dev-${Date.now()}`,
+    IS_NATIVE_APP_HOST: false,
+    SENTRY_DSN: '',
   })
 );
 
