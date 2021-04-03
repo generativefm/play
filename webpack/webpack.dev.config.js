@@ -17,7 +17,7 @@ config.plugins.push(
     GFM_USER_ENDPOINT: 'https://user.api.generative.fm/v1',
     APP_VERSION: `dev-${Date.now()}`,
     IS_NATIVE_APP_HOST: false,
-    SENTRY_DSN: '',
+    SENTRY_DSN: null,
   })
 );
 
