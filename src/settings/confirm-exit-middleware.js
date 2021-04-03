@@ -8,6 +8,9 @@ const handleBeforeUnload = (event) => {
 };
 
 const confirmExitMiddleware = (store) => (next) => (action) => {
+  if (process.env.IS_NATIVE_APP_HOST) {
+    return next(action);
+  }
   const previousState = store.getState();
   const wasEnabled = selectConfirmExitDuringPlayback(previousState);
   const wasPlaying = selectPlaybackStatus(previousState) === 'playing';

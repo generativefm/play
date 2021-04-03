@@ -3,7 +3,6 @@ import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import useActivePatrons from '../donate/use-active-patrons';
-import { version } from '../../package.json';
 import logo from '../logo.png';
 import styles from './about.module.scss';
 
@@ -81,7 +80,7 @@ const About = () => {
             <h2 className={styles['about__body__text__title']}>
               Generative.fm Play
             </h2>
-            <p>version {version}</p>
+            <p>version {process.env.APP_VERSION}</p>
             <p>
               made by{' '}
               <a
