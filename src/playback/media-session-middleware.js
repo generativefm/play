@@ -32,6 +32,14 @@ const mediaSessionMiddleware = (store) => (next) => {
   });
   try {
     navigator.mediaSession.setActionHandler('stop', () => {
+      // the cast SDK sends a 'stop' event when connecting
+      if (
+        window.cast &&
+        window.cast.framework.CastContext.getInstance().getCastState() ===
+          window.cast.framework.CastState.CONNECTING
+      ) {
+        return;
+      }
       store.dispatch(userStoppedPlayback());
     });
   } catch (error) {

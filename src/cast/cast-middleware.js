@@ -36,7 +36,7 @@ const updateReceiverMetadata = (castSession, currentPieceId) => {
       artist: 'Alex Bainter',
       albumName: 'Generative.fm Play',
       releaseDate: releaseDate.toISOString(),
-      imageUrl: `https://play.generative.fm${imageSrc}`,
+      imageUrl: `${window.location.origin}${imageSrc}`,
       type: 'metadata',
     })
   );
