@@ -17,7 +17,7 @@ import contextMenuOptionStyles from '../context-menu/context-menu-option.module.
 import beforeInstallPromptContext from '../app/before-install-prompt-context';
 import useUpgrade from '../service-worker/use-upgrade';
 
-const HELP_URL =
+export const HELP_URL =
   'https://www.notion.so/generativefm/Get-help-with-Generative-fm-0efd0280b87d4132a66d212f125d9f4f';
 
 const UserContextMenu = () => {

@@ -1,0 +1,53 @@
+@import '../styles/_theme.scss';
+
+.radio {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  cursor: default;
+
+  &__control {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 3px solid $color-white;
+    border-radius: 50%;
+    margin-right: 1rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 200ms, background-color 200ms;
+    position: relative;
+
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &::before {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      content: '';
+      background-color: rgba($color-white, 0.15);
+      position: absolute;
+      top: calc(-3px - 0.75rem / 2);
+      left: calc(-3px - 0.75rem / 2);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+
+    &--is-checked {
+      border-color: $color-primary;
+      background-color: $color-primary;
+      background-clip: content-box;
+      padding: 2px;
+    }
+  }
+
+  &__input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}

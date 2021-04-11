@@ -18,6 +18,7 @@ import userOpenedPlayback from '../playback/user-opened-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
 import TopBar from '../top-bar/top-bar';
 import withSuspense from '../loading/with-suspense';
+import FeedbackDialog from '../feedback/feedback-dialog';
 import styles from './layout.module.scss';
 
 const Browse = withSuspense(() => import('../browse/browse'));
@@ -61,6 +62,7 @@ const Layout = () => {
         [styles['layout--has-playback-content']]: isPlaybackOpen,
       })}
     >
+      <FeedbackDialog />
       {!isNarrowScreen && <TopNav />}
       {isNarrowScreen && <TopBar />}
       <AnonymousDataImportedBanner />

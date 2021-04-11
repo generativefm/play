@@ -1,0 +1,35 @@
+@import '../styles/_theme.scss';
+
+.feedback-dialog-body {
+  @include type-normal();
+  color: $color-white;
+  line-height: 2;
+
+  &__help-prompt {
+    margin-bottom: 1rem;
+    a {
+      border-bottom: 1px solid $color-primary;
+      text-decoration: none;
+      color: inherit;
+      padding-bottom: 0.25rem;
+    }
+  }
+
+  &__text {
+    @include type-normal();
+    font-size: 1rem;
+    width: 100%;
+    background: transparent;
+    border-color: $color-white;
+    border-radius: $border-radius-sm;
+    color: $color-white;
+    margin: 1rem 0;
+    resize: none;
+  }
+}
+
+@include is-narrow-screen {
+  .feedback-dialog-body__text {
+    width: auto;
+  }
+}
