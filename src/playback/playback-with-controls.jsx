@@ -21,6 +21,7 @@ import CircularLoadingIndicator from '../loading/circular-loading-indicator';
 import MoreButton from '../piece/more-button';
 import Queue from '../queue/queue';
 import ControlBar from '../controls/control-bar';
+import CastButton from '../cast/cast-button';
 import selectQueue from '../queue/select-queue';
 import styles from './playback-with-controls.module.scss';
 
@@ -163,7 +164,12 @@ const PlaybackWithControls = () => {
               />
               <LikeButton pieceId={currentPieceId} />
             </div>
-            <SceneControl />
+            <div
+              className={styles['playback-with-controls__current-piece__row']}
+            >
+              <SceneControl />
+              <CastButton />
+            </div>
             <div
               className={
                 styles['playback-with-controls__current-piece__controls']

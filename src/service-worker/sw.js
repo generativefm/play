@@ -2,14 +2,16 @@ const ASSET_CACHE_NAME = '@generative.fm/play/assets';
 const FONT_CACHE_NAME = '@generative.fm/play/fonts';
 const FONT_STYLESHEET_URL =
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
+const CAST_SENDER_SDK_SRC =
+  'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1';
 
 const STATIC_FONT_URL = /url\((https:\/\/fonts.gstatic.com[^)\s]+)\)/g;
 
 //eslint-disable-next-line no-undef
 const assetPaths = __WEBPACK_ASSETS__
   .filter((filename) => filename !== 'sw.js')
-  .concat([''])
-  .map((path) => [self.location.origin, path].join('/'));
+  .map((path) => [self.location.origin, path].join('/'))
+  .concat([CAST_SENDER_SDK_SRC]);
 
 const assetPathSet = new Set(assetPaths);
 
@@ -61,6 +63,7 @@ const CACHED_ORIGINS = [
   self.location.origin,
   'https://fonts.googleapis.com',
   'https://fonts.gstatic.com',
+  'https://www.gstatic.com',
 ];
 
 self.addEventListener('fetch', (event) => {
