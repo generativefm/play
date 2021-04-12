@@ -120,7 +120,7 @@ const attachConnectedListener = (castContext, store) => {
 const castMiddleware = (store) => (next) => {
   let isCasting = () => false;
   window.__onGCastApiAvailable = (isAvailable) => {
-    if (!isAvailable) {
+    if (!isAvailable || !window.chrome.cast) {
       return;
     }
     const castContext = window.cast.framework.CastContext.getInstance();
