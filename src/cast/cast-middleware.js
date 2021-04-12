@@ -73,7 +73,6 @@ const handleCastStateConnected = (castContext, store) => {
   masterGainNode.connect(streamDestination);
 
   streamDestination.stream.getAudioTracks().forEach((track) => {
-    console.log('sending audio');
     peerConnection.addTrack(track, streamDestination.stream);
   });
 
