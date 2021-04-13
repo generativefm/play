@@ -18,6 +18,7 @@ const getAssetRequests = async (cache) => {
   //eslint-disable-next-line no-undef
   const ownAssetUrls = __WEBPACK_ASSETS__
     .filter((filename) => filename !== 'sw.js')
+    .concat(['']) //root path
     .map((path) => [self.location.origin, path].join('/'));
   return fontAssetUrls.concat(ownAssetUrls).map((url) => new Request(url));
 };
@@ -72,10 +73,11 @@ const cleanAssets = async () => {
     cache.keys(),
   ]);
   const assetRequestUrlSet = new Set(assetRequests.map(({ url }) => url));
+  const requestsToDelete = storedRequests.filter(
+    (cachedRequest) => !assetRequestUrlSet.has(cachedRequest.url)
+  );
   return Promise.all(
-    storedRequests
-      .filter((cachedRequest) => !assetRequestUrlSet.has(cachedRequest.url))
-      .map((cachedRequest) => cache.delete(cachedRequest))
+    requestsToDelete.map((cachedRequest) => cache.delete(cachedRequest))
   );
 };
 
