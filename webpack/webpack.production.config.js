@@ -21,6 +21,9 @@ config.plugins.push(
     SAMPLE_FILE_HOST: 'https://samples.alexbainter.com',
     GFM_STATS_ENDPOINT: 'https://stats.api.generative.fm/v1',
     GFM_USER_ENDPOINT: 'https://user.api.generative.fm/v1',
+    APP_VERSION: version,
+    IS_NATIVE_APP_HOST: false,
+    SENTRY_DSN: null,
   }),
   new MiniCssExtractPlugin({
     filename: '[name].[contenthash].css',

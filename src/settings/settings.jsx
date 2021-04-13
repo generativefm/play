@@ -39,14 +39,16 @@ const Settings = () => {
   return (
     <div className={styles.settings}>
       <h1 className={styles['settings__header']}>Settings</h1>
-      <Setting
-        label={'Confirm exit during playback'}
-        help={
-          "If you try to close the app while music is playing, you'll get a chance to keep the app open in case you didn't actually mean to close it."
-        }
-        setting={CONFIRM_EXIT_DURING_PLAYBACK}
-        selector={selectConfirmExitDuringPlayback}
-      />
+      {!process.env.IS_NATIVE_APP_HOST && (
+        <Setting
+          label={'Confirm exit during playback'}
+          help={
+            "If you try to close the app while music is playing, you'll get a chance to keep the app open in case you didn't actually mean to close it."
+          }
+          setting={CONFIRM_EXIT_DURING_PLAYBACK}
+          selector={selectConfirmExitDuringPlayback}
+        />
+      )}
       <Setting
         label={'Move anonymous activity to the next user account'}
         help={
