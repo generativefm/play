@@ -3,8 +3,10 @@ const FONT_STYLESHEET_URL =
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
 const STATIC_FONT_URL_PATTERN = /url\((https:\/\/fonts.gstatic.com[^)\s]+)\)/g;
 
-const getFontAssetUrls = async (cache) => {
-  await cache.add(FONT_STYLESHEET_URL);
+const getFontAssetUrls = async (cache, { fetchStylesheet = true } = {}) => {
+  if (fetchStylesheet) {
+    await cache.add(FONT_STYLESHEET_URL);
+  }
   const response = await cache.match(FONT_STYLESHEET_URL);
   const content = await response.text();
   const staticFontUrls = Array.from(
@@ -69,7 +71,7 @@ self.addEventListener('fetch', (event) => {
 const cleanAssets = async () => {
   const cache = await caches.open(ASSET_CACHE_NAME);
   const [assetRequests, storedRequests] = await Promise.all([
-    getAssetRequests(cache),
+    getAssetRequests(cache, { fetchStylesheet: false }),
     cache.keys(),
   ]);
   const assetRequestUrlSet = new Set(assetRequests.map(({ url }) => url));
