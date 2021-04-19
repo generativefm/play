@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import TextButton from '../button/text-button';
+import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 
 import styles from './snackbar-message.module.scss';
 
@@ -21,6 +22,7 @@ const SnackbarMessage = ({
   const [isHovering, setIsHovering] = useState(false);
   const isNarrowScreen = useIsNarrowScreen();
   const currentPieceId = useSelector(selectCurrentPieceId);
+  const isPlaybackOpen = useSelector(selectIsPlaybackOpen);
 
   useEffect(() => {
     if (!message || shouldExitNow) {
@@ -59,6 +61,10 @@ const SnackbarMessage = ({
     return null;
   }
 
+  const isAboveControls =
+    Boolean(currentPieceId) && !(isNarrowScreen && isPlaybackOpen);
+  const isAboveNav = isNarrowScreen && !isPlaybackOpen;
+
   return (
     <CSSTransition
       classNames={{
@@ -76,8 +82,8 @@ const SnackbarMessage = ({
     >
       <div
         className={classnames(styles['snackbar-message'], {
-          [styles['snackbar-message--is-above-controls']]: currentPieceId,
-          [styles['snackbar-message--is-above-bottom-nav']]: isNarrowScreen,
+          [styles['snackbar-message--is-above-controls']]: isAboveControls,
+          [styles['snackbar-message--is-above-bottom-nav']]: isAboveNav,
         })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
