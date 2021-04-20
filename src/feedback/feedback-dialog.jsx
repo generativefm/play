@@ -1,9 +1,13 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Dialog from '../dialog/dialog';
 import Radio from './radio';
 import Checkbox from './checkbox';
 import { HELP_URL } from '../user/user-context-menu';
+import useShowSnackbar from '../snackbar/use-show-snackbar';
 import styles from './feedback-dialog.module.scss';
+
+const FEEDBACK_URL = 'https://api.alexbainter.com/v1/contact';
 
 const GENERATOR_CHECKBOXES = [
   {
@@ -41,6 +45,17 @@ const FeedbackDialog = () => {
     }, {})
   );
   const [text, setText] = useState('');
+  const { isAuthenticated, user } = useAuth0();
+  const [email, setEmail] = useState(isAuthenticated ? user.email : '');
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
+  const showSnackbar = useShowSnackbar();
+
+  useEffect(() => {
+    if (email || isEmailTouched || isAuthenticated || !user || !user.email) {
+      return;
+    }
+    setEmail(user.email);
+  }, [isAuthenticated, user, email, isEmailTouched]);
 
   const handleGeneratorTypeCheck = useCallback(() => {
     setFeedbackType('generator');
@@ -53,6 +68,64 @@ const FeedbackDialog = () => {
   const handleTextChange = useCallback((event) => {
     setText(event.target.value);
   }, []);
+
+  const handleEmailChange = useCallback((event) => {
+    setIsEmailTouched(true);
+    setEmail(event.target.value);
+  }, []);
+
+  const handleSend = useCallback(() => {
+    const timestamp = Date.now();
+    const emailBodyParagraphs = [];
+    if (feedbackType === 'generator') {
+      emailBodyParagraphs.push('Regarding <GENERATOR>...'); //TODO
+    }
+    if (
+      feedbackType === 'generator' &&
+      Object.values(generatorCheckboxStates).some((isChecked) => isChecked)
+    ) {
+      emailBodyParagraphs.push(
+        ['Issues:']
+          .concat(
+            Object.values(generatorCheckboxStates).reduce(
+              (checkedArr, isChecked, i) =>
+                isChecked
+                  ? checkedArr.concat([`${GENERATOR_CHECKBOXES[i].label}.`])
+                  : checkedArr,
+              []
+            )
+          )
+          .join('\n')
+      );
+    }
+    if (text) {
+      emailBodyParagraphs.push(text);
+    }
+    if (email) {
+      emailBodyParagraphs.push(`Reply to ${email}`);
+    }
+    const postBody = {
+      subject: `Generative.fm Play Feedback ${timestamp}`,
+      body: emailBodyParagraphs.join('\n\n'),
+    };
+    if (email) {
+      postBody.replyTo = email;
+    }
+    showSnackbar('Sending feedback...');
+    fetch(FEEDBACK_URL, {
+      method: 'POST',
+      body: JSON.stringify(postBody),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return;
+        }
+        showSnackbar('Feedback sent');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [feedbackType, generatorCheckboxStates, text, email, showSnackbar]);
 
   const generatorCheckboxHandlers = useMemo(
     () =>
@@ -69,7 +142,7 @@ const FeedbackDialog = () => {
   return (
     <Dialog
       title="Send Feedback"
-      actions={[{ text: 'Cancel' }, { text: 'Send' }]}
+      actions={[{ text: 'Cancel' }, { text: 'Send', onClick: handleSend }]}
     >
       <div className={styles['feedback-dialog-body']}>
         <p className={styles['feedback-dialog-body__help-prompt']}>
@@ -110,6 +183,17 @@ const FeedbackDialog = () => {
           value={text}
           onChange={handleTextChange}
         ></textarea>
+        <p>
+          Leave your email address below if you wouldn&apos;t mind getting a
+          response.
+        </p>
+        <input
+          className={styles['feedback-dialog-body__email']}
+          placeholder="Your email"
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
       </div>
     </Dialog>
   );
