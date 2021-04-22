@@ -122,6 +122,7 @@ Dialog.propTypes = {
   ),
   children: PropTypes.node.isRequired,
   onDismiss: PropTypes.func.isRequired,
+  shouldDismissOnContainerClick: PropTypes.bool,
 };
 
 export default Dialog;

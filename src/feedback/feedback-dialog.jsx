@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useAuth0 } from '@auth0/auth0-react';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import Dialog from '../dialog/dialog';
@@ -220,6 +221,12 @@ const FeedbackDialog = ({
       </div>
     </Dialog>
   );
+};
+
+FeedbackDialog.propTypes = {
+  defaultPieceId: PropTypes.string,
+  defaultFeedbackType: PropTypes.string,
+  onDismiss: PropTypes.func.isRequired,
 };
 
 export default FeedbackDialog;

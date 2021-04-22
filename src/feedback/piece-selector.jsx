@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+import PropTypes from 'prop-types';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import { ArrowDropDown } from '@material-ui/icons';
 import useDismissable from '../app/use-dismissable';
@@ -61,6 +62,13 @@ const PieceList = ({ width, onDismiss, onSelect, selectedPieceId }) => {
   );
 };
 
+PieceList.propTypes = {
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onDismiss: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  selectedPieceId: PropTypes.string.isRequired,
+};
+
 const PieceSelector = ({ selectedPieceId, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [width, setWidth] = useState('auto');
@@ -107,6 +115,11 @@ const PieceSelector = ({ selectedPieceId, onChange }) => {
       )}
     </>
   );
+};
+
+PieceSelector.propTypes = {
+  selectedPieceId: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default PieceSelector;

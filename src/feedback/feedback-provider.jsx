@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import feedbackContext from './feedback-context';
 import FeedbackDialog from './feedback-dialog';
 
@@ -23,6 +24,10 @@ const FeedbackProvider = ({ children }) => {
       )}
     </>
   );
+};
+
+FeedbackProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default FeedbackProvider;

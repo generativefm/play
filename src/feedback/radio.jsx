@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './radio.module.scss';
 
@@ -13,6 +14,12 @@ const Radio = ({ label, isChecked, onCheck }) => {
       {label}
     </div>
   );
+};
+
+Radio.propTypes = {
+  label: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired,
 };
 
 export default Radio;
