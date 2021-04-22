@@ -7,6 +7,7 @@ import {
   QueueMusic,
   PlaylistPlay,
   RemoveCircleOutline,
+  Feedback,
 } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -25,6 +26,7 @@ import selectQueue from '../queue/select-queue';
 import userQueuedPiece from '../queue/user-queued-piece';
 import userPlayedPiece from '../playback/user-played-piece';
 import userUnqueuedPiece from '../queue/user-unqueued-piece';
+import useOpenFeedbackDialog from '../feedback/use-open-feedback-dialog';
 import styles from './piece-context-menu.module.scss';
 
 const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
@@ -35,6 +37,7 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
   const queue = useSelector(selectQueue);
   const showSnackbar = useShowSnackbar();
   const isNarrowScreen = useIsNarrowScreen();
+  const openFeedbackDialog = useOpenFeedbackDialog();
 
   const pieceRoute = `/generator/${pieceId}`;
   const { pathname } = useLocation();
@@ -116,6 +119,13 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
     await copyToClipboard(url);
     showSnackbar('Link copied');
   }, [pieceRoute, pieceId, showSnackbar]);
+
+  const handleSendFeedbackClick = useCallback(() => {
+    openFeedbackDialog({
+      defaultFeedbackType: 'generator',
+      defaultPieceId: pieceId,
+    });
+  }, [openFeedbackDialog, pieceId]);
 
   const isInQueue = useMemo(() => queue.pieceIds.indexOf(pieceId) >= 0, [
     queue.pieceIds,
@@ -206,6 +216,12 @@ const PieceContextMenu = ({ pieceId, shouldEnableLike = true }) => {
           Make your own recording
         </ContextMenuOption>
       )}
+      <ContextMenuOption onClick={handleSendFeedbackClick}>
+        <Feedback
+          className={contextMenuOptionStyles['context-menu-option__icon']}
+        />
+        Send feedback
+      </ContextMenuOption>
     </>
   );
 };

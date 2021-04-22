@@ -9,12 +9,13 @@ import withSuspense from '../loading/with-suspense';
 import retryable from '../loading/retryable';
 
 const getCreateStore = retryable(() =>
-  import('../store/create-store').then((module) => module.default)
+  import('../store/create-store').then(
+    (createStoreModule) => createStoreModule.default
+  )
 );
-
 const Auth0Provider = withSuspense(() =>
-  import('@auth0/auth0-react').then((module) => ({
-    default: module.Auth0Provider,
+  import('@auth0/auth0-react').then(({ Auth0Provider }) => ({
+    default: Auth0Provider,
   }))
 );
 const ReduxApp = withSuspense(() => import('./redux-app'));

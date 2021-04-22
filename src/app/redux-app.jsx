@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import SnackbarProvider from '../snackbar/snackbar-provider';
 import UpgradeProvider from '../service-worker/upgrade-provider';
 import useActivePatrons from '../donate/use-active-patrons';
+import FeedbackProvider from '../feedback/feedback-provider';
 
 const ReduxApp = ({ store }) => {
   const activePatrons = useActivePatrons({ isGreedy: true });
@@ -45,9 +46,11 @@ const ReduxApp = ({ store }) => {
         <MasterGainProvider>
           <UpgradeProvider>
             <Router>
-              <ContextMenuProvider>
-                <Layout />
-              </ContextMenuProvider>
+              <FeedbackProvider>
+                <ContextMenuProvider>
+                  <Layout />
+                </ContextMenuProvider>
+              </FeedbackProvider>
             </Router>
           </UpgradeProvider>
         </MasterGainProvider>

@@ -41,7 +41,11 @@ const SceneDialog = ({ onDismiss }) => {
   }, [autochange.interval]);
   const isRunning = Boolean(timer);
   return (
-    <Dialog title="Playback behavior" onDismiss={onDismiss}>
+    <Dialog
+      title="Playback behavior"
+      onDismiss={onDismiss}
+      shouldDismissOnContainerClick
+    >
       <div className={styles['scene-dialog-body']}>
         <div className={styles['scene-dialog-body__input-rows']}>
           <div className={styles['scene-dialog-body__input-rows__row']}>
