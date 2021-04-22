@@ -51,7 +51,6 @@ SelectList.propTypes = {
 const Select = ({ options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [width, setWidth] = useState('auto');
-  const [buttonHeight, setButtonHeight] = useState(0);
   const containerRef = useRef(null);
   const buttonRef = useRef(null);
   const handleOpenClick = useCallback(() => {
@@ -70,7 +69,6 @@ const Select = ({ options, value, onChange }) => {
 
   useLayoutEffect(() => {
     setWidth(containerRef.current.clientWidth);
-    setButtonHeight(buttonRef.current.clientHeight);
   }, []);
 
   useDismissable({
@@ -101,8 +99,6 @@ const Select = ({ options, value, onChange }) => {
         selectedValue={value}
         onChange={handleChange}
         isOpen={isOpen}
-        width={width}
-        topOffset={buttonHeight}
       ></SelectList>
     </div>
   );

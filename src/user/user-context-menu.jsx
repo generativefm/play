@@ -7,17 +7,20 @@ import {
   Info,
   GetApp,
   Update,
+  Feedback,
 } from '@material-ui/icons';
 import { userLoggedOut } from '@generative.fm/user';
 import { clearData } from '@generative.fm/stats';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContextMenuOption from '../context-menu/context-menu-option';
 import styles from './user-context-menu.module.scss';
 import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
 import beforeInstallPromptContext from '../app/before-install-prompt-context';
 import useUpgrade from '../service-worker/use-upgrade';
+import useOpenFeedbackDialog from '../feedback/use-open-feedback-dialog';
+import selectCurrentPieceId from '../queue/select-current-piece-id';
 
-const HELP_URL =
+export const HELP_URL =
   'https://www.notion.so/generativefm/Get-help-with-Generative-fm-0efd0280b87d4132a66d212f125d9f4f';
 
 const UserContextMenu = () => {
@@ -25,6 +28,8 @@ const UserContextMenu = () => {
   const dispatch = useDispatch();
   const beforeInstallPromptEvent = useContext(beforeInstallPromptContext);
   const upgrade = useUpgrade();
+  const openFeedbackDialog = useOpenFeedbackDialog();
+  const currentPieceId = useSelector(selectCurrentPieceId);
 
   const handleSignoutClick = useCallback(() => {
     clearData().then(() => {
@@ -39,6 +44,13 @@ const UserContextMenu = () => {
     }
     beforeInstallPromptEvent.prompt();
   }, [beforeInstallPromptEvent]);
+
+  const handleFeedbackClick = useCallback(() => {
+    openFeedbackDialog({
+      defaultFeedbackType: 'other',
+      defaultPieceId: currentPieceId !== null ? currentPieceId : undefined,
+    });
+  }, [openFeedbackDialog, currentPieceId]);
 
   return (
     <div className={styles['user-context-menu']}>
@@ -79,6 +91,12 @@ const UserContextMenu = () => {
           Install
         </ContextMenuOption>
       )}
+      <ContextMenuOption onClick={handleFeedbackClick}>
+        <Feedback
+          className={contextMenuOptionStyles['context-menu-option__icon']}
+        />
+        Send feedback
+      </ContextMenuOption>
       {upgrade && (
         <ContextMenuOption onClick={upgrade} isHighlighted={true}>
           <Update

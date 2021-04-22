@@ -10,7 +10,7 @@ const useDismissable = ({ isOpen = true, dismissableRef, onDismiss }) => {
     }
 
     const handleDocumentClick = (event) => {
-      if (isOpening.current || !dismissableRef.current) {
+      if (isOpening || !dismissableRef.current) {
         return;
       }
       if (!dismissableRef.current.contains(event.target)) {

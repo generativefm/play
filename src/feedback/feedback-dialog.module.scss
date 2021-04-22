@@ -1,0 +1,61 @@
+@import '../styles/_theme.scss';
+
+.feedback-dialog-body {
+  @include type-normal();
+  color: $color-white;
+  line-height: 2;
+
+  &__help-prompt {
+    margin-bottom: 1rem;
+    a {
+      border-bottom: 1px solid $color-primary;
+      text-decoration: none;
+      color: inherit;
+      padding-bottom: 0.25rem;
+      transition: color 200ms;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  &__text {
+    @include type-normal();
+    font-size: inherit;
+    width: 100%;
+    background: transparent;
+    border: 1px solid $color-white;
+    border-radius: $border-radius-sm;
+    color: $color-white;
+    margin: 1rem 0;
+    resize: none;
+    padding: 0.25rem;
+    box-sizing: border-box;
+  }
+
+  &__email {
+    @include type-normal();
+    font-size: inherit;
+    width: 100%;
+    background: transparent;
+    border: 1px solid $color-white;
+    border-radius: $border-radius-sm;
+    color: $color-white;
+    margin: 1rem 0;
+    padding: 0.25rem;
+    box-sizing: border-box;
+  }
+}
+
+@include is-narrow-screen {
+  .feedback-dialog-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    &__email,
+    &__text {
+      margin: 0.5rem 0;
+    }
+  }
+}

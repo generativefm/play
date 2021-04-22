@@ -7,11 +7,13 @@ import IconButton from '../button/icon-button';
 import useDismissable from '../app/use-dismissable';
 import styles from './dialog.module.scss';
 
-const stopPropagation = (event) => {
-  event.stopPropagation();
-};
-
-const Dialog = ({ title, actions, children, onDismiss }) => {
+const Dialog = ({
+  title,
+  actions,
+  children,
+  onDismiss,
+  shouldDismissOnContainerClick = false,
+}) => {
   const [isVisible, setIsVisible] = useState(true);
   const ref = useRef(null);
 
@@ -33,6 +35,19 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       }
     },
     []
+  );
+
+  const handleContainerClick = useCallback(
+    (event) => {
+      if (
+        !shouldDismissOnContainerClick ||
+        (ref.current && ref.current.contains(event.target))
+      ) {
+        return;
+      }
+      handleDismiss();
+    },
+    [shouldDismissOnContainerClick, handleDismiss]
   );
 
   const hasActions = Array.isArray(actions) && actions.length > 0;
@@ -63,8 +78,11 @@ const Dialog = ({ title, actions, children, onDismiss }) => {
       unmountOnExit
       onExited={onDismiss}
     >
-      <div className={styles['dialog-container']} onClick={handleDismiss}>
-        <div className={styles.dialog} ref={ref} onClick={stopPropagation}>
+      <div
+        className={styles['dialog-container']}
+        onClick={handleContainerClick}
+      >
+        <div className={styles.dialog} ref={ref}>
           <h1 className={styles['dialog__header']}>
             {title}
             {!hasActions && (
@@ -104,6 +122,7 @@ Dialog.propTypes = {
   ),
   children: PropTypes.node.isRequired,
   onDismiss: PropTypes.func.isRequired,
+  shouldDismissOnContainerClick: PropTypes.bool,
 };
 
 export default Dialog;
