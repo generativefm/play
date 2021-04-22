@@ -12,6 +12,11 @@
       text-decoration: none;
       color: inherit;
       padding-bottom: 0.25rem;
+      transition: color 200ms;
+
+      &:hover {
+        color: $color-primary;
+      }
     }
   }
 

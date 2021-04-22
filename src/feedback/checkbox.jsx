@@ -18,6 +18,7 @@ const Checkbox = ({ label, isChecked, onCheck }) => {
         type="checkbox"
         className={styles['checkbox__input']}
         checked={isChecked}
+        readOnly
       />
     </div>
   );

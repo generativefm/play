@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import Dialog from '../dialog/dialog';
 import Radio from './radio';
 import Checkbox from './checkbox';
 import { HELP_URL } from '../user/user-context-menu';
 import useShowSnackbar from '../snackbar/use-show-snackbar';
+import PieceSelector from './piece-selector';
 import styles from './feedback-dialog.module.scss';
 
 const FEEDBACK_URL = 'https://api.alexbainter.com/v1/contact';
@@ -36,8 +38,12 @@ const GENERATOR_CHECKBOXES = [
   },
 ];
 
-const FeedbackDialog = () => {
-  const [feedbackType, setFeedbackType] = useState('generator');
+const FeedbackDialog = ({
+  defaultFeedbackType = 'generator',
+  defaultPieceId = pieces.sort((a, b) => a.title.localeCompare(b.title))[0].id,
+  onDismiss,
+}) => {
+  const [feedbackType, setFeedbackType] = useState(defaultFeedbackType);
   const [generatorCheckboxStates, setGeneratorCheckboxStates] = useState(
     GENERATOR_CHECKBOXES.reduce((o, { id }) => {
       o[id] = false;
@@ -49,6 +55,7 @@ const FeedbackDialog = () => {
   const [email, setEmail] = useState(isAuthenticated ? user.email : '');
   const [isEmailTouched, setIsEmailTouched] = useState(false);
   const showSnackbar = useShowSnackbar();
+  const [selectedPieceId, setSelectedPieceId] = useState(defaultPieceId);
 
   useEffect(() => {
     if (email || isEmailTouched || isAuthenticated || !user || !user.email) {
@@ -77,23 +84,21 @@ const FeedbackDialog = () => {
   const handleSend = useCallback(() => {
     const timestamp = Date.now();
     const emailBodyParagraphs = [];
-    if (feedbackType === 'generator') {
-      emailBodyParagraphs.push('Regarding <GENERATOR>...'); //TODO
+    if (feedbackType === 'generator' && byId[selectedPieceId]) {
+      emailBodyParagraphs.push(`(Regarding "${byId[selectedPieceId].title}")`);
     }
     if (
       feedbackType === 'generator' &&
       Object.values(generatorCheckboxStates).some((isChecked) => isChecked)
     ) {
       emailBodyParagraphs.push(
-        ['Issues:']
-          .concat(
-            Object.values(generatorCheckboxStates).reduce(
-              (checkedArr, isChecked, i) =>
-                isChecked
-                  ? checkedArr.concat([`${GENERATOR_CHECKBOXES[i].label}.`])
-                  : checkedArr,
-              []
-            )
+        Object.values(generatorCheckboxStates)
+          .reduce(
+            (checkedArr, isChecked, i) =>
+              isChecked
+                ? checkedArr.concat([`${GENERATOR_CHECKBOXES[i].label}.`])
+                : checkedArr,
+            []
           )
           .join('\n')
       );
@@ -101,6 +106,10 @@ const FeedbackDialog = () => {
     if (text) {
       emailBodyParagraphs.push(text);
     }
+    emailBodyParagraphs.push(
+      `(Generative.fm Play version ${process.env.APP_VERSION})`
+    );
+    emailBodyParagraphs.push(`(${window.navigator.userAgent})`);
     if (email) {
       emailBodyParagraphs.push(`Reply to ${email}`);
     }
@@ -125,7 +134,14 @@ const FeedbackDialog = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [feedbackType, generatorCheckboxStates, text, email, showSnackbar]);
+  }, [
+    feedbackType,
+    generatorCheckboxStates,
+    text,
+    email,
+    showSnackbar,
+    selectedPieceId,
+  ]);
 
   const generatorCheckboxHandlers = useMemo(
     () =>
@@ -143,6 +159,7 @@ const FeedbackDialog = () => {
     <Dialog
       title="Send Feedback"
       actions={[{ text: 'Cancel' }, { text: 'Send', onClick: handleSend }]}
+      onDismiss={onDismiss}
     >
       <div className={styles['feedback-dialog-body']}>
         <p className={styles['feedback-dialog-body__help-prompt']}>
@@ -157,6 +174,12 @@ const FeedbackDialog = () => {
           isChecked={feedbackType === 'generator'}
           onCheck={handleGeneratorTypeCheck}
         />
+        {feedbackType === 'generator' && (
+          <PieceSelector
+            selectedPieceId={selectedPieceId}
+            onChange={setSelectedPieceId}
+          />
+        )}
         <Radio
           label="Something else"
           isChecked={feedbackType === 'other'}

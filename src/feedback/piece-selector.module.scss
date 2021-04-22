@@ -1,1 +1,53 @@
 @import '../styles/_theme.scss';
+
+.piece-selector {
+  background-color: $color-dark-5;
+  box-shadow: $box-shadow-bottom;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: $border-radius-md;
+  padding-right: 1rem;
+
+  &:hover {
+    background-color: lighten($color-dark-5, 5%);
+  }
+
+  &__piece {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+
+    &__image {
+      width: 3rem;
+      height: 3rem;
+      border-radius: $border-radius-sm;
+      margin-right: 1rem;
+    }
+
+    &__title {
+      @include type-normal();
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__list {
+    max-height: 20rem;
+    background-color: $color-dark-6;
+    overflow-y: auto;
+    box-shadow: $box-shadow-bottom;
+    position: absolute;
+    width: 100%;
+    border-radius: $border-radius-md;
+    z-index: 1;
+    transform: translateY(-5rem);
+
+    .piece-selector__piece {
+      cursor: pointer;
+      &:hover {
+        background-color: rgba($color-white, 0.1);
+      }
+    }
+  }
+}
