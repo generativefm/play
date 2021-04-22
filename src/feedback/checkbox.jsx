@@ -1,10 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import styles from './checkbox.module.scss';
 
 const Checkbox = ({ label, isChecked, onCheck }) => {
-  const inputRef = useRef(null);
-
   return (
     <div className={styles['checkbox']} onClick={onCheck}>
       <div
@@ -13,13 +11,6 @@ const Checkbox = ({ label, isChecked, onCheck }) => {
         })}
       />
       {label}
-      <input
-        ref={inputRef}
-        type="checkbox"
-        className={styles['checkbox__input']}
-        checked={isChecked}
-        readOnly
-      />
     </div>
   );
 };
