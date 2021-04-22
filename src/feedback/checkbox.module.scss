@@ -16,6 +16,7 @@
     cursor: pointer;
     transition: border-color 200ms, background-color 200ms;
     position: relative;
+    flex-shrink: 0;
 
     &:hover {
       &::before {

@@ -22,7 +22,7 @@
 
   &__text {
     @include type-normal();
-    font-size: 1rem;
+    font-size: inherit;
     width: 100%;
     background: transparent;
     border: 1px solid $color-white;
@@ -31,11 +31,12 @@
     margin: 1rem 0;
     resize: none;
     padding: 0.25rem;
+    box-sizing: border-box;
   }
 
   &__email {
     @include type-normal();
-    font-size: 1rem;
+    font-size: inherit;
     width: 100%;
     background: transparent;
     border: 1px solid $color-white;
@@ -43,11 +44,18 @@
     color: $color-white;
     margin: 1rem 0;
     padding: 0.25rem;
+    box-sizing: border-box;
   }
 }
 
 @include is-narrow-screen {
-  .feedback-dialog-body__text {
-    width: auto;
+  .feedback-dialog-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    &__email,
+    &__text {
+      margin: 0.5rem 0;
+    }
   }
 }

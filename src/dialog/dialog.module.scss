@@ -6,7 +6,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 3;
+  z-index: 4;
   background-color: rgba($color-dark-1, 0.5);
   display: flex;
   align-items: center;
@@ -31,8 +31,11 @@
 }
 
 .dialog {
-  margin: 0 1rem;
+  margin: 1rem;
   max-width: 40rem;
+  max-height: 100vh;
+  overflow: auto;
+  box-sizing: border-box;
   background-color: $color-dark-4;
   padding: 2rem;
   border-radius: $border-radius-md;
@@ -53,5 +56,17 @@
     justify-content: flex-end;
     margin-bottom: -1rem;
     margin-right: -1rem;
+  }
+}
+
+@include is-narrow-screen() {
+  .dialog {
+    margin: 0.5rem;
+    padding: 1rem;
+
+    &__footer {
+      margin-bottom: -0.5rem;
+      margin-right: -0.5rem;
+    }
   }
 }
