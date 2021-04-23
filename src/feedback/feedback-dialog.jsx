@@ -12,6 +12,10 @@ import styles from './feedback-dialog.module.scss';
 
 const FEEDBACK_URL = 'https://api.alexbainter.com/v1/contact';
 
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
 const GENERATOR_CHECKBOXES = [
   {
     id: 'neverPlays',
@@ -206,6 +210,7 @@ const FeedbackDialog = ({
           rows="4"
           value={text}
           onChange={handleTextChange}
+          onKeyDown={stopPropagation}
         ></textarea>
         <p>
           Leave your email address below if you wouldn&apos;t mind getting a
@@ -217,6 +222,7 @@ const FeedbackDialog = ({
           type="email"
           value={email}
           onChange={handleEmailChange}
+          onKeyDown={stopPropagation}
         />
       </div>
     </Dialog>
