@@ -1,6 +1,6 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
