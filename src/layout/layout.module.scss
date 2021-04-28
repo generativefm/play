@@ -7,7 +7,7 @@
 
   &--has-controls {
     .layout__content {
-      margin-bottom: 5rem;
+      padding-bottom: 6rem;
     }
   }
 
@@ -16,7 +16,6 @@
   }
 
   &__content {
-    padding-bottom: 4rem;
     &__main {
       max-width: 110rem;
       margin: 0 auto;
@@ -78,8 +77,14 @@
   .layout {
     padding-top: 0;
 
+    &--has-controls {
+      .layout__content {
+        padding-bottom: 10rem;
+      }
+    }
+
     &__content {
-      padding-bottom: 8rem;
+      padding-bottom: 6rem;
 
       &__main {
         padding: 0;
