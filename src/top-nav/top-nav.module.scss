@@ -1,6 +1,4 @@
-@import '../styles/_type.scss';
-@import '../styles/_colors.scss';
-@import '../styles/_effects.scss';
+@import '../styles/_theme.scss';
 
 .top-nav {
   display: flex;
@@ -21,6 +19,11 @@
     color: $color-grey;
     flex: 0 0 auto;
     margin-right: 1rem;
+    letter-spacing: -0.5px;
+
+    &__product-name {
+      font-weight: $font-weight-medium;
+    }
   }
 
   .nav {
