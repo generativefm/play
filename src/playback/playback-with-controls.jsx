@@ -40,7 +40,10 @@ const PlaybackWithControls = () => {
         history.location.search,
         history.location.hash,
       ].join(''),
-      { isPlaybackOpen: true, isQueueOpen: true }
+      Object.assign({}, history.location.state, {
+        isPlaybackOpen: true,
+        isQueueOpen: true,
+      })
     );
     const unlisten = history.listen(() => {
       unlisten();
@@ -55,7 +58,10 @@ const PlaybackWithControls = () => {
         history.location.search,
         history.location.hash,
       ].join(''),
-      { isPlaybackOpen: true, isQueueOpen: false }
+      Object.assign({}, history.location.state, {
+        isPlaybackOpen: true,
+        isQueueOpen: false,
+      })
     );
   }, [history]);
 

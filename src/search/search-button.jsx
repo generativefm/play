@@ -17,6 +17,10 @@ import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import { useHistory } from 'react-router-dom';
 import styles from './search-button.module.scss';
 
+const stopPropagation = (event) => {
+  event.stopPropagation();
+};
+
 const SearchButton = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -36,17 +40,29 @@ const SearchButton = () => {
           history.location.search,
           history.location.hash,
         ].join(''),
-        {
+        Object.assign({}, history.location.state, {
           isSearching: true,
-        }
+        })
       );
     }
   }, [history, isNarrowScreen]);
 
-  const handleStopSearching = useCallback(() => {
+  const handleBackClick = useCallback(() => {
+    if (isNarrowScreen) {
+      history.goBack();
+      return;
+    }
     setSearchValue('');
     setIsSearching(false);
-  }, []);
+  }, [history, isNarrowScreen]);
+
+  const handleDismiss = useCallback(() => {
+    if (isNarrowScreen) {
+      return;
+    }
+    setSearchValue('');
+    setIsSearching(false);
+  }, [isNarrowScreen]);
 
   const handleClearClick = useCallback(() => {
     setSearchValue('');
@@ -59,24 +75,23 @@ const SearchButton = () => {
     setSearchValue(event.target.value);
   }, []);
 
-  useEffect(
-    () =>
-      history.listen((location, action) => {
-        if (
-          action !== 'POP' ||
-          (location.state && location.state.isSearching)
-        ) {
-          return;
-        }
-        handleStopSearching();
-      }),
-    [history, handleStopSearching]
-  );
+  useEffect(() => {
+    if (!isNarrowScreen || !isSearching) {
+      return;
+    }
+    return history.listen((location) => {
+      if (location.state && location.state.isSearching) {
+        return;
+      }
+      setSearchValue('');
+      setIsSearching(false);
+    });
+  }, [isNarrowScreen, isSearching, history]);
 
   useDismissable({
     dismissableRef: containerRef,
     isOpen: isSearching,
-    onDismiss: handleStopSearching,
+    onDismiss: handleDismiss,
   });
 
   useLayoutEffect(() => {
@@ -102,7 +117,7 @@ const SearchButton = () => {
 
   if (!isSearching) {
     return (
-      <IconButton onClick={handleSearchClick}>
+      <IconButton onClick={handleSearchClick} data-cy="open-search">
         <Search />
       </IconButton>
     );
@@ -121,7 +136,7 @@ const SearchButton = () => {
             Array.isArray(searchResults) && searchResults.length > 0,
         })}
       >
-        <IconButton onClick={handleStopSearching}>
+        <IconButton onClick={handleBackClick} data-cy="close-search">
           <ArrowBack />
         </IconButton>
         <input
@@ -129,7 +144,9 @@ const SearchButton = () => {
           className={styles['search-bar__input']}
           value={searchValue}
           onChange={handleInputChange}
+          onKeyDown={stopPropagation}
           ref={inputRef}
+          data-cy="search-input"
         ></input>
         <div
           className={classnames(styles['search-bar__clear-button'], {
@@ -156,6 +173,7 @@ const SearchButton = () => {
               className={styles['search-results__item']}
               to={`/generator/${id}`}
               replace={isNarrowScreen}
+              data-cy={`search-result--${id}`}
             >
               {title.toLowerCase()}
               <ArrowForward />
