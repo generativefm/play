@@ -46,5 +46,22 @@ describe('Search', () => {
       cy.go(-1);
       cy.location().should(({ pathname }) => expect(pathname).to.eq('/browse'));
     });
+    it('should stay open underneath the playback controls', () => {
+      cy.visit('/browse');
+      cy.visit('/generator/drones');
+      cy.get('[data-cy=play-piece]').click();
+      cy.get('[data-cy=open-search]').click();
+      cy.get('[data-cy=control-bar]').click();
+      cy.get('[data-cy=playback__open-queue]').click();
+      cy.go(-2);
+      cy.get('[data-cy=search-input]').should('exist');
+      cy.go(-1);
+      cy.get('[data-cy=search-input]').should('not.exist');
+      cy.location().should(({ pathname }) =>
+        expect(pathname).to.eq('/generator/drones')
+      );
+      cy.go(-1);
+      cy.location().should(({ pathname }) => expect(pathname).to.eq('/browse'));
+    });
   });
 });
