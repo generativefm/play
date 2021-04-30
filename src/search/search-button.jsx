@@ -21,6 +21,8 @@ const stopPropagation = (event) => {
   event.stopPropagation();
 };
 
+const MAX_RESULTS = 10;
+
 const SearchButton = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -111,9 +113,9 @@ const SearchButton = () => {
         .filter(({ title }) =>
           title.toUpperCase().includes(searchValue.trim().toUpperCase())
         )
-        .slice(0)
+        .slice(0, isNarrowScreen ? Infinity : MAX_RESULTS)
     );
-  }, [searchValue]);
+  }, [searchValue, isNarrowScreen]);
 
   if (!isSearching) {
     return (

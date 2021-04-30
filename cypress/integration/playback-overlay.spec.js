@@ -47,7 +47,7 @@ describe('Playback overlay', () => {
       cy.go(-1);
       cy.get('[data-cy=playback-overlay]').should('not.exist');
     });
-    it('should restore the history stack when the user closes it', () => {
+    it('should restore the history stack when closed', () => {
       cy.visit('/generator/browse');
       cy.visit('/generator/drones');
       cy.get('[data-cy=play-piece]').click();
