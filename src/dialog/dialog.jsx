@@ -27,6 +27,14 @@ const Dialog = ({
     onDismiss: handleDismiss,
   });
 
+  useEffect(() => {
+    const { overflowY } = document.documentElement.style;
+    document.documentElement.style.overflowY = 'hidden';
+    return () => {
+      document.documentElement.style.overflowY = overflowY;
+    };
+  }, []);
+
   const wrapOnClick = useCallback(
     (onClick) => () => {
       setIsVisible(false);
