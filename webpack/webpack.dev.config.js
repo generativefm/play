@@ -6,9 +6,8 @@ const createWebpackConfig = require('./create-webpack-config');
 
 const config = createWebpackConfig({
   styleLoader: 'style-loader',
+  mode: 'development',
 });
-
-config.mode = 'development';
 
 config.plugins.push(
   new EnvironmentPlugin({
@@ -36,5 +35,9 @@ config.devServer = {
     });
   },
 };
+
+config.optimization = Object.assign({}, config.optimization, {
+  runtimeChunk: true,
+});
 
 module.exports = config;

@@ -2,12 +2,12 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const createInjectAssetsPlugin = require('./create-inject-assets-plugin');
 
-const createWebpackConfig = ({ styleLoader }) => ({
-  devtool: 'eval-source-map',
+const createWebpackConfig = ({ styleLoader, mode }) => ({
+  mode,
+  devtool: 'eval-cheap-module-source-map',
   entry: {
     main: { import: './src', filename: '[name].[contenthash].js' },
     serviceWorker: { import: './src/service-worker/sw.js', filename: 'sw.js' },
@@ -16,6 +16,7 @@ const createWebpackConfig = ({ styleLoader }) => ({
     publicPath: '/',
     chunkFilename: '[id].[contenthash].js',
     path: path.join(__dirname, '../dist'),
+    clean: true,
   },
   resolve: {
     extensions: ['.json', '.js', '.jsx'],
@@ -29,17 +30,27 @@ const createWebpackConfig = ({ styleLoader }) => ({
           path.join(__dirname, '../src'),
           path.join(__dirname, '../node_modules/standardized-audio-context'),
         ],
-        use: ['babel-loader'],
+        use: [
+          'thread-loader',
+          { loader: 'babel-loader', options: { cacheDirectory: true } },
+        ],
       },
       {
         test: /\.(s?css)$/,
         include: path.join(__dirname, '../src'),
         use: [
           styleLoader,
+          'thread-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              modules: {
+                localIdentName:
+                  mode === 'production'
+                    ? '[sha1:hash:hex:4]'
+                    : '[path][name][local]',
+              },
             },
           },
           {
@@ -60,6 +71,7 @@ const createWebpackConfig = ({ styleLoader }) => ({
             loader: 'babel-loader',
             options: {
               plugins: ['@babel/plugin-syntax-dynamic-import'],
+              cacheDirectory: true,
             },
           },
           path.join(__dirname, './piece-loader.js'),
@@ -69,7 +81,14 @@ const createWebpackConfig = ({ styleLoader }) => ({
       },
       {
         test: /\.png$/,
-        use: ['file-loader', 'image-webpack-loader'],
+        include: [
+          path.join(__dirname, '../node_modules/@generative-music'),
+          path.join(__dirname, '../src'),
+        ],
+        use:
+          mode === 'production'
+            ? ['file-loader', 'image-webpack-loader']
+            : ['file-loader'],
       },
       {
         test: /\.mp3$/,
@@ -79,7 +98,6 @@ const createWebpackConfig = ({ styleLoader }) => ({
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.template.html',
       excludeChunks: ['serviceWorker'],

@@ -8,9 +8,9 @@ const { version } = require('../package.json');
 
 const config = createWebpackConfig({
   styleLoader: MiniCssExtractPlugin.loader,
+  mode: 'production',
 });
 
-config.mode = 'production';
 config.devtool = 'source-map';
 
 config.devServer = {
