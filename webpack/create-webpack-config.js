@@ -7,7 +7,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const createInjectAssetsPlugin = require('./create-inject-assets-plugin');
 
 const createWebpackConfig = ({ styleLoader }) => ({
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   entry: {
     main: { import: './src', filename: '[name].[contenthash].js' },
     serviceWorker: { import: './src/service-worker/sw.js', filename: 'sw.js' },

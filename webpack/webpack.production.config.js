@@ -11,6 +11,7 @@ const config = createWebpackConfig({
 });
 
 config.mode = 'production';
+config.devtool = 'source-map';
 
 config.devServer = {
   historyApiFallback: true,
