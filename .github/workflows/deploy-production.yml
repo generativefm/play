@@ -10,10 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
-
       - name: Lint
         run: npm run lint
 
@@ -21,8 +29,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run unit tests
@@ -32,8 +49,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run Cypress tests
@@ -52,8 +78,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build production artifacts
@@ -73,8 +108,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build production artifacts
@@ -102,7 +146,17 @@ jobs:
           name: dist-web
           path: dist
 
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Deploy
@@ -124,8 +178,17 @@ jobs:
         with:
           name: dist-native
           path: dist
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install npm dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Deploy
