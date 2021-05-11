@@ -19,7 +19,6 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install npm dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Lint
@@ -39,7 +38,6 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install npm dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run unit tests
@@ -59,7 +57,6 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install npm dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run Cypress tests
