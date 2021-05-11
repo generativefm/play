@@ -6,6 +6,8 @@ const cypress = require('cypress');
 const startDevServer = require('./start-dev-server');
 const webpackConfig = require('../webpack/webpack.production.config');
 
+delete webpackConfig.devtool;
+
 startDevServer({ webpackConfig }).then((server) => {
   cypress.run().then((results) => {
     if (results.totalFailed > 0) {

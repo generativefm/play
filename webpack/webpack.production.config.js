@@ -4,6 +4,7 @@ const { EnvironmentPlugin } = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const createWebpackConfig = require('./create-webpack-config');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const { version } = require('../package.json');
 
 const config = createWebpackConfig({
@@ -50,4 +51,7 @@ if (process.env.SENTRY_AUTH_TOKEN) {
   );
 }
 
+const smp = new SpeedMeasurePlugin();
+
+//module.exports = smp.wrap(config);
 module.exports = config;

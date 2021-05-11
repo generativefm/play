@@ -87,7 +87,7 @@ const createWebpackConfig = ({ styleLoader, mode }) => ({
         ],
         use:
           mode === 'production'
-            ? ['file-loader', 'image-webpack-loader']
+            ? ['file-loader', 'thread-loader', 'image-webpack-loader']
             : ['file-loader'],
       },
       {
