@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import Preview from '../piece/preview';
 import useContentWidth from '../layout/use-content-width';
 import userPlayedPiece from '../playback/user-played-piece';

@@ -3,12 +3,11 @@ import { ExpandLess } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { IconButton, useIsNarrowScreen } from '@generative.fm/web-ui';
 import PlaybackControls from './playback-controls';
 import CurrentPiece from '../playback/current-piece';
-import VolumeSlider from '../volume/volume-slider';
-import IconButton from '../button/icon-button';
+import MasterGainContol from '../volume/master-gain-control';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import CompactPlaybackControls from './compact-playback-controls';
 import CastButton from '../cast/cast-button';
 import styles from './control-bar.module.scss';
@@ -48,7 +47,7 @@ const ControlBar = ({ onExpandCollapse }) => {
       </div>
       <div className={styles['control-bar__right']} onClick={stopPropagation}>
         <CastButton />
-        <VolumeSlider />
+        <MasterGainContol />
         <IconButton
           onClick={onExpandCollapse}
           data-cy="toggle-playback"

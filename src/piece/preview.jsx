@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import { Stop, PlayArrow, VolumeUp, CloudOff } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import IconButton from '../button/icon-button';
+import {
+  IconButton,
+  useCreateContextMenuForMouseEvent,
+  CircularLoadingIndicator,
+} from '@generative.fm/web-ui';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectPlaybackStatus from '../playback/select-playback-status';
-import CircularLoadingIndicator from '../loading/circular-loading-indicator';
-import useCreateContextMenuForMouseEvent from '../context-menu/use-create-context-menu-for-mouse-event';
 import MoreButton from './more-button';
 import PieceContextMenu from './piece-context-menu';
 import userStoppedPlayback from '../playback/user-stopped-playback';

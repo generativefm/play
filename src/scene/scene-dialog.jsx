@@ -1,16 +1,14 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import Dialog from '../dialog/dialog';
+import { TextButton, Switch, Dialog } from '@generative.fm/web-ui';
 import DurationInput from './duration-input';
 import selectTimer from './select-timer';
 import userStartedTimer from './user-started-timer';
 import userStoppedTimer from './user-stopped-timer';
-import TextButton from '../button/text-button';
 import selectAutochange from './select-autochange';
 import userEnabledAutochange from './user-enabled-autochange';
 import userDisabledAutochange from './user-disabled-autochange';
-import Switch from '../button/switch';
 import styles from './scene-dialog.module.scss';
 
 const SceneDialog = ({ onDismiss }) => {

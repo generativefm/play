@@ -1,11 +1,10 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import pieces from '@generative-music/pieces-alex-bainter';
-import Select from '../select/select';
+import { Select, useIsNarrowScreen } from '@generative.fm/web-ui';
 import useContentWidth from '../layout/use-content-width';
 import useSortings from './use-sortings';
 import Grid from '../piece/grid';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import List from '../piece/list';
 import styles from './browse-grid.module.scss';
 

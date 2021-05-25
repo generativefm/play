@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
+import { useDismissable } from '@generative.fm/web-ui';
 import { ArrowDropDown } from '@material-ui/icons';
-import useDismissable from '../app/use-dismissable';
 import styles from './piece-selector.module.scss';
 
 const sortedPieces = pieces.sort((a, b) => a.title.localeCompare(b.title));

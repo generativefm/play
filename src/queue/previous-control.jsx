@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkipPrevious } from '@material-ui/icons';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import selectQueue from './select-queue';
 import playPrevious from './play-previous';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useShowSnackbar } from '@generative.fm/web-ui';
 import upgradeContext from './upgrade-context';
 import register from './register';
-import useShowSnackbar from '../snackbar/use-show-snackbar';
 
 const UpgradeProvider = ({ children }) => {
   const [upgrade, setUpgrade] = useState(null);

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Skeleton from './skeleton';
+import { Skeleton } from '@generative.fm/web-ui';
 import styles from '../piece/preview.module.scss';
 
 const PreviewSkeleton = ({ width, isAnimated = true }) => (

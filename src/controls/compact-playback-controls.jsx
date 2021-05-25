@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { PlayArrow, Stop } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import IconButton from '../button/icon-button';
-import CircularLoadingIndicator from '../loading/circular-loading-indicator';
+import { IconButton, CircularLoadingIndicator } from '@generative.fm/web-ui';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStoppedPlayback from '../playback/user-stopped-playback';
 import userPlayedPiece from '../playback/user-played-piece';

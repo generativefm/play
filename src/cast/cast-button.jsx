@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import styles from './cast-button.module.scss';
 
 const CastButton = () => {

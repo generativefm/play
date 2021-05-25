@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MersenneTwister from 'mersenne-twister';
 import PropTypes from 'prop-types';
+import { useActivePatrons, ContextMenuProvider } from '@generative.fm/web-ui';
 import Layout from '../layout/layout';
 import MasterGainProvider from '../volume/master-gain-provider';
-import ContextMenuProvider from '../context-menu/context-menu-provider';
 import { Provider } from 'react-redux';
-import SnackbarProvider from '../snackbar/snackbar-provider';
 import UpgradeProvider from '../service-worker/upgrade-provider';
-import useActivePatrons from '../donate/use-active-patrons';
 import FeedbackProvider from '../feedback/feedback-provider';
+import WrappedSnackbarProvider from '../snackbar/wrapped-snackbar-provider';
 
 const ReduxApp = ({ store }) => {
   const activePatrons = useActivePatrons({ isGreedy: true });
@@ -42,7 +41,7 @@ const ReduxApp = ({ store }) => {
 
   return (
     <Provider store={store}>
-      <SnackbarProvider>
+      <WrappedSnackbarProvider>
         <MasterGainProvider>
           <UpgradeProvider>
             <Router>
@@ -54,7 +53,7 @@ const ReduxApp = ({ store }) => {
             </Router>
           </UpgradeProvider>
         </MasterGainProvider>
-      </SnackbarProvider>
+      </WrappedSnackbarProvider>
     </Provider>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { TextButton } from '@generative.fm/web-ui';
 import useContentWidth from '../layout/use-content-width';
-import TextButton from '../button/text-button';
 import styles from './banner.module.scss';
 
 const Banner = ({ text, actions, icon = null, onDismiss }) => {

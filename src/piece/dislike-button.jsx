@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThumbDownOutlined, ThumbDown } from '@material-ui/icons';
 import { userDislikedPiece, userUndislikedPiece } from '@generative.fm/user';
 import PropTypes from 'prop-types';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import selectDislikes from '../user/select-dislikes';
 
 const DislikeButton = ({ pieceId }) => {
