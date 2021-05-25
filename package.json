@@ -76,7 +76,7 @@
     "test:watch": "karma start",
     "cypress:open": "node scripts/open-cypress.js",
     "cypress:run": "node scripts/run-cypress.js",
-    "lint": "eslint . --ext \".js,.jsx\"",
+    "lint": "eslint src --ext \".js,.jsx\"",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
     "build": "webpack -c ./webpack/webpack.dev.config.js",
