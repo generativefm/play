@@ -2,9 +2,12 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAuth0 } from '@auth0/auth0-react';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
-import { useShowSnackbar, Dialog } from '@generative.fm/web-ui';
-import Radio from './radio';
-import Checkbox from './checkbox';
+import {
+  useShowSnackbar,
+  Dialog,
+  Radio,
+  Checkbox,
+} from '@generative.fm/web-ui';
 import { HELP_URL } from '../user/user-context-menu';
 import PieceSelector from './piece-selector';
 import styles from './feedback-dialog.module.scss';
