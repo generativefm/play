@@ -1,6 +1,6 @@
 {
   "name": "@generative-fm/play",
-  "version": "0.8.3",
+  "version": "0.10.1",
   "description": "Player interface for Generative.fm",
   "main": "index.js",
   "dependencies": {
@@ -12,6 +12,7 @@
     "@generative-music/web-provider": "^3.0.0",
     "@generative.fm/stats": "^1.0.2",
     "@generative.fm/user": "^1.1.1",
+    "@generative.fm/web-ui": "^0.3.2",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.11.2",
     "@sentry/react": "^6.2.0",
@@ -25,7 +26,6 @@
     "react-router-dom": "^5.2.0",
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
-    "reset-css": "^5.0.1",
     "tone": "^14.7.58"
   },
   "devDependencies": {
@@ -57,12 +57,12 @@
     "mini-css-extract-plugin": "^1.3.5",
     "mocha": "^8.3.0",
     "node-fetch": "^2.6.1",
-    "node-sass": "^5.0.0",
     "null-loader": "^4.0.1",
     "postcss-loader": "^5.2.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.2.1",
     "regenerator-runtime": "^0.13.7",
+    "sass": "^1.34.1",
     "sass-loader": "^10.0.5",
     "sinon": "^9.2.4",
     "style-loader": "^2.0.0",
@@ -76,7 +76,7 @@
     "test:watch": "karma start",
     "cypress:open": "node scripts/open-cypress.js",
     "cypress:run": "node scripts/run-cypress.js",
-    "lint": "eslint . --ext \".js,.jsx\"",
+    "lint": "eslint src --ext \".js,.jsx\"",
     "start": "webpack serve -c ./webpack/webpack.dev.config.js",
     "start:production": "webpack serve -c ./webpack/webpack.production.config.js",
     "build": "webpack -c ./webpack/webpack.dev.config.js",

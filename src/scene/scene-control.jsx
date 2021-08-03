@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Radio } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import selectTimer from './select-timer';
 import SceneDialog from './scene-dialog';
 import selectAutochange from './select-autochange';

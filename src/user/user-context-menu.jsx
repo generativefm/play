@@ -12,13 +12,15 @@ import {
 import { userLoggedOut } from '@generative.fm/user';
 import { clearData } from '@generative.fm/stats';
 import { useDispatch, useSelector } from 'react-redux';
-import ContextMenuOption from '../context-menu/context-menu-option';
-import styles from './user-context-menu.module.scss';
-import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
+import {
+  ContextMenuOption,
+  contextMenuOptionStyles,
+} from '@generative.fm/web-ui';
 import beforeInstallPromptContext from '../app/before-install-prompt-context';
 import useUpgrade from '../service-worker/use-upgrade';
 import useOpenFeedbackDialog from '../feedback/use-open-feedback-dialog';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
+import styles from './user-context-menu.module.scss';
 
 export const HELP_URL =
   'https://www.notion.so/generativefm/Get-help-with-Generative-fm-0efd0280b87d4132a66d212f125d9f4f';

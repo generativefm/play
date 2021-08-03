@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
 import PropTypes from 'prop-types';
 import selectLikes from '../user/select-likes';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import LikeIcon from './like-icon';
 
 const LikeButton = ({ pieceId }) => {

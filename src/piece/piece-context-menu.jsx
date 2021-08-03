@@ -14,14 +14,16 @@ import { useLocation } from 'react-router-dom';
 import { userLikedPiece, userUnlikedPiece } from '@generative.fm/user';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import PropTypes from 'prop-types';
+import {
+  useShowSnackbar,
+  ContextMenuOption,
+  contextMenuOptionStyles,
+  copyToClipboard,
+  useIsNarrowScreen,
+} from '@generative.fm/web-ui';
 import selectLikes from '../user/select-likes';
-import ContextMenuOption from '../context-menu/context-menu-option';
 import LikeIcon from './like-icon';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
-import copyToClipboard from '../app/copy-to-clipboard';
-import useShowSnackbar from '../snackbar/use-show-snackbar';
-import contextMenuOptionStyles from '../context-menu/context-menu-option.module.scss';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import selectQueue from '../queue/select-queue';
 import userQueuedPiece from '../queue/user-queued-piece';
 import userPlayedPiece from '../playback/user-played-piece';

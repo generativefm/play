@@ -7,10 +7,12 @@ import {
 } from '@generative.fm/user';
 import { useDispatch } from 'react-redux';
 import classnames from 'classnames';
+import {
+  TextButton,
+  IconButton,
+  useCreateContextMenuForTarget,
+} from '@generative.fm/web-ui';
 import useUpgrade from '../service-worker/use-upgrade';
-import TextButton from '../button/text-button';
-import IconButton from '../button/icon-button';
-import useCreateContextMenuForTarget from '../context-menu/use-create-context-menu-for-target';
 import UserContextMenu from './user-context-menu';
 import styles from './auth-button.module.scss';
 

@@ -10,10 +10,12 @@ import classnames from 'classnames';
 import pieces from '@generative-music/pieces-alex-bainter';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import IconButton from '../button/icon-button';
-import useDismissable from '../app/use-dismissable';
+import {
+  IconButton,
+  useDismissable,
+  useIsNarrowScreen,
+} from '@generative.fm/web-ui';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import { useHistory } from 'react-router-dom';
 import styles from './search-button.module.scss';
 

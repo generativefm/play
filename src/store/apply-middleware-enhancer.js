@@ -1,4 +1,5 @@
 import { applyMiddleware } from 'redux';
+import { snackbarMiddleware } from '@generative.fm/web-ui';
 import playbackMiddleware from '../playback/playback-middleware';
 import storeUserStateMiddleware from '../user/store-user-state-middleware';
 import synchronizeUserMiddleware from '../user/synchronize-user-middleware';
@@ -7,7 +8,6 @@ import anonymousImportMiddleware from '../settings/anonymous-import-middleware';
 import timerMiddleware from '../scene/timer-middleware';
 import autochangeMiddleware from '../scene/autochange-middleware';
 import shuffleMiddleware from '../queue/shuffle-middleware';
-import snackbarMiddleware from '../snackbar/snackbar-middleware';
 import mediaSessionMiddleware from '../playback/media-session-middleware';
 import confirmExitMiddleware from '../settings/confirm-exit-middleware';
 import sentryMiddleware from '../sentry/sentry-middleware';

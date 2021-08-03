@@ -2,8 +2,11 @@ import React, { useCallback } from 'react';
 import { PlayArrow, Stop } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
-import IconButton from '../button/icon-button';
-import CircularLoadingIndicator from '../loading/circular-loading-indicator';
+import {
+  IconButton,
+  CircularLoadingIndicator,
+  useIsNarrowScreen,
+} from '@generative.fm/web-ui';
 import selectPlaybackStatus from '../playback/select-playback-status';
 import userStoppedPlayback from '../playback/user-stopped-playback';
 import userPlayedPiece from '../playback/user-played-piece';
@@ -14,7 +17,6 @@ import PreviousControl from '../queue/previous-control';
 import NextControl from '../queue/next-control';
 import useHotkey from '../app/use-hotkey';
 import selectQueue from '../queue/select-queue';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import styles from './playback-controls.module.scss';
 
 const PlaybackControls = () => {

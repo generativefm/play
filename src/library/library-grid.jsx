@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
+import { useIsNarrowScreen } from '@generative.fm/web-ui';
 import Grid from '../piece/grid';
 import useContentWidth from '../layout/use-content-width';
 import useLibraryCategories from './use-library-categories';
 import List from '../piece/list';
-import useIsNarrowScreen from '../layout/use-is-narrow-screen';
 import styles from './library-grid.module.scss';
 
 const titlesByPage = {

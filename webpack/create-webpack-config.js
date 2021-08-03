@@ -20,6 +20,13 @@ const createWebpackConfig = ({ styleLoader }) => ({
   resolve: {
     extensions: ['.json', '.js', '.jsx'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
+    alias: {
+      react: path.join(__dirname, '../node_modules/react'),
+      'react-router-dom': path.join(
+        __dirname,
+        '../node_modules/react-router-dom'
+      ),
+    },
   },
   module: {
     rules: [
@@ -33,7 +40,6 @@ const createWebpackConfig = ({ styleLoader }) => ({
       },
       {
         test: /\.(s?css)$/,
-        include: path.join(__dirname, '../src'),
         use: [
           styleLoader,
           {

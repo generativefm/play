@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Repeat } from '@material-ui/icons';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import selectIsLoopActive from './select-is-loop-active';
 import userEnabledLoop from './user-enabled-loop';
 import userDisabledLoop from './user-disabled-loop';

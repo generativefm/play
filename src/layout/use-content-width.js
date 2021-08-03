@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useIsNarrowScreen } from '@generative.fm/web-ui';
 import useClientWidth from './use-client-width';
 import useRemValue from './use-rem-value';
-import useIsNarrowScreen from './use-is-narrow-screen';
 
 const MAX_WIDTH_REM = 100;
 

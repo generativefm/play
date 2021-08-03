@@ -1,6 +1,6 @@
 import createSampleProvider from '@generative-music/web-provider';
 import createSampleLibrary from '@generative-music/web-library';
-import retryable from '../loading/retryable';
+import { retryable } from '@generative.fm/web-ui';
 
 const lazyMp3Index = retryable(() =>
   import('@generative-music/samples-alex-bainter/src/mp3')

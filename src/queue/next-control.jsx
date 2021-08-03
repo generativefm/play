@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkipNext } from '@material-ui/icons';
-import IconButton from '../button/icon-button';
+import { IconButton } from '@generative.fm/web-ui';
 import playNext from './play-next';
 import selectQueue from './select-queue';
 

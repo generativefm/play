@@ -9,15 +9,21 @@ import {
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
-import TopNav from '../top-nav/top-nav';
-import BottomNav from '../bottom-nav/bottom-nav';
-import useIsNarrowScreen from './use-is-narrow-screen';
+import {
+  TopBar,
+  BottomNav,
+  withSuspense,
+  useIsNarrowScreen,
+} from '@generative.fm/web-ui';
+import { MusicNote, LibraryMusic, Favorite } from '@material-ui/icons';
 import selectCurrentPieceId from '../queue/select-current-piece-id';
 import selectIsPlaybackOpen from '../playback/select-is-playback-open';
 import userOpenedPlayback from '../playback/user-opened-playback';
 import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-banner';
-import TopBar from '../top-bar/top-bar';
-import withSuspense from '../loading/with-suspense';
+import AuthButton from '../user/auth-button';
+import CastButton from '../cast/cast-button';
+import SearchButton from '../search/search-button';
+import logoSrc from '../logo.png';
 import styles from './layout.module.scss';
 
 const Browse = withSuspense(() => import('../browse/browse'));
@@ -27,13 +33,31 @@ const Piece = withSuspense(() => import('../piece/piece'));
 const Library = withSuspense(() => import('../library/library'));
 const LibraryGrid = withSuspense(() => import('../library/library-grid'));
 const Settings = withSuspense(() => import('../settings/settings'));
-const About = withSuspense(() => import('../about/about'));
-const Donate = withSuspense(() => import('../donate/donate'));
+const About = withSuspense(() => import('@generative.fm/web-ui/dist/about'));
+const Donate = withSuspense(() => import('@generative.fm/web-ui/dist/donate'));
 const ControlBar = withSuspense(() => import('../controls/control-bar'));
 const Playback = withSuspense(() => import('../playback/playback'));
 const PlaybackWithControls = withSuspense(() =>
   import('../playback/playback-with-controls')
 );
+
+const NAV_LINKS = [
+  {
+    label: 'Browse',
+    to: '/browse',
+    Icon: MusicNote,
+  },
+  {
+    label: 'Library',
+    to: '/library',
+    Icon: LibraryMusic,
+  },
+  {
+    label: 'Donate',
+    to: '/donate',
+    Icon: Favorite,
+  },
+];
 
 const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
@@ -54,15 +78,20 @@ const Layout = () => {
     dispatch(userOpenedPlayback());
   }, [isPlaybackOpen, dispatch, history]);
 
+  const isPieceSelected = Boolean(currentPieceId);
+
   return (
     <div
       className={classnames(styles.layout, {
-        [styles['layout--has-controls']]: currentPieceId !== null,
+        [styles['layout--has-controls']]: isPieceSelected,
         [styles['layout--has-playback-content']]: isPlaybackOpen,
       })}
     >
-      {!isNarrowScreen && <TopNav />}
-      {isNarrowScreen && <TopBar />}
+      <TopBar productName="Play" navLinks={NAV_LINKS}>
+        {isNarrowScreen && <CastButton />}
+        <SearchButton />
+        <AuthButton />
+      </TopBar>
       <AnonymousDataImportedBanner />
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>
@@ -76,7 +105,14 @@ const Layout = () => {
             <Route path="/library/likes" exact component={LibraryGrid} />
             <Route path="/library/playtime" exact component={LibraryGrid} />
             <Route path="/settings" component={Settings} />
-            <Route path="/about" component={About} />
+            <Route path="/about">
+              <About
+                version={process.env.APP_VERSION}
+                productName="Play"
+                logoSrc={logoSrc}
+                sourceCodeUrl="https://github.com/generative-fm/play"
+              />
+            </Route>
             <Route path="/donate" component={Donate} />
             <Redirect to="/browse" />
           </Switch>
@@ -107,13 +143,19 @@ const Layout = () => {
         timeout={200}
         appear
         unmountOnExit
-        in={Boolean(currentPieceId)}
+        in={isPieceSelected}
       >
         <div className={classnames(styles['layout__control-bar'])}>
           <ControlBar onExpandCollapse={handleControlBarExpandCollapse} />
         </div>
       </CSSTransition>
-      {isNarrowScreen && <BottomNav />}
+      {isNarrowScreen && (
+        <BottomNav
+          navLinks={NAV_LINKS}
+          hasBorder={isPieceSelected}
+          hasShadow={!isPieceSelected}
+        />
+      )}
     </div>
   );
 };

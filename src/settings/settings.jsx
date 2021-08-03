@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import Switch from '../button/switch';
+import { Switch } from '@generative.fm/web-ui';
 import selectAnonymousImporting from './select-anonymous-importing';
 import userChangedSetting from './user-changed-setting';
 import { ANONYMOUS_IMPORTING } from './anonymous-importing-reducer';
