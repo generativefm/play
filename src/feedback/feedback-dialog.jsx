@@ -162,10 +162,20 @@ const FeedbackDialog = ({
     []
   );
 
+  const isSendDisabled =
+    (feedbackType === 'other' &&
+      (typeof text !== 'string' || text.trim() === '')) ||
+    (feedbackType === 'generator' &&
+      GENERATOR_CHECKBOXES.every(({ id }) => !generatorCheckboxStates[id]) &&
+      (typeof text !== 'string' || text.trim() === ''));
+
   return (
     <Dialog
       title="Send Feedback"
-      actions={[{ text: 'Cancel' }, { text: 'Send', onClick: handleSend }]}
+      actions={[
+        { text: 'Cancel' },
+        { text: 'Send', onClick: handleSend, isDisabled: isSendDisabled },
+      ]}
       onDismiss={onDismiss}
     >
       <div className={styles['feedback-dialog-body']}>
