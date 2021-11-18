@@ -53,6 +53,7 @@
     transition: filter 200ms;
     position: relative;
     background-size: contain;
+    background-repeat: no-repeat;
 
     &__more {
       z-index: 2;
