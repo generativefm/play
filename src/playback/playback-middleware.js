@@ -16,7 +16,24 @@ import piecePlaybackFailed from './piece-playback-failed';
 import { USER_UNQUEUED_PIECE } from '../queue/user-unqueued-piece';
 import selectPlaybackStatus from './select-playback-status';
 
+const resumeInterruptedContext = () => {
+  const { rawContext } = getContext();
+  const { state } = rawContext;
+  if (state === 'interrupted') {
+    getContext()
+      .rawContext.resume()
+      .catch(() => {
+        // welp
+      });
+  }
+};
+
 const playbackMiddleware = (store) => (next) => {
+  getContext().rawContext.addEventListener(
+    'statechange',
+    resumeInterruptedContext
+  );
+
   const generator = new MersenneTwister();
   window.generativeMusic = {
     rng: generator.random.bind(generator),
@@ -56,6 +73,7 @@ const playbackMiddleware = (store) => (next) => {
     const piece = byId[pieceId];
     activatingPieces.add(pieceId);
     await start();
+
     try {
       const [sampleLibrary, activate] = await Promise.all([
         getSampleLibrary(),
