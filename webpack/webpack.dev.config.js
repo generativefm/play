@@ -23,17 +23,19 @@ config.plugins.push(
 
 config.devServer = {
   historyApiFallback: true,
-  before: (app) => {
-    app.get('/api/global/playtime', (req, res) =>
+  setupMiddlewares: (middlewares, devServer) => {
+    devServer.app.get('/api/global/playtime', (req, res) =>
       fetch('http://stats.api.generative.fm/v1/global/playtime').then(
         (response) => {
           response.body.pipe(res);
         }
       )
     );
-    app.post('/api/emissions', (req, res) => {
+    devServer.app.post('/api/emissions', (req, res) => {
       res.sendStatus(200);
     });
+
+    return middlewares;
   },
 };
 
