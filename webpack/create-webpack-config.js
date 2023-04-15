@@ -101,6 +101,9 @@ const createWebpackConfig = ({ styleLoader }) => ({
       },
     }),
   ],
+  performance: {
+    hints: false,
+  },
 });
 
 module.exports = createWebpackConfig;
