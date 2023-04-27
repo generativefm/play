@@ -10,7 +10,7 @@ const getDismissalTimestamp = () => window.localStorage.getItem(STORAGE_KEY);
 
 const JobSearchBanner = () => {
   const { isLoading, playTime } = usePlayTime();
-  const [isDismissed, setIsDismissed] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(Boolean(window.Cypress));
 
   if (isDismissed) {
     return null;
