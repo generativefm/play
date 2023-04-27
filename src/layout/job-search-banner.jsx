@@ -19,7 +19,7 @@ const JobSearchBanner = () => {
   if (
     isLoading ||
     !playTime ||
-    Object.values(playTime).reduce((sum, timePlayed) => sum + timePlayed) <
+    Object.values(playTime).reduce((sum, timePlayed) => sum + timePlayed, 0) <
       60 * 60 ||
     getDismissalTimestamp()
   ) {
