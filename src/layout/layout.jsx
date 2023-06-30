@@ -23,7 +23,6 @@ import AnonymousDataImportedBanner from '../settings/anonymous-data-imported-ban
 import AuthButton from '../user/auth-button';
 import CastButton from '../cast/cast-button';
 import SearchButton from '../search/search-button';
-import JobSearchBanner from './job-search-banner';
 import logoSrc from '../logo.png';
 import styles from './layout.module.scss';
 
@@ -94,7 +93,6 @@ const Layout = () => {
         <AuthButton />
       </TopBar>
       <AnonymousDataImportedBanner />
-      <JobSearchBanner />
       <div className={styles['layout__content']}>
         <div className={styles['layout__content__main']}>
           <Switch>
