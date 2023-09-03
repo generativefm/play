@@ -3,6 +3,7 @@ import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import Category from '../piece/category';
 import useSortings from './use-sortings';
 import selectDislikes from '../user/select-dislikes';
+import SoftAd from '../soft-ad/soft-ad';
 import useSelectorOnce from '../app/use-selector-once';
 
 const Browse = () => {
@@ -55,6 +56,9 @@ const Browse = () => {
 
   return (
     <div>
+      <SoftAd href="https://alexbainter.gumroad.com/l/generative-music-systems">
+        &ldquo;Building Generative Music Systems&rdquo; course available now
+      </SoftAd>
       {(sortings.trending.isLoading || sortings.trending.isAvailable) && (
         <Category
           title={'Trending'}

@@ -2,16 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Category from '../piece/category';
 import useLibraryCategories from './use-library-categories';
-import SoftAd from '../soft-ad/soft-ad';
 import styles from './library.module.scss';
 
 const Library = () => {
   const categories = useLibraryCategories();
   return (
     <>
-      <SoftAd href="https://alexbainter.gumroad.com/l/generative-music-systems">
-        &ldquo;Building Generative Music Systems&rdquo; course available now
-      </SoftAd>
       <Category
         title={'Recently played'}
         pieceIds={categories.history.orderedPieceIds}
