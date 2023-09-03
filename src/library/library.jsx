@@ -10,7 +10,7 @@ const Library = () => {
   return (
     <>
       <SoftAd href="https://alexbainter.gumroad.com/l/generative-music-systems">
-        "Building Generative Music Systems" course available now
+        &ldquo;Building Generative Music Systems&rdquo; course available now
       </SoftAd>
       <Category
         title={'Recently played'}
